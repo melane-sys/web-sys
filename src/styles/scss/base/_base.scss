@@ -30,8 +30,6 @@ body {
 // Reboot
 // --------------------------------------------------
 
-// Import Google Fonts (Poppins)
-@import url($path-to-fonts);
 
 html * {
   @include font-smoothing;

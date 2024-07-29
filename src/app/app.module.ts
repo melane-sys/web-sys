@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, provideClientHydration } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -15,38 +15,35 @@ import { MobileAppModule } from './mobile-app/mobile-app.module';
 import { CustomSoftwareModule } from './custom-software/custom-software.module';
 import { AiModule } from './ai/ai.module';
 import { CloudModule } from './cloud/cloud.module';
-import { SwiperModule } from 'swiper/angular';
-import { ChatbotPopupComponent } from './chatbot-popup/chatbot-popup.component';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
-
 @NgModule({
-  declarations: [								
+  declarations: [	
     AppComponent,
-      ChatbotPopupComponent
+    AppComponent,
    ],
-  imports: [
-    BrowserModule, 
-    AppRoutingModule,
-    MenuModule,
-    HomeModule,
-    AboutModule,
-    CareerModule,
-    ContactModule,
-    SkoloModule,
-    BlogModule,
-    WebAppModule,
-    MobileAppModule,
-    CustomSoftwareModule,
-    AiModule,
-    CloudModule,
-    SwiperModule,
-    FormsModule,
-    HttpClientModule
-    
+    imports: [
+      BrowserModule, 
+      AppRoutingModule,
+      MenuModule,
+      HomeModule,
+      AboutModule,
+      CareerModule,
+      ContactModule,
+      SkoloModule,
+      BlogModule,
+      WebAppModule,
+      MobileAppModule,
+      CustomSoftwareModule,
+      AiModule,
+      CloudModule,
+      FormsModule,
+      HttpClientModule
   ],
-  providers: [],
-  bootstrap: [AppComponent],
+  providers: [
+    provideClientHydration()
+  ],
+  bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }

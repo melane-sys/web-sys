@@ -9,8 +9,6 @@ import { CtaComponent } from './cta/cta.component';
 import { SharedModule } from '../shared/shared.module';
 import { MenuModule } from '../menu/menu.module';
 import { RouterModule } from '@angular/router';
-import { ProductsComponent } from './products/products.component';
-import { SwiperModule } from 'swiper/angular';
 
 @NgModule({
   imports: [
@@ -18,7 +16,6 @@ import { SwiperModule } from 'swiper/angular';
     SharedModule,
     MenuModule,
     RouterModule,
-    SwiperModule
   ],
   declarations: [
     HomeComponent,
@@ -27,7 +24,6 @@ import { SwiperModule } from 'swiper/angular';
     FaqComponent,
     ServiceComponent,
     CtaComponent,
-    ProductsComponent
   ],exports:[
     WhoWeAreComponent,
   ]

@@ -223,6 +223,10 @@
   right: 0;
   border: none;
 }
+
+.offcanvas-header a {
+  flex-grow: 1; /* Takes up available space to push close button to the end */
+}
 .offcanvas-body .main-menu li a.nav-link {
   color: $body-color;
   padding: 0.5rem 1rem;
