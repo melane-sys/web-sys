@@ -22,6 +22,9 @@ import { JourneyComponent } from './journey/journey.component';
 import { TransformComponent } from './transform/transform.component';
 import { PackagesComponent } from './packages/packages.component';
 import { PackHeroComponent } from './packages/pack-hero/pack-hero.component';
+import { RegisterComponent } from './register/register.component';
+import { ClassesComponent } from './classes/classes.component';
+import { ClassListComponent } from './classes/class-list/class-list.component';
 
 @NgModule({
   imports: [
@@ -49,7 +52,10 @@ import { PackHeroComponent } from './packages/pack-hero/pack-hero.component';
     JourneyComponent,
     TransformComponent,
     PackagesComponent,
-    PackHeroComponent
+    PackHeroComponent,
+    RegisterComponent,
+    ClassesComponent,
+    ClassListComponent
 
   ]
 })
