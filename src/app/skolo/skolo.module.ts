@@ -29,6 +29,7 @@ import { PackHeroComponent } from './packages/pack-hero/pack-hero.component';
     RouterModule,
     RouterModule.forChild(SkoloRoutes),
     SharedModule,
+    MenuModule
   ],
   declarations: [
     SkoloComponent,

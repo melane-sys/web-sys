@@ -9,7 +9,6 @@ import { AboutModule } from './about/about.module';
 import { CareerModule } from './career/career.module';
 import { ContactModule } from './contact/contact.module';
 import { SkoloModule } from './skolo/skolo.module';
-import { BlogModule } from './blog/blog.module';
 import { WebAppModule } from './web-app/web-app.module';
 import { MobileAppModule } from './mobile-app/mobile-app.module';
 import { CustomSoftwareModule } from './custom-software/custom-software.module';
@@ -32,7 +31,6 @@ import { HttpClientModule } from '@angular/common/http';
       CareerModule,
       ContactModule,
       SkoloModule,
-      BlogModule,
       WebAppModule,
       MobileAppModule,
       CustomSoftwareModule,
