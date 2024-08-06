@@ -7,7 +7,7 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "serve:ssr:SupportPortalUI": "node dist/melane-ui/server/server.mjs"
+    "serve:ssr:melane-ui": "node dist/melane-ui/server/server.mjs"
   },
   "private": true,
   "dependencies": {
