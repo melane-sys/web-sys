@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-register',
@@ -6,10 +7,56 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit {
+  registerForm: FormGroup;
+  classLevels: string[] = ['Primary School', 'Secondary School', 'Senior School'];
+  subjects: string[] = [];
+  subjectOptions: { [key: string]: string[] } = {
+    'Primary School': ['Math', 'Science', 'English', 'History'],
+    'Secondary School': ['Algebra', 'Biology', 'Physics', 'Literature'],
+    'Senior School': ['Calculus', 'Chemistry', 'Advanced Physics', 'Philosophy']
+  };
+  selectedSubjects: Set<string> = new Set();
 
-  constructor() { }
+  constructor(private fb: FormBuilder) {
+    this.registerForm = this.fb.group({
+      firstName: ['', Validators.required],
+      lastName: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      classLevel: ['', Validators.required],
+      subjects: [[], Validators.required],
+      password: ['', Validators.required]
+    });
+  }
 
-  ngOnInit() {
+  ngOnInit(): void {
+    this.registerForm.get('classLevel')?.valueChanges.subscribe(value => {
+      this.updateSubjects(value);
+    });
+  }
+
+  updateSubjects(classLevel: string): void {
+    this.subjects = this.subjectOptions[classLevel] || [];
+    this.registerForm.get('subjects')?.setValue([]); // Clear selected subjects
+  }
+  
+  onSubjectChange(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.checked) {
+      this.selectedSubjects.add(input.value);
+    } else {
+      this.selectedSubjects.delete(input.value);
+    }
+    this.registerForm.get('subjects')?.setValue(Array.from(this.selectedSubjects)); // Update form control value
+  }
+
+  isSubjectSelected(subject: string): boolean {
+    return this.selectedSubjects.has(subject);
+  }
+
+  onSubmit(): void {
+    if (this.registerForm.valid) {
+      console.log(this.registerForm.value);
+    }
   }
 
 }

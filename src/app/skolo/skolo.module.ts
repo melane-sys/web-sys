@@ -25,6 +25,9 @@ import { PackHeroComponent } from './packages/pack-hero/pack-hero.component';
 import { RegisterComponent } from './register/register.component';
 import { ClassesComponent } from './classes/classes.component';
 import { ClassListComponent } from './classes/class-list/class-list.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { SkoloContactComponent } from './skolo-contact/skolo-contact.component';
+import { SkoloContactFormComponent } from './skolo-contact/skolo-contact-form/skolo-contact-form.component';
 
 @NgModule({
   imports: [
@@ -32,7 +35,8 @@ import { ClassListComponent } from './classes/class-list/class-list.component';
     RouterModule,
     RouterModule.forChild(SkoloRoutes),
     SharedModule,
-    MenuModule
+    MenuModule,
+    ReactiveFormsModule
   ],
   declarations: [
     SkoloComponent,
@@ -55,7 +59,9 @@ import { ClassListComponent } from './classes/class-list/class-list.component';
     PackHeroComponent,
     RegisterComponent,
     ClassesComponent,
-    ClassListComponent
+    ClassListComponent,
+    SkoloContactComponent,
+    SkoloContactFormComponent
 
   ]
 })
