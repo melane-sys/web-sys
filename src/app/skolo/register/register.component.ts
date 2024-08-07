@@ -11,9 +11,9 @@ export class RegisterComponent implements OnInit {
   classLevels: string[] = ['Primary School', 'Secondary School', 'Senior School'];
   subjects: string[] = [];
   subjectOptions: { [key: string]: string[] } = {
-    'Primary School': ['Math', 'Science', 'English', 'History'],
-    'Secondary School': ['Algebra', 'Biology', 'Physics', 'Literature'],
-    'Senior School': ['Calculus', 'Chemistry', 'Advanced Physics', 'Philosophy']
+    'Primary School': ['Math', 'Science', 'English', 'SiSwati', 'Social studies'],
+    'Secondary School': ['Maths', 'Additinal Maths', 'Science', 'English', 'Literature', 'Agriculture', 'SiSwati'],
+    'Senior School': ['Maths', 'Physical Science', 'ICT', 'English','Biology','Geograph', 'SiSwati']
   };
   selectedSubjects: Set<string> = new Set();
 
