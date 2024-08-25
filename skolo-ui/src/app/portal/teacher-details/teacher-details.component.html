@@ -1,0 +1,124 @@
+<header class="bg-light">
+  <div class="logo">
+    <img src="../../assets/img/brand-logo/img-skoloi-web.png" alt="Logo">
+  </div>
+  <button class="close-btn" (click)="close()">×</button>
+</header>
+
+<section class="contact-us ptb-120-2 position-relative overflow-hidden">
+  <div class="container">
+    <div class="row justify-content-between">
+      <div class="col-xl-5 col-lg-5 col-md-12">
+        <div class="section-heading">
+          <h4 class="h5 text-primary">Teacher details</h4>
+          <h2>{{ teacher?.firstName }} {{ teacher?.lastName }}</h2>
+        </div>
+        <div class="row justify-content-between pb-5">
+          <img [src]="teacher?.pictureUrl" alt="teacher" class="img-fluid img-size" />
+
+        </div>
+
+      </div>
+      <div class="col-xl-5 col-lg-7 col-md-12">
+        <div class="register-wrap p-5 bg-white shadow rounded-custom position-relative">
+          <form class="register-form position-relative z-5" [formGroup]="ratingForm" autocomplete="off" novalidate
+            (ngSubmit)="createRating(ratingForm.value)">
+            <h3 class="mb-5 fw-medium">
+              Please rate the teacher!
+            </h3>
+            <div class="row">
+              <div class="col-12">
+                <div class="input-group mb-3">
+                  <textarea class="form-control" placeholder="Write your review " formControlName="reviewBody"
+                    style="height: 120px"></textarea>
+                    <span class="text-danger">
+                      <em *ngIf="hasError('reviewBody', 'maxlength')">Review cannot exceed 1000 characters</em>
+                      <em *ngIf="hasError('reviewBody', 'required')">Review is required</em>
+                    </span>
+                </div>
+              </div>
+
+              <div class="col-sm-6">
+                <div class="input-group mb-3">
+                  <input type="number" class="form-control" placeholder="Stars Count" formControlName="starsCount" min="1" max="5" step="1" />
+                </div>
+                <span class="text-danger">
+                  <em *ngIf="hasError('starsCount', 'required')">Stars count is required</em>
+                  <em *ngIf="hasError('starsCount', 'min')">Minimum value is 1</em>
+                  <em *ngIf="hasError('starsCount', 'max')">Maximum value is 5</em>
+                </span>
+              </div>
+              
+
+              <div class="col-12">
+                <button type="submit" class="btn btn-primary mt-4 d-block w-100" [disabled]="!ratingForm.valid">
+                  Save
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12">
+        <ul class="nav nav-pills testimonial-tab-menu mt-60">
+          <li class="nav-item" *ngFor="let item of teacher?.subjects;">
+            <div
+              class="nav-link d-flex align-items-center rounded-custom border border-light border-2 testimonial-tab-link active">
+              <div class=" me-3">
+                <img src="assets/img/testimonial/1.png" width="50" class="rounded-circle" alt="thumb" />
+              </div>
+              <div class="author-info">
+                <h6 class="mb-0">{{item?.subjectName}}</h6>
+                <span>{{item?.class}}</span>
+              </div>
+            </div>
+          </li>
+          
+
+        </ul>
+      </div>
+    </div>
+
+
+
+  </div>
+</section>
+
+
+<section class="masonary-blog-section ptb-60">
+  <div class="container">
+    <div class="row justify-content-center align-content-center">
+      <div class="col-md-10 col-lg-6">
+        <div class="section-heading text-center" data-aos="fade-up">
+          <h4 class="h5" [ngClass]="dark ? 'text-warning' : 'text-primary'">
+
+            What They Say About {{ teacher?.firstName }} {{ teacher?.lastName }}
+          </h4>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-4 col-md-6" *ngFor="let item of teacher?.ratings">
+        <div class="single-article rounded-custom my-3">
+          <div class="article-content p-4">
+            <p class="limit-2-line-text">
+              {{item.reviewBody}}
+            </p>
+
+            <a href="javascript:;">
+              <div class="d-flex align-items-center pt-4">
+                <div class="avatar-info">
+                  <h6 class="mb-0 avatar-name">{{item.firstName}} {{item.lastName}}</h6>
+                  <span class="small fw-medium text-muted">{{item.createdDate | date}}</span>
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

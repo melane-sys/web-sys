@@ -1,0 +1,67 @@
+<header class="bg-light">
+  <div class="logo">
+    <img src="../../assets/img/brand-logo/img-skoloi-web.png" alt="Logo">
+  </div>
+  <button class="close-btn" (click)="close()">×</button>
+</header>
+
+<!-- payment.component.html -->
+<div class="main-wrapper">
+  <!-- payment section start -->
+  <section class="sign-up-in-section bg-dark ptb-60" style="background: url('assets/img/page-header-bg.svg') no-repeat right bottom;">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-10 col-12">
+
+          <div  class="pricing-content-wrap bg-custom-light rounded-custom shadow-lg">
+            <div class="price-feature-col pricing-feature-info text-white left-radius p-5 order-1 order-lg-0">
+              <h5>Skolo Institute!</h5>
+              <a routerLink="/skolo" class="mb-5 d-none d-xl-block d-lg-block">
+                <img src="assets/img/img-skolo.png" alt="logo" class="img-fluid" />
+              </a>
+            </div>
+            <div class="price-feature-col pricing-action-info p-5 right-radius bg-light order-0 order-lg-1">
+              <a routerLink="/" class="mb-5 d-block d-xl-none d-lg-none"><img src="assets/img/img-skolo.png" alt="logo" class="img-fluid white-logo" /></a>
+              <h1 class="h3">{{subject.subjectName}}</h1>
+              <h5>Class Level: {{subject.class}}</h5>
+              <h5>Teacher: {{subject.teacherFirstName}} {{subject.teacherLastName}}</h5>
+              
+              <form (ngSubmit)="onSubmit()">
+                <div class="container mt-4">
+                  <div class="row">
+                    <div class="col-12">
+                      <div class="mb-4">
+                        <label class="form-label">Select Payment Plan</label>
+                        <div class="form-check">
+                          <input type="radio" id="monthly" name="paymentPlan" value="monthly" [(ngModel)]="selectedPlan" class="form-check-input" />
+                          <label for="monthly" class="form-check-label ms-2">Monthly</label>
+                        </div>
+                        <div class="form-check mt-2">
+                          <input type="radio" id="annually" name="paymentPlan" value="annually" [(ngModel)]="selectedPlan" class="form-check-input" />
+                          <label for="annually" class="form-check-label ms-2">Annually</label>
+                        </div>
+                      </div>
+              
+                      <div class="mb-4">
+                        <h5>Total Cost: SZL {{ totalCost }}</h5>
+                      </div>
+              
+                      <div class="mb-3">
+                        <button type="submit" class="btn btn-primary">Proceed to Payment</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </form>
+              
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- payment section end -->
+</div>
+
+

@@ -1,0 +1,38 @@
+<section class="home-blog-section pt-60 pb-120">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-6 col-md-12">
+        <div class="section-heading text-center">
+          <h2>Skolo Institute Teachers</h2>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <swiper [config]="config" class="cyber-blog">
+        <ng-template swiperSlide *ngFor="let teacher of teachers">
+          <div class="cyber-single-article mb-4 mb-lg-0 p-3 border">
+            <a class="cyber-article-img"  (click)="redirectToDetails(teacher.id)">
+              <img [src]="teacher.pictureUrl" alt="teacher" class="img-fluid img-size" />
+            </a>
+            <hr class="spacer" />
+            <div class="sh-feedback-bottom d-flex align-items-center justify-content-between">
+              <div class="sh-feedback-client">
+                <h6 class="mb-0">{{ teacher.firstName }} {{ teacher.lastName }}</h6>
+              </div>
+              <div class="sh-feedback-rating">
+                <ng-container >
+                  <img *ngIf="teacher.rating == 0" src="assets/img/two-star.svg" alt="rating" class="img-fluid" />
+                  <img *ngIf="teacher.rating == 1" src="assets/img/two-star.svg" alt="rating" class="img-fluid" />
+                  <img *ngIf="teacher.rating == 2"  src="assets/img/two-star.svg" alt="rating" class="img-fluid" />
+                  <img *ngIf="teacher.rating == 3"  src="assets/img/three-star.svg" alt="rating" class="img-fluid" />
+                  <img *ngIf="teacher.rating == 4"  src="assets/img/three-star.svg" alt="rating" class="img-fluid" />
+                  <img *ngIf="teacher.rating == 5"  src="assets/img/five-star.svg" alt="rating" class="img-fluid" />
+                </ng-container>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+      </swiper>
+    </div>
+  </div>
+</section>

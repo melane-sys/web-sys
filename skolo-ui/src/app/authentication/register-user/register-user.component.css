@@ -1,0 +1,24 @@
+.action-btns{
+    margin-bottom: 1rem;
+}
+.top-header{
+    margin-top: 100px;
+}
+
+/* register-user.component.css */
+.form-check {
+    margin-bottom: 1rem;
+  }
+  
+  .form-check-input {
+    margin-right: 0.5rem;
+  }
+  
+  .form-check-label {
+    margin-bottom: 0;
+  }
+  
+  .text-danger {
+    font-size: 0.875rem;
+  }
+  

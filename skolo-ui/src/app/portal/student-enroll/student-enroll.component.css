@@ -1,0 +1,82 @@
+/* Ensure the ul takes up the full width of the container but doesn't overflow */
+.nav-pills {
+    display: flex;
+    flex-wrap: wrap;
+    padding-left: 0;
+    margin: 0;
+    list-style: none;
+  }
+  
+  /* Set a fixed width for each nav-item */
+  .nav-item {
+    flex: 0 0 auto; /* Ensure the item does not stretch */
+    width: 300px;   /* Set a fixed width for each item */
+    margin-right: 10px; /* Optional: Space between items */
+  }
+  
+  /* Style the nav-link */
+  .nav-link {
+    display: flex;
+    align-items: center;
+    width: 100%; /* Make sure it takes full width of the parent li */
+    text-align: left; /* Align text to the left */
+  }
+  
+  /* Optional: Adjustments for the testimonial-thumb */
+  .testimonial-thumb {
+    flex-shrink: 0; /* Prevent image container from shrinking */
+  }
+  
+  /* Optional: Adjustments for the author-info */
+  .author-info {
+    flex: 1; /* Allow author-info to take the remaining space */
+  }
+  
+/* header.component.css */
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 90px; 
+  display: flex;
+  align-items: center;
+  padding: 0 20px; 
+  z-index: 1000; 
+  justify-content: center; 
+  transition: top 0.3s;
+}
+
+header .logo {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  transition: opacity 0.3s;
+}
+
+.logo img {
+  height: 80px; 
+}
+
+.close-btn {
+  position: absolute;
+  right: 20px; 
+  background: none;
+  border: none;
+  font-size: 34px; 
+  cursor: pointer;
+}
+
+/* Hide logo when scrolled */
+header.scrolled .logo {
+  opacity: 0;
+}
+
+.btn-primary {
+    margin-top: 10px;
+  }
+  
+  .form-check {
+    display: flex;
+    align-items: center;
+  }

@@ -1,0 +1,160 @@
+<section class="hero-section ptb-90 bg-purple text-white" style="
+    background: url('assets/img/app-two-mockup-bg.png') no-repeat center center /
+      cover;
+  ">
+  <div class="container">
+    <div class="row justify-content-xl-between align-items-center">
+      <div class="row justify-content-center align-content-center">
+        <div class="col-md-10 col-lg-6">
+          <ng-container>
+            <div class="section-heading text-center">
+              <h3 class="text-primary">Welcome back, {{user?.firstName}} {{user?.lastName}}</h3>
+              <p>
+                Learning that gets you, Skills for your present (and your future). Get started with us.
+              </p>
+
+                  <a routerLink="/student-portal/class" class="btn btn-light">My Class</a>
+           
+         
+            </div>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+    
+  </div>
+
+</section>
+<!-- 
+<section class="hero-section ptb-60 bg-light">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <ul class="nav justify-content-center feature-tab-list-2 mb-0" id="nav-tab" role="tablist">
+          <li class="nav-item">
+            <a class="nav-link active" href="#tab-1" data-bs-toggle="tab" data-bs-target="#tab-1" role="tab"
+              aria-selected="false">
+              Register now
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#tab-2" data-bs-toggle="tab" data-bs-target="#tab-2" role="tab"
+              aria-selected="false">
+              Subscribe to subjects
+            </a>
+          </li>
+        </ul>
+        <div class="tab-content" id="nav-tabContent">
+          <div class="tab-pane fade pt-60 active show" id="tab-1" role="tabpanel">
+            <div class="row justify-content-center align-items-center justify-content-around">
+              <form action="#" class="register-form">
+                <div class="row">
+                  <div class="col-sm-6">
+                    <label for="firstName" class="mb-1">First name <span class="text-danger">*</span></label>
+                    <div class="input-group mb-3">
+                      <input type="text" class="form-control" id="firstName" required placeholder="First name"
+                        aria-label="First name" />
+                    </div>
+                  </div>
+                  <div class="col-sm-6">
+                    <label for="lastName" class="mb-1">Last name</label>
+                    <div class="input-group mb-3">
+                      <input type="text" class="form-control" id="lastName" placeholder="Last name"
+                        aria-label="Last name" />
+                    </div>
+                  </div>
+                  <div class="col-sm-6">
+                    <label for="phone" class="mb-1">Phone <span class="text-danger">*</span></label>
+                    <div class="input-group mb-3">
+                      <input type="text" class="form-control" id="phone" required placeholder="Phone"
+                        aria-label="Phone" />
+                    </div>
+                  </div>
+                  <div class="col-sm-6">
+                    <label for="email" class="mb-1">Email<span class="text-danger">*</span></label>
+                    <div class="input-group mb-3">
+                      <input type="email" class="form-control" id="email" required placeholder="Email"
+                        aria-label="Email" />
+                    </div>
+                  </div>
+                  <div class="col-sm-6">
+                    <div class="input-group mb-3">
+                      <select class="form-control form-select" name="budget" id="budget" required=""
+                        data-msg="Please select your budget.">
+                        <option value="" selected="" disabled="">Class</option>
+                        <option value="budget1">Primary school</option>
+                        <option value="budget1">Secondary school</option>
+                        <option value="budget1">Senior school</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <button type="submit" class="btn btn-primary btn-lg mt-3">Register</button>
+              </form>
+            </div>
+          </div>
+          <div class="tab-pane fade pt-60" id="tab-2" role="tabpanel">
+            <div class="row justify-content-center align-items-center justify-content-around">
+              <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+                <div class="row">
+                  <div class="col-sm-6">
+                    <label for="firstName" class="mb-1">First Name <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" formControlName="firstName" id="firstName"
+                      placeholder="First name" />
+                  </div>
+                  <div class="col-sm-6">
+                    <label for="lastName" class="mb-1">Last Name <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" formControlName="lastName" id="lastName"
+                      placeholder="Last name" />
+                  </div>
+                  <div class="col-sm-12">
+                    <label for="email" class="mb-1">Email</label>
+                    <input type="email" class="form-control" formControlName="email" id="email" placeholder="Email" />
+                  </div>
+
+
+                  <div class="col-sm-6">
+                    <label for="classLevel" class="mb-1">Class Level <span class="text-danger">*</span></label>
+                    <div class="custom-select-container">
+                      <select class="form-control custom-select form-select" formControlName="classLevel"
+                        id="classLevel">
+                        <option value="" disabled selected>Please select a class</option>
+                        <option *ngFor="let level of classLevels" [value]="level">{{ level }}</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="col-sm-6">
+                    <label for="subjects" class="mb-1">Subjects <span class="text-danger">*</span></label>
+                    <div class="subject-checkbox-group">
+                      <div *ngFor="let subject of subjects">
+                        <input type="checkbox" [id]="subject" [value]="subject" (change)="onSubjectChange($event)"
+                          [checked]="isSubjectSelected(subject)" />
+                        <label [for]="subject">{{ subject }}</label>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-12">
+                    <div class="form-check d-flex">
+                      <input class="form-check-input me-2" type="checkbox" id="terms" />
+                      <label class="form-check-label" for="terms">
+                        I have read and agree to the
+                        <a href="#" class="text-decoration-none">Terms & Conditions</a>
+                      </label>
+                    </div>
+                  </div>
+                  <div class="col-12">
+                    <button (click)="onSubmit()" class="btn btn-primary mt-4 d-block w-100">
+                      Continue with payment
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section> -->

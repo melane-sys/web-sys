@@ -1,0 +1,78 @@
+<app-close-header></app-close-header>
+<section class="sign-up-in-section bg-light ptb-20">
+  <div class="container">
+
+    <div class="row align-items-center justify-content-center">
+      <div class="col-lg-5 col-md-8 col-12">
+        <div class="text-center mb-4 top-header">
+          <h3 class="mb-3 font-weight-normal">Create an account</h3>
+        </div>
+
+        <div *ngIf="showError" class="alert alert-danger" role="alert">
+          <span [innerHTML]="errorMessage"></span>
+        </div>
+
+        <main class="form-signin">
+          <form [formGroup]="registerForm" autocomplete="off" novalidate (ngSubmit)="registerUser(registerForm.value)">
+            <div class="form-floating mb-3">
+              <input type="text" id="firstName" formControlName="firstName" class="form-control" />
+              <label for="firstName">First Name:</label>
+            </div>
+            <div class="form-floating mb-3">
+              <input type="text" id="lastName" formControlName="lastName" class="form-control" />
+              <label for="lastName">Last Name:</label>
+            </div>
+            <div class="form-floating mb-3">
+              <input type="email" id="email" formControlName="email" class="form-control" />
+              <label for="email">Email:</label>
+              <span class="text-danger">
+                <em *ngIf="validateControl('email') && hasError('email', 'email')">Please provide a valid email</em>
+                <em *ngIf="validateControl('email') && hasError('email', 'required')">Email is required</em>
+              </span>
+            </div>
+            <div class="form-floating mb-3">
+              <input type="password" id="password" formControlName="password" class="form-control" />
+              <label for="password">Password:</label>
+              <span class="text-danger">
+                <em *ngIf="validateControl('password') && hasError('password', 'required')">Password is required</em>
+              </span>
+            </div>
+            <div class="form-floating mb-3">
+              <input type="password" id="confirm" formControlName="confirm" class="form-control" />
+              <label for="confirm">Confirm Password:</label>
+              <span class="text-danger">
+                <em *ngIf="validateControl('confirm') && hasError('confirm', 'required')">Confirmation is required</em>
+                <em *ngIf="hasError('confirm', 'mustMatch')">Passwords must match</em>
+              </span>
+            </div>
+            
+            <!-- Radio Buttons for User Type -->
+            <div class="mb-3">
+              <label class="form-label">User Type:</label>
+              <div class="form-check">
+                <input type="radio" id="student" value="student" formControlName="userType" class="form-check-input" />
+                <label for="student" class="form-check-label">Student</label>
+              </div>
+              <div class="form-check">
+                <input type="radio" id="school" value="school" formControlName="userType" class="form-check-input" />
+                <label for="school" class="form-check-label">School</label>
+              </div>
+              <div class="text-danger mt-2">
+                <em *ngIf="validateControl('userType') && hasError('userType', 'required')">User type is required</em>
+              </div>
+            </div>
+            
+            <div class="d-grid mt-4 px-1">
+              <button class="btn btn-primary mt-3 d-block w-100" type="submit" [disabled]="!registerForm.valid">Create Account</button>
+            </div>
+          </form>
+
+          <p class="font-monospace fw-medium text-center text-muted mt-2 mb-0">
+            Already have an account? <a routerLink="/authentication/login" class="text-decoration-none">Login</a>
+          </p>
+        </main>
+      </div>
+    </div>
+  </div>
+</section>
+

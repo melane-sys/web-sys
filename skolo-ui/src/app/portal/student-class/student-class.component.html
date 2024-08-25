@@ -1,0 +1,107 @@
+<header class="bg-light">
+  <div class="logo">
+    <img src="../../assets/img/brand-logo/img-skoloi-web.png" alt="Logo">
+  </div>
+  <button class="close-btn" (click)="close()">×</button>
+</header>
+
+<section class="blog-details pt-120">
+  <div class="container">
+    <div class="row justify-content-between ev-schedule">
+      <div class="col-lg-8 pe-lg-5">
+        <div class="blog-details-wrap">
+
+          <div class="blog-details-info mt-5">
+            <h3 class="h5">My Class</h3>
+            <div class="tab-content" id="pills-tabContent">
+              <div class="tab-pane fade show active">
+
+                <div class="single-eve-session py-5 rounded px-4 px-lg-0 mb-4" *ngFor="let list of enrollments">
+                  <div class="row align-items-center">
+                    <div class="col-lg-3">
+                      <div
+                        class="text-lg-center speaker-info mb-3 mb-lg-0 py-3 md-py-0"
+                      >
+                        <img
+                          src="assets/img/event/sp-1.png"
+                          alt="speaker"
+                          class="mb-3"
+                        />
+                        <h5 class="h6 m-0">{{list?.teacherLastName}} {{list?.teacherFirstName}}</h5>
+                        <span class="small">Teacher</span>
+                      </div>
+                    </div>
+                    <div class="col-lg-9">
+                      <div class="single-ev px-lg-4">
+                        <h5 class="mb-3 h6">{{list?.subjectName}}</h5>
+                        <div class="d-md-flex mb-2">
+                          <div class="date pe-4 small text-muted">
+                            <h5 class="mb-3 h6">Enrolled Date</h5>
+                          </div>
+                          <div class="location small text-muted">
+                            <i class="far fa-alarm-clock pe-2"></i><span>{{list?.enrolledDate | date}}</span>
+                          </div>
+                        </div>
+                        <div class="d-md-flex mb-2">
+                          <div class="date pe-4 small text-muted">
+                            <h5 class="mb-3 h6">Expire</h5>
+                          </div>
+                          <div class="location small text-muted">
+                            <i class="far fa-alarm-clock pe-2"></i>
+                            <span *ngIf="getExpirationDetails(list?.enrolledDate).status === 'Expired'">
+                              Expired
+                            </span>
+                            <span *ngIf="getExpirationDetails(list?.enrolledDate).status === 'Valid'">
+                              Expires in {{getExpirationDetails(list?.enrolledDate).daysLeft}} days
+                            </span>
+
+                 
+                          </div>
+                          
+                        </div>
+                        <a  class="link-with-icon"
+                        >Login to moodle<i class="far fa-arrow-right"></i
+                      ></a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+
+
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <div class="author-wrap bg-light p-5 sticky-sidebar rounded-custom mt-5 mt-lg-0">
+
+          <div class="author-info my-4">
+            <h5 class="mb-0">Recommendations for you</h5>
+          </div>
+          <ul class="nav nav-pills testimonial-tab-menu mt-60">
+            <li class="nav-item" *ngFor="let list of primarySubjects">
+              <div
+                class="nav-link d-flex align-items-center rounded-custom border border-light border-2 testimonial-tab-link active">
+                <div class="testimonial-thumb me-3">
+                  <img src="assets/img/integations/airbnb.png" width="50" class="rounded-circle"
+                    alt="testimonial thumb" />
+                </div>
+                <div class="author-info">
+                  <h6 class="mb-0">{{list?.subjectName}}</h6>
+                  <a (click)="redirectToEnroll(list?.id)"
+                  class="link-with-icon p-0 mt-auto text-decoration-none text-warning">Enroll <i
+                    class="far fa-arrow-right"></i></a>
+                </div>
+              </div>
+            </li>
+          </ul>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<app-download></app-download>

@@ -1,0 +1,202 @@
+<header class="main-header w-100" [ngClass]="[ dark ? 'position-absolute' : '', absolute ? 'position-absolute' : '' ]">
+  <nav class="navbar navbar-expand-xl sticky-header z-10"
+    [ngClass]="[dark ? 'navbar-dark' : 'navbar-light', sticky ? 'affix' : '']" (scroll)="onscroll()">
+    <div class="container d-flex align-items-center justify-content-lg-between position-relative">
+      <a routerLink="/" class="navbar-brand d-flex align-items-center mb-md-0 text-decoration-none">
+        <img src="../../../assets/img/brand-logo/skolo-logo.png" alt="logo" class="img-fluid logo-white" />
+        <img src="../../../assets/img/brand-logo/skolo-logo.png" alt="logo" class="img-fluid logo-color" />
+      </a>
+      <button class="navbar-toggler position-absolute right-0 border-0" id="#offcanvasWithBackdrop" role="button">
+        <span class="far fa-bars" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBackdrop"
+          aria-controls="offcanvasWithBackdrop"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-center">
+        <ul class="nav col-12 col-md-auto justify-content-center main-menu">
+          <li><a routerLink="/" class="nav-link">Home</a></li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Solutions
+            </a>
+            <div class="dropdown-menu border-0 rounded-custom shadow py-0 bg-white">
+              <div class="dropdown-grid rounded-custom width-full">
+                <div class="dropdown-grid-item">
+                  <h6 class="drop-heading">Students</h6>
+                  <a class="dropdown-link">
+                    <span class="demo-list bg-primary rounded text-white fw-bold">
+                      <i class="fas fa-user-graduate"></i>
+                    </span>
+                    <div class="dropdown-info">
+                      <div class="drop-title">Empower Your Learning Journey</div>
+                    </div>
+                  </a>
+                  <a routerLink="/students" class="link-with-icon p-0 mt-auto text-decoration-none text-warning">Learn
+                    more <i class="far fa-arrow-right"></i></a>
+                </div>
+                <div class="dropdown-grid-item radius-right-side bg-light">
+                  <h6 class="drop-heading">Educators</h6>
+                  <a class="dropdown-link">
+                    <span class="demo-list bg-primary rounded text-white fw-bold">
+                      <i class="fas fa-chalkboard-teacher"></i>
+                    </span>
+                    <div class="dropdown-info">
+                      <div class="drop-title">Elevate Your Teaching Experience</div>
+                    </div>
+                  </a>
+                  <a routerLink="/educators" class="link-with-icon p-0 mt-auto text-decoration-none text-warning">Learn
+                    more <i class="far fa-arrow-right"></i></a>
+                </div>
+                <div class="dropdown-grid-item">
+                  <h6 class="drop-heading">Schools</h6>
+                  <a class="dropdown-link">
+                    <span class="demo-list bg-primary rounded text-white fw-bold">
+                      <i class="fas fa-school"></i>
+                    </span>
+                    <div class="dropdown-info">
+                      <div class="drop-title">Streamline Your School Management</div>
+                    </div>
+                  </a>
+                  <a routerLink="/schools" class="link-with-icon p-0 mt-auto text-decoration-none text-warning">Learn
+                    more <i class="far fa-arrow-right"></i></a>
+                </div>
+              </div>
+            </div>
+          </li>
+          <!-- <li><a routerLink="/skolo" class="nav-link">Resources</a></li> -->
+          <!-- <li><a routerLink="/skolo/categories" class="nav-link">Categories</a></li> -->
+          <!-- <li><a routerLink="/skolo/price" class="nav-link">Pricing</a></li> -->
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Pricing
+            </a>
+            <div class="dropdown-menu border-0 rounded-custom shadow py-0 bg-white">
+              <div class="dropdown-no-grid rounded-custom width-full">
+                <div class="dropdown-no-grid-item">
+                  <a routerLink="/student-pricing" class="dropdown-link">
+                    <div class="dropdown-info">
+                      <div class="drop-title">Students pricing</div>
+                    </div>
+                  </a>
+                  <a routerLink="/school-pricing" class="dropdown-link">
+                    <div class="dropdown-info">
+                      <div class="drop-title">Schools pricing</div>
+                    </div>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li *ngIf='isUserAuthenticated && isUserStudent'><a routerLink="/student-portal" class="nav-link">Student Portal</a></li>
+          <li *ngIf='isUserAuthenticated && isUserSchool'><a routerLink="/school-portal" class="nav-link">School Portal</a></li>
+          <li><a routerLink="/" class="nav-link">
+              <span>
+                <i class="fas fa-search"></i>
+              </span>
+            </a></li>
+        </ul>
+      </div>
+
+      <ng-container *ngIf="!isUserAuthenticated">
+        <div class="action-btns text-end me-5 me-lg-0 d-none d-md-block d-lg-block">
+          
+          <a routerLink="/authentication/login" class="btn btn-primary">Login</a>
+        </div>
+      </ng-container>
+
+      <ng-container *ngIf="isUserAuthenticated">
+        <div class="action-btns text-end me-5 me-lg-0 d-none d-md-block d-lg-block">
+         <!-- <a class="btn btn-link text-decoration-none me-2">FirstName</a>  put the user here -->
+          <a (click)="logout()" class="btn btn-primary">LogOut</a>
+        </div>
+      </ng-container>
+
+
+      <!--offcanvas menu start-->
+      <div class="offcanvas offcanvas-end d-xl-none" tabindex="-1" id="offcanvasWithBackdrop">
+        <div class="offcanvas-header d-flex align-items-center mt-4">
+          <a routerLink="/" class="d-flex align-items-center mb-md-0 text-decoration-none">
+            <img src="../../../assets/img/brand-logo/skolo-logo.png" alt="logo" class="img-fluid ps-2" />
+          </a>
+          <button type="button" class="close-btn text-danger" data-bs-dismiss="offcanvas" aria-label="Close">
+            <i class="far fa-close"></i>
+          </button>
+        </div>
+        <div class="offcanvas-body">
+          <ul class="nav col-12 col-md-auto justify-content-center main-menu">
+            <li><a routerLink="/" class="nav-link">Home</a></li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                aria-expanded="false">
+                Solutions
+              </a>
+              <div class="dropdown-menu border-0 rounded-custom shadow py-0 bg-white">
+                <div class="dropdown-grid rounded-custom width-half">
+                  <div class="dropdown-grid-item">
+                    <a routerLink="/students" class="dropdown-link">
+                      <span class="demo-list bg-primary rounded text-white fw-bold">
+                        <i class="fas fa-user-graduate"></i>
+                      </span>
+                      <div class="dropdown-info">
+                        <div class="drop-title">Students</div>
+                      </div>
+                    </a>
+                    <a routerLink="/educators" class="dropdown-link">
+                      <span class="demo-list bg-primary rounded text-white fw-bold">
+                        <i class="fas fa-chalkboard-teacher"></i>
+                      </span>
+                      <div class="dropdown-info">
+                        <div class="drop-title">Educators</div>
+                      </div>
+                    </a>
+
+                    <a routerLink="/schools" class="dropdown-link">
+                      <span class="demo-list bg-primary rounded text-white fw-bold">8</span>
+                      <div class="dropdown-info">
+                        <div class="drop-title">Schools</div>
+                      </div>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                aria-expanded="false">Pricing</a>
+              <div class="dropdown-menu border-0 rounded-custom shadow py-0 bg-white">
+                <div class="dropdown-grid rounded-custom width-full">
+                  <div class="dropdown-grid-item">
+                    <a routerLink="/students" class="dropdown-link px-0">
+                      <div class="drop-title">Students pricing</div>
+                    </a>
+                    <a routerLink="/schools" class="dropdown-link px-0">
+                      <div class="drop-title">Schools pricing</div>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li *ngIf='isUserAuthenticated && isUserStudent'><a routerLink="/student-portal" class="nav-link" data-bs-dismiss="offcanvas" aria-label="Close">Student Portal</a></li>
+            <li *ngIf='isUserAuthenticated && isUserSchool'><a routerLink="/school-portal" class="nav-link" data-bs-dismiss="offcanvas" aria-label="Close">School Portal</a></li>
+            <li><a routerLink="/" class="nav-link" data-bs-dismiss="offcanvas" aria-label="Close">
+                <span>
+                  <i class="fas fa-search"></i>
+                </span>
+              </a></li>
+          </ul>
+          <ng-container *ngIf="!isUserAuthenticated">
+            <div class="action-btns mt-4 ps-3">
+              <a routerLink="/authentication/login" class="btn btn-primary">Login</a>
+            </div>
+          </ng-container>
+
+          <ng-container *ngIf="isUserAuthenticated">
+            <div class="action-btns mt-4 ps-3">
+              <a (click)="logout()" class="btn btn-primary">Logout</a>
+            </div>
+          </ng-container>
+ 
+        </div>
+      </div>
+      <!--offcanvas menu end-->
+    </div>
+  </nav>
+</header>
