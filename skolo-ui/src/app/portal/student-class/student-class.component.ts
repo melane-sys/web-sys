@@ -84,7 +84,6 @@ export class StudentClassComponent implements OnInit {
     const currentDate = new Date();
     const expirationDate = new Date(enrollmentDate);
     expirationDate.setDate(enrollmentDate.getDate() + 30);
-
     const diffTime = expirationDate.getTime() - currentDate.getTime();
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
@@ -99,6 +98,7 @@ export class StudentClassComponent implements OnInit {
       };
     }
   }
+  
   public redirectToEnroll = async (id: string) => {
     let url: string = `student-portal/student-enroll/${id}`;
     this.router.navigate([url]);

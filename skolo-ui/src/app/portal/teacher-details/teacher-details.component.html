@@ -10,7 +10,7 @@
     <div class="row justify-content-between">
       <div class="col-xl-5 col-lg-5 col-md-12">
         <div class="section-heading">
-          <h4 class="h5 text-primary">Teacher details</h4>
+          <h4 class="h5 text-primary">Educator details</h4>
           <h2>{{ teacher?.firstName }} {{ teacher?.lastName }}</h2>
         </div>
         <div class="row justify-content-between pb-5">
@@ -24,7 +24,7 @@
           <form class="register-form position-relative z-5" [formGroup]="ratingForm" autocomplete="off" novalidate
             (ngSubmit)="createRating(ratingForm.value)">
             <h3 class="mb-5 fw-medium">
-              Please rate the teacher!
+              Please rate the educator!
             </h3>
             <div class="row">
               <div class="col-12">
@@ -63,6 +63,7 @@
 
     <div class="row">
       <div class="col-12">
+        <h4>List of subjects</h4>
         <ul class="nav nav-pills testimonial-tab-menu mt-60">
           <li class="nav-item" *ngFor="let item of teacher?.subjects;">
             <div
@@ -108,7 +109,7 @@
               {{item.reviewBody}}
             </p>
 
-            <a href="javascript:;">
+            <a >
               <div class="d-flex align-items-center pt-4">
                 <div class="avatar-info">
                   <h6 class="mb-0 avatar-name">{{item.firstName}} {{item.lastName}}</h6>

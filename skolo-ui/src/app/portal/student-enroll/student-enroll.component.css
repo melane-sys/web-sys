@@ -80,3 +80,7 @@ header.scrolled .logo {
     display: flex;
     align-items: center;
   }
+
+  .row{
+    margin-top: 3rem;
+  }
