@@ -7,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class EducatorsComponent implements OnInit {
 
+  // add the teacherApplication here
   constructor() { }
 
   ngOnInit() {

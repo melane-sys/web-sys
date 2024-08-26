@@ -3,21 +3,21 @@
       cover;
   ">
   <div class="container">
-    <div class="row justify-content-xl-between align-items-center">
-      <div class="col-lg-5 col-xl-5 col-xl-5 col-md-10">
-        <div class="hero-content-wrap mt-5 mt-lg-0 mt-xl-0">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="hero-content">
           <h5 class="text-warning">Empowering Education in Eswatini</h5>
-          <h1 class="fw-bold display-5">Become a Part of Our Educator Community
+          <h1 class="fw-bold display-5 text-white mb-4" data-aos="fade-up">
+            Become a Part of Our Educator
+            <span class="gr-text ms-lg-2">Community.</span>
           </h1>
-          <p class="lead">
+          <p class="lead text-off-white m-0">
             Share your expertise and make a difference in education. Apply to join our platform as an educator and
             connect with students around the world.
           </p>
-        </div>
-      </div>
-      <div class="col-lg-5 col-md-8 mt-5">
-        <div class="hero-app-img position-relative text-center">
-          <img src="../../../assets/img/img-skolo.png" alt="app screen" class="img-fluid" />
+          <a (click)="scrollToSection('apply')" class="btn-gradient mt-4 link-with-icon">
+            Apply Now <i class="far fa-arrow-right"></i>
+          </a>
         </div>
       </div>
     </div>
@@ -142,51 +142,73 @@
             Complete the form below to apply to become an educator on our platform.
           </p>
         </div>
-        <form action="#" class="register-form">
+        <form [formGroup]="teacherForm" (ngSubmit)="submitApplication()" class="register-form">
           <div class="row">
             <div class="col-sm-6">
               <label for="firstName" class="mb-1">First name <span class="text-danger">*</span></label>
               <div class="input-group mb-3">
-                <input type="text" class="form-control" id="firstName" required placeholder="First name"
-                  aria-label="First name" />
+                <input type="text" class="form-control" id="firstName" formControlName="firstName" required
+                  placeholder="First name" aria-label="First name" />
+                <div *ngIf="validateControl('firstName')" class="text-danger">
+                  First name is required.
+                </div>
               </div>
             </div>
             <div class="col-sm-6">
               <label for="lastName" class="mb-1">Last name</label>
               <div class="input-group mb-3">
-                <input type="text" class="form-control" id="lastName" placeholder="Last name" aria-label="Last name" />
+                <input type="text" class="form-control" id="lastName" formControlName="lastName" placeholder="Last name"
+                  aria-label="Last name" />
               </div>
             </div>
             <div class="col-sm-6">
               <label for="phone" class="mb-1">Phone <span class="text-danger">*</span></label>
               <div class="input-group mb-3">
-                <input type="text" class="form-control" id="phone" required placeholder="Phone" aria-label="Phone" />
+                <input type="text" class="form-control" id="phone" formControlName="phone" required placeholder="Phone"
+                  aria-label="Phone" />
+                <div *ngIf="validateControl('phone')" class="text-danger">
+                  Phone number is required.
+                </div>
               </div>
             </div>
             <div class="col-sm-6">
-              <label for="email" class="mb-1">Email<span class="text-danger">*</span></label>
+              <label for="email" class="mb-1">Email <span class="text-danger">*</span></label>
               <div class="input-group mb-3">
-                <input type="email" class="form-control" id="email" required placeholder="Email" aria-label="Email" />
+                <input type="email" class="form-control" id="email" formControlName="email" required placeholder="Email"
+                  aria-label="Email" />
+                <div *ngIf="validateControl('email')" class="text-danger">
+                  Valid email is required.
+                </div>
               </div>
             </div>
             <div class="col-12">
-              <label for="yourMessage" class="mb-1">Teaching Experience <span class="text-danger">*</span></label>
+              <label for="experience" class="mb-1">Teaching Experience <span class="text-danger">*</span></label>
               <div class="input-group mb-3">
-                <textarea class="form-control" id="yourMessage" required placeholder="How can we help you?"
-                  style="height: 120px"></textarea>
+                <textarea class="form-control" id="experience" formControlName="experience" required
+                  placeholder="Teaching Experience" style="height: 120px"></textarea>
+                <div *ngIf="validateControl('experience')" class="text-danger">
+                  Teaching experience is required.
+                </div>
               </div>
             </div>
             <div class="col-12">
-              <label for="yourMessage" class="mb-1">Proposed Classes and subjects <span
+              <label for="subjects" class="mb-1">Proposed Classes and Subjects <span
                   class="text-danger">*</span></label>
               <div class="input-group mb-3">
-                <textarea class="form-control" id="yourMessage" required placeholder="How can we help you?"
-                  style="height: 120px"></textarea>
+                <textarea class="form-control" id="subjects" formControlName="subjects" required
+                  placeholder="Proposed Classes and Subjects" style="height: 120px"></textarea>
+                <div *ngIf="validateControl('subjects')" class="text-danger">
+                  Proposed classes and subjects are required.
+                </div>
               </div>
             </div>
           </div>
           <button type="submit" class="btn btn-primary btn-lg mt-3">Submit Application</button>
+          <div *ngIf="errorMessage" class="text-danger mt-3">
+            {{ errorMessage }}
+          </div>
         </form>
+
       </div>
     </div>
   </div>

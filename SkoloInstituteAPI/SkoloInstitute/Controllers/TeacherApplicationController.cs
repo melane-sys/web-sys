@@ -6,7 +6,7 @@ using SkoloInstitute.Entities.Models;
 
 namespace SkoloInstitute.Controllers
 {
-    [Route("api/teacherapplications")]
+    [Route("api/teacher-applications")]
     [ApiController]
     public class TeacherApplicationController : ControllerBase
     {
