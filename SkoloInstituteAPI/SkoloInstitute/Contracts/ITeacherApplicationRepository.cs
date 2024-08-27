@@ -6,6 +6,7 @@ namespace SkoloInstitute.Contracts
     {
         IEnumerable<TeacherApplication> GetAllData();
         TeacherApplication GetDataById(Guid Id);
+        TeacherApplication GetDataByEmail(string email);
         void CreateData(TeacherApplication data);
         void UpdateData(TeacherApplication data);
         void DeleteData(TeacherApplication data);

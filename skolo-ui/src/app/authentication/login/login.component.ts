@@ -30,6 +30,8 @@ export class LoginComponent implements OnInit {
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
   }
 
+
+
   validateControl = (controlName: string) => {
     return this.loginForm.get(controlName).invalid && this.loginForm.get(controlName).touched
   }
@@ -39,7 +41,6 @@ export class LoginComponent implements OnInit {
   }
 
   loginUser = (loginFormValue:any) => {
-    this.authService.isExternalAuth = false;
     this.showError = false;
     const login = { ...loginFormValue };
 

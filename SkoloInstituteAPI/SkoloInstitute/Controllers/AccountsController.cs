@@ -30,6 +30,7 @@ namespace SkoloInstitute.Controllers
             _emailService = emailService;
             _config = config;
             _repository = repository;
+
         }
 
         [HttpPost("Registration")]
@@ -417,5 +418,6 @@ p{{
 
             return await _emailService.SendEmailAsync(emailSend);
         }
+
     }
 }

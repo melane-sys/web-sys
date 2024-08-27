@@ -12,6 +12,7 @@ import { ResetPasswordDto } from 'src/app/_interfaces/resetPassword/resetPasswor
 import { CustomEncoder } from '../custom-encoder';
 import { TwoFactorDto } from 'src/app/_interfaces/twoFactor/twoFactorDto.model';
 import { User } from 'src/app/_interfaces/user/User';
+import { GoogleLoginProvider, SocialAuthService, SocialUser } from '@abacritt/angularx-social-login';
 
 @Injectable({
   providedIn: 'root'
@@ -19,14 +20,15 @@ import { User } from 'src/app/_interfaces/user/User';
 export class AuthenticationService {
   private authChangeSub = new Subject<boolean>();
   public authChanged = this.authChangeSub.asObservable();
-  public isExternalAuth: boolean |any;
   private userSubject = new BehaviorSubject<User | null>(null);
   public userChanged = this.userSubject.asObservable(); 
 
   constructor(private http: HttpClient, private envUrl: EnvironmentUrlService, 
-    private jwtHelper: JwtHelperService, ) { 
+    private jwtHelper: JwtHelperService) { 
       this.updateAuthState();
     }
+
+ 
 
   public registerUser = (route: string, body: UserForRegistrationDto) => {
     return this.http.post<RegistrationResponseDto> (this.createCompleteRoute(route, this.envUrl.urlAddress), body);
@@ -79,6 +81,7 @@ export class AuthenticationService {
     this.sendAuthStateChangeNotification(false);
   }
 
+
   private updateAuthState() {
     const token = localStorage.getItem("token");
     const user = localStorage.getItem("user");
@@ -130,6 +133,8 @@ export class AuthenticationService {
     
     return role === 'School';
   }
+
+  
 
   private createCompleteRoute = (route: string, envAddress: string) => {
     return `${envAddress}/${route}`;

@@ -9,6 +9,7 @@ import { User } from 'src/app/_interfaces/user/User';
 import { SuccessModalComponent } from 'src/app/shared/modals/success-modal/success-modal.component';
 import { AuthenticationService } from 'src/app/shared/service/authentication.service';
 import { ErrorHandlerService } from 'src/app/shared/service/error-handler.service';
+import { RepositoryErrorService } from 'src/app/shared/service/repository-error.service';
 import { RepositoryService } from 'src/app/shared/service/repository.service';
 import { SwiperOptions } from 'swiper';
 
@@ -31,7 +32,7 @@ export class TeacherDetailsComponent implements OnInit {
    private repository: RepositoryService,
    private router: Router, 
    private activeRoute: ActivatedRoute, 
-   private errorService: ErrorHandlerService, 
+   private errorService: RepositoryErrorService,
    private authService: AuthenticationService,
    private modal: BsModalService,
   ) {}
@@ -94,7 +95,8 @@ export class TeacherDetailsComponent implements OnInit {
         } );
       },
       error: (err: HttpErrorResponse) => {
-          this.errorService.handleError(err);
+        this.errorService.handleError(err);
+        this.errorMessage = this.errorService.errorMessage;
         
       }
     })

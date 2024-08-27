@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SkoloInstitute.Contracts;
+using SkoloInstitute.LoggerService;
 using SkoloInstitute.Repository;
 
 namespace SkoloInstitute.Extensions
@@ -21,6 +22,10 @@ namespace SkoloInstitute.Extensions
 
             });
 
+        public static void ConfigureLoggerService(this IServiceCollection services)
+        {
+            services.AddSingleton<ILoggerManager, LoggerManager>();
+        }
         public static void ConfigureSqlContext(this IServiceCollection services, IConfiguration configuration) =>
             services.AddDbContext<RepositoryContext>(opts =>
                 opts.UseSqlite(configuration.GetConnectionString("sqlConnection"), b => b.MigrationsAssembly("SkoloInstitute")));

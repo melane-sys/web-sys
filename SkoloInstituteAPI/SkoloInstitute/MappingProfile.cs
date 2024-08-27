@@ -3,6 +3,7 @@ using SkoloInstitute.Entities.DataTransferObjects;
 using SkoloInstitute.Entities.DataTransferObjects.Enrollment;
 using SkoloInstitute.Entities.DataTransferObjects.Rating;
 using SkoloInstitute.Entities.DataTransferObjects.Subject;
+using SkoloInstitute.Entities.DataTransferObjects.Subscribe;
 using SkoloInstitute.Entities.DataTransferObjects.Teacher;
 using SkoloInstitute.Entities.Models;
 using SkoloInstitute.Helpers;
@@ -45,6 +46,10 @@ namespace SkoloInstitute
 
             CreateMap<TeacherApplication, TeacherAppDto>();
             CreateMap<TeacherAppForCreationDto, TeacherApplication>();
+
+            CreateMap<Subscriber, SubscriberDto>();
+            CreateMap<SubscriberForCreationDto, Subscriber>();
+            CreateMap<SubscriberForUpdateDto, Subscriber>();
 
         }
     }

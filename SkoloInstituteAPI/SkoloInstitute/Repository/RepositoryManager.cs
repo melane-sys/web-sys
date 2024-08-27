@@ -10,6 +10,7 @@ namespace SkoloInstitute.Repository
         private ITeacherApplicationRepository _applicationRepository;
         private ITeacherRepository _teacherRepository;
         private ISubjectRepository _subjectRepository;
+        private ISubscribeRepository _subscribeRepository;
 
         public RepositoryManager(RepositoryContext repositoryContext)
         {
@@ -77,6 +78,17 @@ namespace SkoloInstitute.Repository
             }
         }
 
+        public ISubscribeRepository Subscriber
+        {
+            get
+            {
+                if (_subscribeRepository == null)
+                {
+                    _subscribeRepository = new SubscribeRepository(_repoContext);
+                }
+                return _subscribeRepository;
+            }
+        }
         public void Save() => _repoContext.SaveChanges();
     }
 }

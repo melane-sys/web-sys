@@ -7,6 +7,7 @@
         ITeacherApplicationRepository TeacherApplication { get; }
         ITeacherRepository Teacher { get; }
         ISubjectRepository Subject { get; }
+        ISubscribeRepository Subscriber { get; }
         void Save();
     }
 }

@@ -24,6 +24,11 @@ namespace SkoloInstitute.Repository
             return FindAll().OrderBy(ow => ow.Email).ToList();
         }
 
+        public TeacherApplication GetDataByEmail(string email)
+        {
+            return FindByCondition(ow => ow.Email.Equals(email)).FirstOrDefault();
+        }
+
         public TeacherApplication GetDataById(Guid Id)
         {
             return FindByCondition(ow => ow.Id.Equals(Id)).FirstOrDefault();

@@ -16,6 +16,7 @@ namespace SkoloInstitute.Repository
         public DbSet<Rating> Ratings { get; set; }
         public DbSet<TeacherApplication> TeacherApplications { get; set; }
         public DbSet<Enrollment> Enrollments { get; set; }
+        public DbSet<Subscriber> subscribers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

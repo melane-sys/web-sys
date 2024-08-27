@@ -23,7 +23,7 @@ export class TeachersListComponent implements OnInit {
   }
 
   config: SwiperOptions = {
-    slidesPerView: 3.5,
+    slidesPerView: 3.25,
     spaceBetween: 30,
     speed: 1000,
     autoplay: {
@@ -33,14 +33,14 @@ export class TeachersListComponent implements OnInit {
     loop: true,
     breakpoints: {
       320: {
-        slidesPerView: 1.5,
+        slidesPerView: 1.25,
         spaceBetween: 30,
       },
       768: {
-        slidesPerView: 2.5,
+        slidesPerView: 2.25,
       },
       991: {
-        slidesPerView: 3.5,
+        slidesPerView: 3.25,
       },
     },
   };

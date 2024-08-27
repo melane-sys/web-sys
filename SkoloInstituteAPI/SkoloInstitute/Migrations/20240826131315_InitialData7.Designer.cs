@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SkoloInstitute.Repository;
 
@@ -10,9 +11,11 @@ using SkoloInstitute.Repository;
 namespace SkoloInstitute.Migrations
 {
     [DbContext(typeof(RepositoryContext))]
-    partial class RepositoryContextModelSnapshot : ModelSnapshot
+    [Migration("20240826131315_InitialData7")]
+    partial class InitialData7
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.5");
@@ -45,19 +48,19 @@ namespace SkoloInstitute.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "108d98a8-8a24-4ab6-86ff-d71b6c90012e",
+                            Id = "35faa4b6-d918-4126-89bc-5fb11f0cf986",
                             Name = "Student",
                             NormalizedName = "STUDENT"
                         },
                         new
                         {
-                            Id = "00325095-bdec-465e-85f3-e505e42684cf",
+                            Id = "2e459a90-d71f-478e-ad79-109ad6fc33bb",
                             Name = "School",
                             NormalizedName = "SCHOOL"
                         },
                         new
                         {
-                            Id = "a3f7ffbd-83d3-40b1-b476-4cf4013032f7",
+                            Id = "454d3043-bd67-4204-8514-22c696553a17",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         });
@@ -325,9 +328,6 @@ namespace SkoloInstitute.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime>("DateCreated")
-                        .HasColumnType("TEXT");
-
                     b.Property<string>("Email")
                         .HasMaxLength(256)
                         .HasColumnType("TEXT");
@@ -363,9 +363,6 @@ namespace SkoloInstitute.Migrations
 
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("INTEGER");
-
-                    b.Property<string>("Provider")
-                        .HasColumnType("TEXT");
 
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("TEXT");

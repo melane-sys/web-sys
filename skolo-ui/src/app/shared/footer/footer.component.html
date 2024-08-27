@@ -1,49 +1,46 @@
 <!--footer section start-->
 <footer class="footer-section">
   <!--footer top start-->
-  <div
-    class="footer-top ptb-120"
-    [ngClass]="dark ? 'bg-dark bg-gradient text-white' : 'footer-light'"
-  >
+  <div class="footer-top ptb-120" [ngClass]="dark ? 'bg-dark bg-gradient text-white' : 'footer-light'">
     <div class="container">
       <div class="row justify-content-between">
         <div class="col-md-8 col-lg-4 mb-md-4 mb-lg-0">
           <div class="footer-single-col">
             <div class="footer-single-col mb-4">
-              <img
-              src="../../../assets/img/brand-logo/skolo-logo.png"
-                alt="logo"
-                class="img-fluid logo-white"
-              />
-              <img
-              src="../../../assets/img/brand-logo/skolo-logo.png"
-                alt="logo"
-                class="img-fluid logo-color"
-              />
+              <img src="../../../assets/img/brand-logo/skolo-logo.png" alt="logo" class="img-fluid logo-white" />
+              <img src="../../../assets/img/brand-logo/skolo-logo.png" alt="logo" class="img-fluid logo-color" />
             </div>
             <p>
               Our latest news, articles, and resources, we will sent to your
               inbox weekly.
             </p>
 
-            <form
-              class="newsletter-form position-relative d-block d-lg-flex d-md-flex"
-            >
-              <input
-                type="text"
-                class="input-newsletter form-control me-2"
-                placeholder="Enter your email"
-                name="email"
-                required=""
-                autocomplete="off"
-              />
-              <input
-                type="submit"
-                value="Subscribe"
-                data-wait="Please wait..."
-                class="btn btn-primary mt-3 mt-lg-0 mt-md-0"
+            <form [formGroup]="newsletterForm" (ngSubmit)="subscribeNewsletter()" class="newsletter-form position-relative d-block d-lg-flex d-md-flex">
+              <div class="form-group">
+                <input 
+                  type="text" 
+                  formControlName="email" 
+                  class="input-newsletter form-control me-2" 
+                  placeholder="Enter your email" 
+                  required 
+                  autocomplete="off" 
+                />
+                <span class="text-danger">
+                  <em *ngIf="hasError('email', 'required')">Email is required</em>
+                  <em *ngIf="hasError('email', 'email')">Invalid email address</em>
+                </span>
+              </div>
+              <input 
+                type="submit" 
+                value="Subscribe" 
+                data-wait="Please wait..." 
+                class="btn btn-primary mt-3 mt-lg-0 mt-md-0" 
+                [disabled]="newsletterForm.invalid" 
               />
             </form>
+            
+            
+            
           </div>
         </div>
         <div class="col-md-12 col-lg-7 mt-4 mt-md-0 mt-lg-0">
@@ -56,14 +53,10 @@
                     <a routerLink="/" class="text-decoration-none">Home</a>
                   </li>
                   <li>
-                    <a routerLink="/about" class="text-decoration-none"
-                      >About Us</a
-                    >
+                    <a routerLink="/about" class="text-decoration-none">About Us</a>
                   </li>
                   <li>
-                    <a routerLink="/" class="text-decoration-none"
-                      >Terms & privacy</a
-                    >
+                    <a routerLink="/" class="text-decoration-none">Terms & privacy</a>
                   </li>
                 </ul>
               </div>
@@ -73,17 +66,13 @@
                 <h3>Discover</h3>
                 <ul class="list-unstyled footer-nav-list mb-lg-0">
                   <li>
-                    <a routerLink="/students" class="text-decoration-none"
-                      >Students</a
-                    >
+                    <a routerLink="/students" class="text-decoration-none">Students</a>
                   </li>
                   <li>
                     <a routerLink="/educators" class="text-decoration-none">Educators</a>
                   </li>
                   <li>
-                    <a routerLink="/schools" class="text-decoration-none"
-                      >Schools</a
-                    >
+                    <a routerLink="/schools" class="text-decoration-none">Schools</a>
                   </li>
                 </ul>
               </div>
@@ -93,21 +82,13 @@
                 <h3>Contact</h3>
                 <ul class="list-unstyled footer-nav-list mb-lg-0">
                   <li>
-                    <a  class="text-decoration-none"
-                      >Eswatini: +268 7667 1033</a
-                    >
+                    <a class="text-decoration-none">Eswatini: +268 7667 1033</a>
                   </li>
                   <li>
-                    <a  class="text-decoration-none"
-                      >skolo&#64;melanegroup.com</a
-                    >
+                    <a class="text-decoration-none">skolo&#64;melanegroup.com</a>
                   </li>
                   <li>
-                    <a
-                      
-                      class="text-decoration-none"
-                      >support&#64;melanegroup.com</a
-                    >
+                    <a class="text-decoration-none">support&#64;melanegroup.com</a>
                   </li>
                 </ul>
               </div>
@@ -120,10 +101,7 @@
   <!--footer top end-->
 
   <!--footer bottom start-->
-  <div
-    class="footer-bottom py-4"
-    [ngClass]="dark ? 'bg-gradient text-white' : 'footer-light'"
-  >
+  <div class="footer-bottom py-4" [ngClass]="dark ? 'bg-gradient text-white' : 'footer-light'">
     <div class="container">
       <div class="row justify-content-between align-items-center">
         <div class="col-md-7 col-lg-7">

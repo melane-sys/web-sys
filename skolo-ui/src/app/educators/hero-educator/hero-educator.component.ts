@@ -6,6 +6,7 @@ import { BsModalRef, BsModalService, ModalOptions } from 'ngx-bootstrap/modal';
 import { TeacherAppForCreationDto } from 'src/app/_interfaces/teacher/TeacherAppForCreationDto';
 import { SuccessModalComponent } from 'src/app/shared/modals/success-modal/success-modal.component';
 import { ErrorHandlerService } from 'src/app/shared/service/error-handler.service';
+import { RepositoryErrorService } from 'src/app/shared/service/repository-error.service';
 import { RepositoryService } from 'src/app/shared/service/repository.service';
 
 @Component({
@@ -21,7 +22,7 @@ export class HeroEducatorComponent implements OnInit {
 
   constructor(
     private repository: RepositoryService,
-    private errorHandler: ErrorHandlerService, 
+    private errorHandler: RepositoryErrorService, 
     private router: Router,
     private modal: BsModalService,
   ) { }
@@ -77,6 +78,8 @@ export class HeroEducatorComponent implements OnInit {
         },
         error: (err: HttpErrorResponse) => {
           this.errorHandler.handleError(err);
+          this.errorMessage = this.errorHandler.errorMessage;
+          this.teacherForm.reset();
         }
       });
   }

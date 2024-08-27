@@ -66,31 +66,48 @@ namespace SkoloInstitute.Controllers
         [HttpPost]
         public IActionResult CreateData([FromBody] RatingForCreationDto data)
         {
+            try
+            {
+                var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            if (data is null)
+                // Check if the user has already rated this teacher
+                var existingRating = _repository.Rating.GetAllData()
+                    .FirstOrDefault(r => r.UserId == userId && r.TeacherId == data.TeacherId);
+
+                if (existingRating != null)
+                {
+                    return BadRequest("You have already rated this teacher");
+                }
+
+                if (data is null)
+                {
+
+                    return BadRequest("Data object is null");
+                }
+
+                if (!ModelState.IsValid)
+                {
+
+                    return BadRequest("Invalid model object");
+                }
+
+
+                data.UserId = userId;
+
+                var dataEntity = _mapper.Map<Rating>(data);
+
+                _repository.Rating.CreateData(dataEntity);
+                _repository.Save();
+
+                var createdData = _mapper.Map<RatingDto>(dataEntity);
+
+                return CreatedAtRoute("RatingById", new { id = createdData.Id }, createdData);
+            }
+            catch (Exception)
             {
 
-                return BadRequest("Data object is null");
+                return StatusCode(500, "Internal server error");
             }
-
-            if (!ModelState.IsValid)
-            {
-
-                return BadRequest("Invalid model object");
-            }
-
-            var userId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
-            data.UserId = userId;
-
-            var dataEntity = _mapper.Map<Rating>(data);
-
-            _repository.Rating.CreateData(dataEntity);
-            _repository.Save();
-
-            var createdData = _mapper.Map<RatingDto>(dataEntity);
-
-            return CreatedAtRoute("RatingById", new { id = createdData.Id }, createdData);
-
         }
     }
 }

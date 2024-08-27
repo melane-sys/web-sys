@@ -4,10 +4,10 @@
 
 export const environment = {
   production: false,
-  appUrl:  'http://localhost:5296',
+  appUrl:  'https://localhost:5001',
   clientUrl:  'http://localhost:4200',
   googleClientId: '627151598839-rt6os8hnp3j69efmr0k5kmc01jquor9b.apps.googleusercontent.com',
-  userKey: 'identityHubUser'
+  userKey: 'skoloInstituteUser'
 };
 /*
  * For easier debugging in development mode, you can import the following file

@@ -20,7 +20,7 @@ import { SharedModule } from '../shared/shared.module';
     ForgotPasswordComponent,
     ResetPasswordComponent,
     EmailConfirmationComponent,
-    TwoStepVerificationComponent
+    TwoStepVerificationComponent,
   ],
   imports: [
     CommonModule,

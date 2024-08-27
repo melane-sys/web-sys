@@ -2,7 +2,7 @@
 {
     public class RatingForCreationDto
     {
-        public Guid UserId { get; set; }
+        public string UserId { get; set; }
         public string ReviewBody { get; set; }
         public DateTime CreatedDate { get; set; } = DateTime.Now;
         public int starsCount { get; set; }

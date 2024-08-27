@@ -59,6 +59,13 @@ namespace SkoloInstitute.Controllers
         {
             try
             {
+                var app = _repository.TeacherApplication.GetDataByEmail(teacherApplication.Email);
+
+                if (app != null)
+                {
+
+                    return BadRequest("You have already applied for this role in the last 6 months. Please try again after 6 months.");
+                }
                 if (teacherApplication == null)
                 {
 
