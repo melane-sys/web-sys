@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
-using NLog;
 using SkoloInstitute.Entities.Models;
 using SkoloInstitute.Extensions;
 using SkoloInstitute.JwtFeatures;
@@ -13,17 +12,13 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-LogManager.Setup().LoadConfigurationFromFile(string.Concat(Directory.GetCurrentDirectory(), "/nlog.config"));
-
 builder.Services.ConfigureCors();
 builder.Services.ConfigureIISIntegration();
-builder.Services.ConfigureLoggerService();
 builder.Services.ConfigureSqlContext(builder.Configuration);
 builder.Services.ConfigureRepositoryManager();
 builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddScoped<EmailService>();
 builder.Services.AddSwaggerGen();
-builder.Services.AddScoped<JWTService>();
 
 
 builder.Services.AddIdentity<User, IdentityRole>(opt =>

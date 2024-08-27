@@ -54,7 +54,7 @@ namespace SkoloInstitute.Controllers
             var enrollment = new Enrollment
             {
                 UserId = user.Id,
-                SubjectId = new Guid("ea552602-ca9a-49c2-8027-b0c8af51e474")
+                SubjectId = new Guid("f10323d3-da72-44e7-ae7d-0379da31b329")
             };
             _repository.Enrollment.CreateData(enrollment);
             _repository.Save();

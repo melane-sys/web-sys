@@ -134,6 +134,13 @@ export class AuthenticationService {
     return role === 'School';
   }
 
+
+  public loadCurrentUserId() {
+    const token: any = localStorage.getItem("token");
+    const decodedToken = this.jwtHelper.decodeToken(token);
+    const name = decodedToken['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'];
+    return name;
+  }
   
 
   private createCompleteRoute = (route: string, envAddress: string) => {

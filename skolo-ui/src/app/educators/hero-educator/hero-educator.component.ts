@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { BsModalRef, BsModalService, ModalOptions } from 'ngx-bootstrap/modal';
 import { TeacherAppForCreationDto } from 'src/app/_interfaces/teacher/TeacherAppForCreationDto';
 import { SuccessModalComponent } from 'src/app/shared/modals/success-modal/success-modal.component';
+import { AuthenticationService } from 'src/app/shared/service/authentication.service';
 import { ErrorHandlerService } from 'src/app/shared/service/error-handler.service';
 import { RepositoryErrorService } from 'src/app/shared/service/repository-error.service';
 import { RepositoryService } from 'src/app/shared/service/repository.service';
@@ -19,12 +20,14 @@ export class HeroEducatorComponent implements OnInit {
   public teacherForm: FormGroup | any;
   public errorMessage: string = '';
   bsModalRef?: BsModalRef;
+  userId?: any
 
   constructor(
     private repository: RepositoryService,
     private errorHandler: RepositoryErrorService, 
     private router: Router,
     private modal: BsModalService,
+    private authService: AuthenticationService,
   ) { }
 
   ngOnInit(): void {
@@ -89,5 +92,9 @@ export class HeroEducatorComponent implements OnInit {
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
     }
+  }
+  public getUserEmail() {
+    this.userId = this.authService.loadCurrentUserId();
+    console.log(this.userId)
   }
 }

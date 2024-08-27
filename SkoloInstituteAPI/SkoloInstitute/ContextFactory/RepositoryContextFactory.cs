@@ -14,7 +14,7 @@ namespace SkoloInstitute.ContextFactory
                 .Build();
 
             var builder = new DbContextOptionsBuilder<RepositoryContext>()
-                .UseSqlite(configuration.GetConnectionString("sqlConnection"),
+                .UseSqlServer(configuration.GetConnectionString("sqlConnection"),
                 b => b.MigrationsAssembly("SkoloInstitute"));
 
             return new RepositoryContext(builder.Options);

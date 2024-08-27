@@ -6,7 +6,5 @@ namespace SkoloInstitute.Entities.Models
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public DateTime DateCreated { get; set; } = DateTime.UtcNow;
-        public string Provider { get; set; }
     }
 }

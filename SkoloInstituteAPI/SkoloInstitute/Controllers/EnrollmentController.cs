@@ -41,14 +41,13 @@ namespace SkoloInstitute.Controllers
         {
             try
             {
-                // Extract userId as a string
                 var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-                // Ensure userId is not null or empty
                 if (string.IsNullOrEmpty(userId))
                 {
                     return BadRequest("User ID not found.");
                 }
+
                 var enrollments = _repository.Enrollment.GetAllDataById(userId);
                 var enrollmentsResult = _mapper.Map<IEnumerable<EnrollmentDto>>(enrollments);
                 return Ok(enrollmentsResult);

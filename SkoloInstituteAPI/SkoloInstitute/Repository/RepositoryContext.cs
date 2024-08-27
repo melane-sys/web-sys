@@ -22,6 +22,8 @@ namespace SkoloInstitute.Repository
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyConfiguration(new RoleConfiguration());
+            modelBuilder.ApplyConfiguration(new SubjectConfiguration());
+            modelBuilder.ApplyConfiguration(new TeacherConfiguration());
         }
 
     }
