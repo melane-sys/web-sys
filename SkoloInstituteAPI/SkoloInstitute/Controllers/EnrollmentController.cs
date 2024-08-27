@@ -45,7 +45,8 @@ namespace SkoloInstitute.Controllers
 
                 if (string.IsNullOrEmpty(userId))
                 {
-                    return BadRequest("User ID not found.");
+                    var claims = User.Claims.Select(c => new { c.Type, c.Value }).ToList();
+                    return BadRequest($"User ID not found. Claims: {string.Join(", ", claims)}");
                 }
 
                 var enrollments = _repository.Enrollment.GetAllDataById(userId);

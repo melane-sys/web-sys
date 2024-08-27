@@ -93,8 +93,5 @@ export class HeroEducatorComponent implements OnInit {
       element.scrollIntoView({ behavior: 'smooth' });
     }
   }
-  public getUserEmail() {
-    this.userId = this.authService.loadCurrentUserId();
-    console.log(this.userId)
-  }
+
 }

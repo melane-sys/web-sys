@@ -19,6 +19,7 @@ builder.Services.ConfigureRepositoryManager();
 builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddScoped<EmailService>();
 builder.Services.AddSwaggerGen();
+builder.Services.AddScoped<JwtHandler>();
 
 
 builder.Services.AddIdentity<User, IdentityRole>(opt =>
@@ -57,7 +58,7 @@ builder.Services.AddAuthentication(opt =>
     };
 });
 
-builder.Services.AddScoped<JwtHandler>();
+
 
 
 builder.Services.AddControllers();
