@@ -12,7 +12,7 @@ import { ResetPasswordDto } from 'src/app/_interfaces/resetPassword/resetPasswor
 import { CustomEncoder } from '../custom-encoder';
 import { TwoFactorDto } from 'src/app/_interfaces/twoFactor/twoFactorDto.model';
 import { User } from 'src/app/_interfaces/user/User';
-import { GoogleLoginProvider, SocialAuthService, SocialUser } from '@abacritt/angularx-social-login';
+
 
 @Injectable({
   providedIn: 'root'

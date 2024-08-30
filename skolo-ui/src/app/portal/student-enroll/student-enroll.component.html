@@ -20,37 +20,36 @@
             </div>
             <div class="price-feature-col pricing-action-info p-5 right-radius bg-light order-0 order-lg-1">
               <a routerLink="/" class="mb-5 d-block d-xl-none d-lg-none"><img src="assets/img/img-skolo.png" alt="logo" class="img-fluid white-logo" /></a>
-              <h1 class="h3">{{subject.subjectName}}</h1>
-              <h5>Class Level: {{subject.class}}</h5>
-              <h5>Teacher: {{subject.teacherFirstName}} {{subject.teacherLastName}}</h5>
-              
-              <form (ngSubmit)="onSubmit()">
-                <div class="container mt-4">
-                  <div class="row">
-                    <div class="col-12">
-                      <div class="mb-4">
-                        <label class="form-label">Select Payment Plan</label>
-                        <div class="form-check">
-                          <input type="radio" id="monthly" name="paymentPlan" value="monthly" [(ngModel)]="selectedPlan" class="form-check-input" />
-                          <label for="monthly" class="form-check-label ms-2">Monthly</label>
+              <div class="row" *ngIf="(basket$ | async) as basket ;">
+                <div class="col-12">
+                  <div class="integration-wrapper position-relative w-100">
+                    <ul class="integration-list list-unstyled mb-0">
+                      <li *ngFor="let item of basket.items" class="position-relative">
+                        <div class="single-integration">
+                          <button 
+                            class="btn btn-danger btn-sm position-absolute top-0 end-0 m-1"
+                            (click)="removeBasketItem(item)">
+                            <i class="fas fa-times"></i> <!-- Font Awesome icon for the remove button -->
+                          </button>
+                          <img src="assets/img/integations/airbnb.png" alt="integration" class="img-fluid" />
+                          <h6 class="mb-0 mt-4">{{item?.subjectName}}</h6>
+                          <a class="link-with-icon p-0 mt-auto text-decoration-none pointer text-warning">{{item.class}}</a>
                         </div>
-                        <div class="form-check mt-2">
-                          <input type="radio" id="annually" name="paymentPlan" value="annually" [(ngModel)]="selectedPlan" class="form-check-input" />
-                          <label for="annually" class="form-check-label ms-2">Annually</label>
-                        </div>
-                      </div>
-              
-                      <div class="mb-4">
-                        <h5>Total Cost: SZL {{ totalCost }}</h5>
-                      </div>
-              
-                      <div class="mb-3">
-                        <button type="submit" class="btn btn-primary">Proceed to Payment</button>
-                      </div>
-                    </div>
+                      </li>
+                      
+                      
+                    </ul>
                   </div>
                 </div>
-              </form>           
+              </div>
+              
+              <div class="mb-4" *ngIf="(basketTotals$ | async) as totals" >
+                <h5>Total Cost: <sup>E</sup>{{totals.subTotal |number:'1.2'}}</h5>
+              </div>
+      
+              <div class="mb-3">
+                <button type="submit" class="btn btn-primary">Proceed to Payment</button>
+              </div>       
             </div>
           </div>
         </div>

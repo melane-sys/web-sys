@@ -1,7 +1,10 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import { IBasket, IBasketItem, IBasketTotals } from 'src/app/_interfaces/Basket/Basket';
 import { SubjectDto } from 'src/app/_interfaces/subject/SubjectDto';
+import { BasketService } from 'src/app/shared/service/basket.service';
 import { ErrorHandlerService } from 'src/app/shared/service/error-handler.service';
 import { RepositoryService } from 'src/app/shared/service/repository.service';
 
@@ -11,37 +14,27 @@ import { RepositoryService } from 'src/app/shared/service/repository.service';
   styleUrls: ['./student-enroll.component.css']
 })
 export class StudentEnrollComponent implements OnInit {
-  subject: SubjectDto|any;
-  selectedPlan: string = 'monthly'; 
-  monthlyCost: number = 125;
-  annualCost: number = 900;
+  basket$!: Observable<IBasket>;
+  basketTotals$!: Observable<IBasketTotals>;
+  @Input() isBasket = true;
 
   constructor( 
     private repository: RepositoryService,
     private errorService: ErrorHandlerService, 
     private router: Router,
     private activeRoute: ActivatedRoute,
+    private basketService: BasketService,
   ) {}
 
   ngOnInit() {
-    this.getSubjectDetails();
+    this.basket$ = this.basketService.basket$;
+    this.basketTotals$ = this.basketService.basketTotals$;
   }
   close() {
     this.router.navigate(["/student-portal"]);
   }
 
-  private getSubjectDetails = () =>{
-    let id: string = this.activeRoute.snapshot.params['id'];
-    let apiUrl: string = `api/subjects/${id}`;
- 
-    this.repository.getData(apiUrl)
-    .subscribe(res => {
-      this.subject = res as SubjectDto;
-    },
-    (err: HttpErrorResponse) =>{
-      this.errorService.handleError(err);
-    })
-  }
+
   onSubmit(): void {
     const message = `
     The payment functionality is currently under development. 
@@ -50,7 +43,8 @@ export class StudentEnrollComponent implements OnInit {
   `;
   alert(message);
   }
-  get totalCost(): number {
-    return this.selectedPlan === 'monthly' ? this.monthlyCost : this.annualCost;
+  removeBasketItem(item: IBasketItem) {
+    this.basketService.removeItemFromBasket(item);
   }
+ 
 }

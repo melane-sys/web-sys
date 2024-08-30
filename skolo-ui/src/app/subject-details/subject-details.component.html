@@ -1,0 +1,26 @@
+<div class="modal-header">
+  <h4 class="modal-title">{{subject?.subjectName}}</h4>
+</div>
+<div class="modal-body">
+  <p><strong>Teacher:</strong> {{subject?.teacherFirstName}} {{subject?.teacherLastName}}</p>
+  <p><strong>Description:</strong> fdgretretyrtyrey</p>
+</div>
+<div class="text-center mt-3" *ngIf="(basket$ | async) as basket; else elseBlock">
+
+  <div class="action-btns mt-4 ps-3" *ngIf="isProductInBasket(basket, subject.subjectName); else elseBlock">
+    <a (click)="onClose()" class="btn btn-outline-primary me-2">Add subjects</a>
+    <a (click)="redirectToEnroll()" class="btn btn-primary" *ngIf="(basketTotals$ | async) as totals">Enroll
+      <sup>E</sup>{{totals.subTotal| number: '1.2'}}</a>
+  </div>
+
+
+</div>
+<ng-template #elseBlock>
+  <div class="text-center mt-3">
+    <a (click)="addItemToBasket()" class="btn btn-primary bg-dark-blue">Add to cart</a>
+  </div>
+
+</ng-template>
+<div class="modal-footer">
+  <button type="button" class="btn btn-danger" (click)="onClose()">Close</button>
+</div>

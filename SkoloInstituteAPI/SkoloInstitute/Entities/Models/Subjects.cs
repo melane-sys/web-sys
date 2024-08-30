@@ -5,6 +5,7 @@
         public Guid Id { get; set; }
         public string SubjectName { get; set; }
         public string Class { get; set; }
+        public decimal Price { get; set; } = 125;
         public Guid TeacherId { get; set; }
         public Teacher Teacher { get; set; }
     }

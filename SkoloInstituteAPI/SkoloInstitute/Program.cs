@@ -3,11 +3,14 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
+using SkoloInstitute.Contracts;
 using SkoloInstitute.Entities.Models;
 using SkoloInstitute.Extensions;
 using SkoloInstitute.JwtFeatures;
 using SkoloInstitute.Repository;
+using SkoloInstitute.Repository.Services;
 using SkoloInstitute.Services;
+using StackExchange.Redis;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -20,6 +23,14 @@ builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddScoped<EmailService>();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<JwtHandler>();
+
+builder.Services.AddSingleton<IConnectionMultiplexer>(c =>
+{
+    var config = ConfigurationOptions.Parse(builder.Configuration.GetConnectionString("Redis"), true);
+    return ConnectionMultiplexer.Connect(config);
+});
+
+builder.Services.AddScoped<IBasketService, BasketService>();
 
 
 builder.Services.AddIdentity<User, IdentityRole>(opt =>

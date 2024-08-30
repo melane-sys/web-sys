@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SkoloInstitute.Repository;
 
@@ -11,9 +12,11 @@ using SkoloInstitute.Repository;
 namespace SkoloInstitute.Migrations
 {
     [DbContext(typeof(RepositoryContext))]
-    partial class RepositoryContextModelSnapshot : ModelSnapshot
+    [Migration("20240830210629_InitialData2")]
+    partial class InitialData2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -51,19 +54,19 @@ namespace SkoloInstitute.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "6dc34c2d-707a-4e78-a808-566cd922b3e1",
+                            Id = "9759cde8-65fb-4f28-96c0-697b355b1f83",
                             Name = "Student",
                             NormalizedName = "STUDENT"
                         },
                         new
                         {
-                            Id = "b3dba2cc-7d86-49b6-bb0a-5a70abe9470c",
+                            Id = "e5b78038-ec78-408a-8457-5890fa650da6",
                             Name = "School",
                             NormalizedName = "SCHOOL"
                         },
                         new
                         {
-                            Id = "23a33e1f-1b30-405a-abd4-7cc8f95fa8b6",
+                            Id = "fadd5408-2efd-4696-8979-ef9ef11dc6aa",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         });

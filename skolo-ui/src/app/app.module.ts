@@ -30,13 +30,14 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { JwtModule } from '@auth0/angular-jwt';
 import { ErrorHandlerService } from './shared/service/error-handler.service';
 import { SchoolPortalModule } from './school-portal/school-portal.module';
+import { SubjectDetailsComponent } from './subject-details/subject-details.component';
 
 export function tokenGetter() {
   return localStorage.getItem("token");
 }
 
 @NgModule({
-  declarations: [										
+  declarations: [											
     AppComponent,
     PageNotFoundComponent,
     HomeComponent,
@@ -55,7 +56,7 @@ export function tokenGetter() {
     StudentPriceComponent,
     RegisterComponent,
     ChatbotComponent,
-    
+      SubjectDetailsComponent
    ],
   imports: [
     BrowserModule, 

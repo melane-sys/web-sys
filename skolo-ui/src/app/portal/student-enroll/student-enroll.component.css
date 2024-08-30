@@ -84,3 +84,6 @@ header.scrolled .logo {
   .row{
     margin-top: 3rem;
   }
+  .btn-sm i {
+    font-size: 0.75rem; /* Adjust size of the icon */
+  }

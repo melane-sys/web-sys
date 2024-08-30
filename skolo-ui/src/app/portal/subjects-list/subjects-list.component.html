@@ -37,12 +37,12 @@
                 <div class="col-12">
                   <div class="integration-wrapper position-relative w-100">
                     <ul class="integration-list list-unstyled mb-0">
-                      <li *ngFor="let list of primarySubjects">
+                      <li *ngFor="let list of primarySubjects" (click)="openSubjectDetailsModal(list?.id)">
                         <div class="single-integration">
                           <img src="assets/img/integations/airbnb.png" alt="integration" class="img-fluid" />
                           <h6 class="mb-0 mt-4">{{list?.subjectName}}</h6>
-                          <a (click)="redirectToEnroll(list?.id)"
-                          class="link-with-icon p-0 mt-auto text-decoration-none text-warning">Enroll <i
+                          <a 
+                          class="link-with-icon p-0 mt-auto text-decoration-none pointer text-warning">Enroll subject <i
                             class="far fa-arrow-right"></i></a>
                         </div>
                       </li>
@@ -62,8 +62,8 @@
                         <div class="single-integration">
                           <img src="assets/img/integations/airbnb.png" alt="integration" class="img-fluid" />
                           <h6 class="mb-0 mt-4">{{list?.subjectName}}</h6>
-                          <a (click)="redirectToEnroll(list?.id)"
-                          class="link-with-icon p-0 mt-auto text-decoration-none text-warning">Enroll <i
+                          <a (click)="openSubjectDetailsModal(list?.id)"
+                          class="link-with-icon p-0 mt-auto text-decoration-none text-warning">Enroll subject <i
                             class="far fa-arrow-right"></i></a>
                         </div>
                       </li>
@@ -83,8 +83,8 @@
                         <div class="single-integration">
                           <img src="assets/img/integations/airbnb.png" alt="integration" class="img-fluid" />
                           <h6 class="mb-0 mt-4">{{list?.subjectName}}</h6>
-                          <a (click)="redirectToEnroll(list?.id)"
-                            class="link-with-icon p-0 mt-auto text-decoration-none text-warning">Enroll <i
+                          <a (click)="openSubjectDetailsModal(list?.id)"
+                            class="link-with-icon p-0 mt-auto text-decoration-none text-warning">Enroll subject <i
                               class="far fa-arrow-right"></i></a>
                         </div>
                       </li>
