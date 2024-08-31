@@ -18,9 +18,11 @@
                 <img src="assets/img/img-skolo.png" alt="logo" class="img-fluid" />
               </a>
             </div>
-            <div class="price-feature-col pricing-action-info p-5 right-radius bg-light order-0 order-lg-1">
+            <div class="price-feature-col pricing-action-info p-5 right-radius bg-light order-0 order-lg-1" >
               <a routerLink="/" class="mb-5 d-block d-xl-none d-lg-none"><img src="assets/img/img-skolo.png" alt="logo" class="img-fluid white-logo" /></a>
-              <div class="row" *ngIf="(basket$ | async) as basket ;">
+             <div *ngIf="(basket$ | async) as basket ;else elseBlock">
+              <div class="row" >
+                <h1>Your Cart</h1>
                 <div class="col-12">
                   <div class="integration-wrapper position-relative w-100">
                     <ul class="integration-list list-unstyled mb-0">
@@ -35,21 +37,24 @@
                           <h6 class="mb-0 mt-4">{{item?.subjectName}}</h6>
                           <a class="link-with-icon p-0 mt-auto text-decoration-none pointer text-warning">{{item.class}}</a>
                         </div>
-                      </li>
-                      
-                      
+                      </li>                  
                     </ul>
                   </div>
                 </div>
-              </div>
-              
+              </div>  
               <div class="mb-4" *ngIf="(basketTotals$ | async) as totals" >
                 <h5>Total Cost: <sup>E</sup>{{totals.subTotal |number:'1.2'}}</h5>
               </div>
-      
               <div class="mb-3">
                 <button type="submit" class="btn btn-primary">Proceed to Payment</button>
-              </div>       
+              </div> 
+            </div>         
+            <ng-template #elseBlock>
+              <h1>Your cart is empty</h1>
+              <div class="mb-3">
+                <button (click)="close()" class="btn btn-primary">Add subjects</button>
+              </div> 
+            </ng-template>
             </div>
           </div>
         </div>
