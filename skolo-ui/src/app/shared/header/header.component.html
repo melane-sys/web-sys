@@ -87,11 +87,11 @@
           </li>
           <li *ngIf='isUserAuthenticated && isUserStudent'><a routerLink="/student-portal" class="nav-link">Student Portal</a></li>
           <li *ngIf='isUserAuthenticated && isUserSchool'><a routerLink="/school-portal" class="nav-link">School Portal</a></li>
-          <li><a routerLink="/" class="nav-link">
+          <!-- <li><a routerLink="/" class="nav-link">
               <span>
                 <i class="fas fa-search"></i>
               </span>
-            </a></li>
+            </a></li> -->
         </ul>
       </div>
 
@@ -176,11 +176,11 @@
             </li>
             <li *ngIf='isUserAuthenticated && isUserStudent'><a routerLink="/student-portal" class="nav-link" data-bs-dismiss="offcanvas" aria-label="Close">Student Portal</a></li>
             <li *ngIf='isUserAuthenticated && isUserSchool'><a routerLink="/school-portal" class="nav-link" data-bs-dismiss="offcanvas" aria-label="Close">School Portal</a></li>
-            <li><a routerLink="/" class="nav-link" data-bs-dismiss="offcanvas" aria-label="Close">
+            <!-- <li><a routerLink="/" class="nav-link" data-bs-dismiss="offcanvas" aria-label="Close">
                 <span>
                   <i class="fas fa-search"></i>
                 </span>
-              </a></li>
+              </a></li> -->
           </ul>
           <ng-container *ngIf="!isUserAuthenticated">
             <div class="action-btns mt-4 ps-3">

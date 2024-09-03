@@ -21,14 +21,13 @@
                 <h6 class="mb-0">{{ teacher.firstName }} {{ teacher.lastName }}</h6>
               </div>
               <div class="sh-feedback-rating">
-                <ng-container >
-                  <img *ngIf="teacher.rating == 0" src="assets/img/two-star.svg" alt="rating" class="img-fluid" />
-                  <img *ngIf="teacher.rating == 1" src="assets/img/two-star.svg" alt="rating" class="img-fluid" />
-                  <img *ngIf="teacher.rating == 2"  src="assets/img/two-star.svg" alt="rating" class="img-fluid" />
-                  <img *ngIf="teacher.rating == 3"  src="assets/img/three-star.svg" alt="rating" class="img-fluid" />
-                  <img *ngIf="teacher.rating == 4"  src="assets/img/three-star.svg" alt="rating" class="img-fluid" />
-                  <img *ngIf="teacher.rating == 5"  src="assets/img/five-star.svg" alt="rating" class="img-fluid" />
-                </ng-container>
+                <div class="star-rating">
+                  <span *ngFor="let star of stars; let i = index"
+                        [class.filled]="i < teacher.rating">
+                    &#9733; <!-- Unicode star character -->
+                  </span>
+                </div>
+                
               </div>
             </div>
             <a (click)="redirectToDetails(teacher.id)" class="link-with-icon p-0 mt-auto text-decoration-none text-warning">Educator details <i

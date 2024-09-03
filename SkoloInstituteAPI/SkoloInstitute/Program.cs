@@ -23,6 +23,7 @@ builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddScoped<EmailService>();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<JwtHandler>();
+builder.Services.AddHttpClient();
 
 builder.Services.AddSingleton<IConnectionMultiplexer>(c =>
 {

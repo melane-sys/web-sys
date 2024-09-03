@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { TeacherDto } from 'src/app/_interfaces/teacher/TeacherDto';
 import { ErrorHandlerService } from 'src/app/shared/service/error-handler.service';
@@ -12,6 +12,9 @@ import { SwiperOptions } from 'swiper';
 })
 export class TeachersListComponent implements OnInit {
   teachers: TeacherDto|any;
+  @Input() teacher: { rating: number } = { rating: 0 };
+  stars = Array(5).fill(0);
+  
   constructor( 
     private repoService: RepositoryService,
     private errorService: ErrorHandlerService, 

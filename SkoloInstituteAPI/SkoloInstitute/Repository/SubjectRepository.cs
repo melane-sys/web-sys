@@ -25,6 +25,7 @@ namespace SkoloInstitute.Repository
             return FindAll().OrderBy(ow => ow.Id)
                    .Include(x => x.Teacher)
                        .Include(x => x.Grades)
+                                       .Include(x => x.EnrollItems)
                 .ToList();
         }
 
@@ -33,6 +34,7 @@ namespace SkoloInstitute.Repository
             return FindByCondition(ow => ow.Id.Equals(Id))
                   .Include(x => x.Teacher)
                         .Include(x => x.Grades)
+                                        .Include(x => x.EnrollItems)
                 .FirstOrDefault();
         }
 
