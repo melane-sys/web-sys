@@ -21,12 +21,19 @@
             <div class="price-feature-col pricing-action-info p-5 right-radius bg-light order-0 order-lg-1" >
               <a routerLink="/" class="mb-5 d-block d-xl-none d-lg-none"><img src="assets/img/img-skolo.png" alt="logo" class="img-fluid white-logo" /></a>
              <div *ngIf="(basket$ | async) as basket ;else elseBlock">
+              <div class="justify-content-center">
+                <div class="col-lg-6 col-md-12">
+                  <div class="text-center" data-aos="fade-up">
+                    <h2>Your Cart</h2>
+                    <p></p>
+                  </div>
+                </div>
+              </div>
               <div class="row" >
-                <h1>Your Cart</h1>
                 <div class="col-12">
                   <div class="integration-wrapper position-relative w-100">
                     <ul class="integration-list list-unstyled mb-0">
-                      <li *ngFor="let item of basket.items" class="position-relative">
+                      <li *ngFor="let item of basket?.items" class="position-relative">
                         <div class="single-integration">
                           <button 
                             class="btn btn-danger btn-sm position-absolute top-0 end-0 m-1"
@@ -41,12 +48,20 @@
                     </ul>
                   </div>
                 </div>
-              </div>  
-              <div class="mb-4" *ngIf="(basketTotals$ | async) as totals" >
-                <h5>Total Cost: <sup>E</sup>{{totals.subTotal |number:'1.2'}}</h5>
-              </div>
+              </div> 
+              <div class="row">
+                <div class="col-lg-6 col-md-12">
+                  <div class="section-heading" data-aos="fade-up">
+                    <div class="mb-4" *ngIf="(basketTotals$ | async) as totals" >
+                      <h5>Total Cost: <sup>E</sup>{{totals.subTotal |number:'1.2'}}</h5>
+                    </div>
+                    <p></p>
+                  </div>
+                </div>
+              </div> 
+
               <div class="mb-3">
-                <button type="submit" class="btn btn-primary">Proceed to Payment</button>
+                <button (click)="redirectToPayment()" class="btn btn-primary">Proceed to Payment</button>
               </div> 
             </div>         
             <ng-template #elseBlock>

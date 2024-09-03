@@ -7,6 +7,7 @@ namespace SkoloInstitute.Contracts
         IEnumerable<Enrollment> GetAllData();
         IEnumerable<Enrollment> GetAllDataById(string Id);
         Enrollment GetDataById(Guid Id);
+        Enrollment GetDataByUserId(string Id);
         void CreateData(Enrollment data);
         void UpdateData(Enrollment data);
         void DeleteData(Enrollment data);

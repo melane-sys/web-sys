@@ -18,7 +18,9 @@ export class StudentClassComponent implements OnInit {
   secondarySubjects: SubjectDto|any;
   seniorSubjects: SubjectDto|any;
   enrollments: EnrollmentDto|any;
-
+  gradeClass:any;
+  grade:any;
+  
 
   constructor( 
     private repoService: RepositoryService,
@@ -27,7 +29,7 @@ export class StudentClassComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.getPrimarySubjects();
+   // this.getPrimarySubjects();
     this.getSecondarySubjects();
     this.getSeniorSubjects();
     this.getEnrollment();
@@ -37,15 +39,35 @@ export class StudentClassComponent implements OnInit {
     this.repoService.getData(addressUri)
     .subscribe(res => {
       this.enrollments= res as EnrollmentDto[];
+
+      this.enrollments.forEach((enrollment: { grade: string; }) => {
+        console.log("Class: " + enrollment.grade); 
+        if(enrollment.grade == "Grade 1" || enrollment.grade == "Grade 2"|| enrollment.grade == "Grade 3"||enrollment.grade == "Grade 4"
+          || enrollment.grade == "Grade 5"||enrollment.grade == "Grade 6"||enrollment.grade == "Grade 7"
+        ){
+          this.grade = "Primary";
+          this.getPrimarySubjects(this.grade);
+        }
+        if(enrollment.grade == "Form 1"||enrollment.grade == "Form 2"|| enrollment.grade == "Form 3"){
+          this.grade = "Secondary";
+          this.getPrimarySubjects(this.grade);
+        }
+        if(enrollment.grade == "Form 4"||enrollment.grade == "Form 5"){
+          this.grade = "Senior";
+          this.getPrimarySubjects(this.grade);
+        }
+      });
+
     },
     (error) => {
       this.errorService.handleError(error);
     })
   }
 
+
   
-  public getPrimarySubjects = () => {
-    const addressUri: string = `api/subjects/Primary/class`;
+  public getPrimarySubjects = (grade:string) => {
+    const addressUri: string = `api/subjects/${grade}/class`;
     this.repoService.getData(addressUri)
     .subscribe(res => {
       this.primarySubjects= res as SubjectDto[];

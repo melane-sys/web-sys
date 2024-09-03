@@ -1,4 +1,6 @@
-﻿namespace SkoloInstitute.Entities.Models
+﻿using SkoloInstitute.Entities.Models.EnrollAggregate;
+
+namespace SkoloInstitute.Entities.Models
 {
     public class Subject
     {
@@ -8,5 +10,7 @@
         public decimal Price { get; set; } = 125;
         public Guid TeacherId { get; set; }
         public Teacher Teacher { get; set; }
+        public ICollection<Grade> Grades { get; set; }
+        public ICollection<EnrollItem> EnrollItems { get; set; }
     }
 }

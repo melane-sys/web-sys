@@ -24,6 +24,7 @@ namespace SkoloInstitute.Repository
         {
             return FindAll().OrderBy(ow => ow.Id)
                    .Include(x => x.Teacher)
+                       .Include(x => x.Grades)
                 .ToList();
         }
 
@@ -31,14 +32,27 @@ namespace SkoloInstitute.Repository
         {
             return FindByCondition(ow => ow.Id.Equals(Id))
                   .Include(x => x.Teacher)
+                        .Include(x => x.Grades)
                 .FirstOrDefault();
         }
 
         public IEnumerable<Subject> GetSubjectsByClass(string name)
         {
             return FindByCondition(ow => ow.Class.Equals(name))
-      .Include(x => x.Teacher)
-    .ToList();
+                .Include(x => x.Teacher)
+                .Include(x => x.Grades)
+                .Include(x => x.EnrollItems)
+                .AsEnumerable()
+                .GroupBy(s => s)
+                .Select(g => new
+                {
+                    Subject = g.Key,
+                    EnrollItemCount = g.Key.EnrollItems.Count
+                })
+                .OrderByDescending(s => s.EnrollItemCount)
+                .Take(4)
+                .Select(s => s.Subject)
+                .ToList();
         }
 
         public void UpdateData(Subject data)

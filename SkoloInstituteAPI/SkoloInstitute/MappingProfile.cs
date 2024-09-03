@@ -2,6 +2,7 @@
 using SkoloInstitute.Entities.DataTransferObjects;
 using SkoloInstitute.Entities.DataTransferObjects.Basket;
 using SkoloInstitute.Entities.DataTransferObjects.Enrollment;
+using SkoloInstitute.Entities.DataTransferObjects.Grade;
 using SkoloInstitute.Entities.DataTransferObjects.Rating;
 using SkoloInstitute.Entities.DataTransferObjects.Subject;
 using SkoloInstitute.Entities.DataTransferObjects.Subscribe;
@@ -27,24 +28,25 @@ namespace SkoloInstitute
             CreateMap<TeacherForUpdateDto, Teacher>();
 
             CreateMap<Rating, RatingDto>()
-     .ForMember(n => n.FirstName, opt => opt.MapFrom(src => src.User.FirstName))
-      .ForMember(dest => dest.LastName, opt => opt.MapFrom(src => src.User.LastName));
+              .ForMember(n => n.FirstName, opt => opt.MapFrom(src => src.User.FirstName))
+              .ForMember(dest => dest.LastName, opt => opt.MapFrom(src => src.User.LastName));
             CreateMap<RatingForCreationDto, Rating>();
 
             CreateMap<Subject, SubjectDto>()
-                   .ForMember(n => n.TeacherFirstName, opt => opt.MapFrom(src => src.Teacher.FirstName))
-                  .ForMember(dest => dest.TeacherLastName, opt => opt.MapFrom(src => src.Teacher.LastName));
+                  .ForMember(n => n.TeacherFirstName, opt => opt.MapFrom(src => src.Teacher.FirstName))
+                  .ForMember(dest => dest.TeacherLastName, opt => opt.MapFrom(src => src.Teacher.LastName))
+                  .ForMember(dest => dest.EnrollItemsCount, opt => opt.MapFrom(src => src.EnrollItems.Count));
             CreateMap<SubjectForCreationDto, Subject>();
             CreateMap<SubjectForUpdateDto, Subject>();
 
             CreateMap<Enrollment, EnrollmentDto>()
-                  .ForMember(n => n.SubjectName, opt => opt.MapFrom(src => src.Subject.SubjectName))
                   .ForMember(n => n.FirstName, opt => opt.MapFrom(src => src.User.FirstName))
-                  .ForMember(dest => dest.LastName, opt => opt.MapFrom(src => src.User.LastName))
-                   .ForMember(n => n.TeacherFirstName, opt => opt.MapFrom(src => src.Subject.Teacher.FirstName))
-                  .ForMember(dest => dest.TeacherLastName, opt => opt.MapFrom(src => src.Subject.Teacher.LastName));
+                  .ForMember(dest => dest.LastName, opt => opt.MapFrom(src => src.User.LastName));
             CreateMap<EnrollmentForCreationDto, Enrollment>();
+            CreateMap<EnrollItemCreateDto, EnrollItem>();
             CreateMap<EnrollmentForUpdateDto, Enrollment>();
+
+            CreateMap<EnrollItem, EnrollItemDto>();
 
             CreateMap<TeacherApplication, TeacherAppDto>();
             CreateMap<TeacherAppForCreationDto, TeacherApplication>();
@@ -57,6 +59,8 @@ namespace SkoloInstitute
             CreateMap<CustomerBasket, CustomerBasketDto>();
             CreateMap<BasketItemDto, BasketItem>();
             CreateMap<CustomerBasketDto, CustomerBasket>();
+
+            CreateMap<Grade, GradeDto>();
 
         }
     }

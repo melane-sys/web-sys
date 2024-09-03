@@ -12,6 +12,7 @@ export interface IBasketItem {
   class: string
   quantity: number
   teacherId: string;
+  subjectId: string;
 }
 
 export class Basket implements IBasket {

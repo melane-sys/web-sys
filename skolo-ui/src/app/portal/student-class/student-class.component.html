@@ -12,7 +12,9 @@
         <div class="blog-details-wrap">
 
           <div class="blog-details-info mt-5">
-            <h3 class="h5">My Class</h3>
+            <div class="section-heading" data-aos="fade-up">
+              <h2>Enrolled classes</h2>
+            </div>
             <div class="tab-content" id="pills-tabContent">
               <div class="tab-pane fade show active">
 
@@ -27,8 +29,8 @@
                           alt="speaker"
                           class="mb-3"
                         />
-                        <h5 class="h6 m-0">{{list?.teacherLastName}} {{list?.teacherFirstName}}</h5>
-                        <span class="small">Teacher</span>
+                        <h5 class="h6 m-0">Class</h5>
+                        <span class="small">{{list.grade}}</span>
                       </div>
                     </div>
                     <div class="col-lg-9">
@@ -56,8 +58,23 @@
                             </span>
 
                  
+                          </div>                        
+                        </div>
+                        <div class="row justify-content-center align-items-center justify-content-around">
+                          <div class="row">
+                            <div class="col-12">
+                              <div class="integration-wrapper position-relative w-100">
+                                <ul class="integration-list list-unstyled">
+                                  <li *ngFor="let sub of list.enrollItems">
+                                    <div class="single-integration">
+                                      <h6 class="mb-0 mt-4">{{sub?.subjectName}}</h6>
+                                       <p>{{sub.class}}</p>
+                                    </div>
+                                  </li>
+                                </ul>
+                              </div>
+                            </div>
                           </div>
-                          
                         </div>
                         <a  class="link-with-icon"
                         >Login to moodle<i class="far fa-arrow-right"></i

@@ -8,7 +8,7 @@ import { StudentEnrollComponent } from './student-enroll/student-enroll.componen
 
 const routes: Routes = [
   { path: '', component: PortalComponent },
-  { path: 'payment', component: PaymentComponent },
+  { path: 'payment/:grade', component: PaymentComponent },
   { path: 'teacher/:id', component: TeacherDetailsComponent },
   { path: 'class', component: StudentClassComponent },
   { path: 'student-enroll', component: StudentEnrollComponent },

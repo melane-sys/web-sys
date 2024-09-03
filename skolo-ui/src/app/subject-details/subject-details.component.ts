@@ -72,4 +72,5 @@ export class SubjectDetailsComponent implements OnInit {
     this.router.navigate([url]);
     this.bsModalRef.hide();
   }
+  
 }

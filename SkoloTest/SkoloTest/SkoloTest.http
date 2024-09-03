@@ -1,0 +1,6 @@
+@SkoloTest_HostAddress = http://localhost:5170
+
+GET {{SkoloTest_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

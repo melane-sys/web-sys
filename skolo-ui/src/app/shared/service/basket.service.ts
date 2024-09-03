@@ -113,6 +113,7 @@ export class BasketService {
       price: item.price,
       class: item.class,
       teacherId: item.teacherId,
+      subjectId: item.id,
       quantity
     };
   }

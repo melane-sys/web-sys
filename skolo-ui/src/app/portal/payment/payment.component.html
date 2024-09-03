@@ -6,7 +6,7 @@
       <div class="row justify-content-center">
         <div class="col-lg-10 col-12">
 
-          <div *ngIf="subjects.length === 0" class="pricing-content-wrap bg-custom-light rounded-custom shadow-lg">
+          <div class="pricing-content-wrap bg-custom-light rounded-custom shadow-lg">
             <div class="price-feature-col pricing-feature-info text-white left-radius p-5 order-1 order-lg-0">
               <h5>Skolo Institute!</h5>
               <a routerLink="/skolo" class="mb-5 d-none d-xl-block d-lg-block">
@@ -15,107 +15,35 @@
             </div>
             <div class="price-feature-col pricing-action-info p-5 right-radius bg-light order-0 order-lg-1">
               <a routerLink="/" class="mb-5 d-block d-xl-none d-lg-none"><img src="assets/img/img-skolo.png" alt="logo" class="img-fluid white-logo" /></a>
-              <h5>No subjects selected</h5>
-              <p class="lead">Please go back to the portal and select subjects.</p>
-              <a routerLink="/student-portal" class="btn btn-primary">Select Subjects</a>
-
-            </div>
-          </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-          <!-- If subjects are available, show payment details -->
-          <div *ngIf="subjects.length > 0" class="pricing-content-wrap bg-custom-light rounded-custom shadow-lg">
-            <div class="price-feature-col pricing-feature-info text-white left-radius p-5 order-1 order-lg-0">
-              <h5>Skolo Institute!</h5>
-              <a routerLink="/skolo" class="mb-5 d-none d-xl-block d-lg-block">
-                <img src="assets/img/img-skolo.png" alt="logo" class="img-fluid" />
-              </a>
-            </div>
-            <div class="price-feature-col pricing-action-info p-5 right-radius bg-light order-0 order-lg-1">
-              <a routerLink="/" class="mb-5 d-block d-xl-none d-lg-none"><img src="assets/img/img-skolo.png" alt="logo" class="img-fluid white-logo" /></a>
-              <h1 class="h3">Payment Details</h1>
-              <p class="text-muted">Review your selected subjects and pay.</p>
-              
-              <form (ngSubmit)="onSubmit()">
-                <div class="row">
-                  <!-- Display Selected Class Level -->
-                  <div class="col-12">
-                    <h5>Class Level: {{ classLevel }}</h5>
-                  </div>
-                  
-                  <!-- Display Selected Subjects with Remove Option -->
-                  <div class="col-12">
-                    <h5>Selected Subjects</h5>
-                    <table class="table table-striped">
-                      <thead>
-                        <tr>
-                          <th>Subject</th>
-                          <th>Action</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr *ngFor="let subject of subjects">
-                          <td>{{ subject }}</td>
-                          <td>
-                            <button type="button" class="btn btn-danger btn-sm" (click)="removeSubject(subject)">Remove</button>
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-
-                  <!-- Display Cost and Payment Options -->
-                  <div class="col-12">
-                    <div class="mb-3">
-                      <label class="form-label">Select Payment Plan</label>
-                      <div>
-                        <input type="radio" id="monthly" name="paymentPlan" value="monthly" [(ngModel)]="paymentPlan" (change)="calculateCost()" />
-                        <label for="monthly">Monthly</label>
-                      </div>
-                      <div>
-                        <input type="radio" id="annually" name="paymentPlan" value="annually" [(ngModel)]="paymentPlan" (change)="calculateCost()" />
-                        <label for="annually">Annually</label>
-                      </div>
-                    </div>
-
-                    <div class="mb-3">
-                      <h5>Total Cost: {{ totalCost | currency:'SZL' }}</h5>
-                    </div>
-
-                    <!-- <div class="mb-3">
-                      <label class="form-label">Payment Method</label>
-                      <div>
-                        <input type="radio" id="paypal" name="paymentMethod" value="paypal" [(ngModel)]="paymentMethod" />
-                        <label for="paypal">PayPal</label>
-                      </div>
-                      <div>
-                        <input type="radio" id="mobileMoney" name="paymentMethod" value="mobileMoney" [(ngModel)]="paymentMethod" />
-                        <label for="mobileMoney">Mobile Money</label>
-                      </div>
-                    </div> -->
-
-                    <div class="mb-3">
-                      <button type="submit" class="btn btn-primary">Proceed to Payment</button>
-                      <button type="button" class="btn btn-secondary ms-2" (click)="goBack()">Go Back to Register</button>
-                    </div>
+              <h5>{{user?.firstName}} {{user?.lastName}}</h5>
+              <div class="mb-4">
+                <p *ngIf="gradeOptions.length > 0" class="fs-5 fw-bold mb-3">Select a Grade:</p>
+                <div *ngIf="gradeOptions.length > 0" class="mb-3">
+                  <div class="form-check" *ngFor="let grade of gradeOptions">
+                    <input 
+                      type="radio" 
+                      class="form-check-input" 
+                      id="{{grade}}" 
+                      name="grade" 
+                      [value]="grade" 
+                      [(ngModel)]="selectedGrade">
+                    <label class="form-check-label" for="{{grade}}">
+                      {{grade}}
+                    </label>
                   </div>
                 </div>
-              </form>
-            </div>
+
+                <div class="action-btns mt-4 ps-3" *ngIf="(basketTotals$ | async) as totals">
+                  <a (click)="goBack()" class="btn btn-outline-primary me-2">Back to Cart</a>
+                  <a (click)="submitOrder()" class="btn btn-primary" >Pay <sup>E</sup>{{totals.subTotal |number:'1.2'}}</a>
+                </div>
+                
+              </div>
+              
           </div>
         </div>
       </div>
+    </div>
     </div>
   </section>
   <!-- payment section end -->

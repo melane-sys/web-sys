@@ -6,6 +6,8 @@ import { UserForRegistrationDto } from './../../_interfaces/user/userForRegistra
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthenticationService } from 'src/app/shared/service/authentication.service';
 import { environment } from 'src/environments/environment';
+import { BsModalRef, BsModalService, ModalOptions } from 'ngx-bootstrap/modal';
+import { SuccessModalComponent } from 'src/app/shared/modals/success-modal/success-modal.component';
 
 @Component({
   selector: 'app-register-user',
@@ -16,11 +18,13 @@ export class RegisterUserComponent implements OnInit {
   registerForm: FormGroup |any;
   errorMessage: string = '';
   showError: boolean = false;
+  bsModalRef?: BsModalRef;
 
   constructor(
     private authService: AuthenticationService,
     private passConfValidator: PasswordConfirmationValidatorService,
-    private router: Router
+    private router: Router,
+    private modal: BsModalService,
   ) { }
 
   ngOnInit(): void {
@@ -64,7 +68,21 @@ export class RegisterUserComponent implements OnInit {
 
     this.authService.registerUser(registrationUrl, user)
       .subscribe({
-        next: (_) => this.router.navigate(["/authentication/login"]),
+        next: (_) =>{
+          const config: ModalOptions = {
+            initialState: {
+              modalHeaderText: 'Registered successfully',
+              modalBodyText: `Please check your email inbox and  confirm your email address`,
+              okButtonText: 'OK'
+            }
+          };
+  
+          this.bsModalRef = this.modal.show(SuccessModalComponent, config);
+          this.bsModalRef.content.redirectOnOk.subscribe((_: any)=> {
+            this.router.navigate(["/authentication/login"])
+          } );
+
+        } ,
         error: (err: HttpErrorResponse) => {
           this.errorMessage = err.message;
           this.showError = true;

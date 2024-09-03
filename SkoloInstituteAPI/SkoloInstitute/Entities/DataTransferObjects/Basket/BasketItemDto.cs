@@ -8,6 +8,7 @@
         public int Quantity { get; set; }
         public string Class { get; set; }
         public string TeacherId { get; set; }
+        public string SubjectId { get; set; }
 
     }
 }

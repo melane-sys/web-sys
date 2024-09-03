@@ -3,9 +3,29 @@ export interface EnrollmentDto {
     userId: string;
     firstName: string;
     lastName: string;
-    subjectId: string; 
-    teacherFirstName: string;
-    teacherLastName: string; 
-    subjectName: string;
+    grade: string;
     enrolledDate: Date; 
+    enrollItems: EnrollItemDto[];
 }
+export interface EnrollmentForCreationDto {
+    userId?: string;
+    grade: string; 
+    subtotal: number; 
+    enrollItems: EnrollItemCreateDto[]; 
+  }
+  
+  export interface EnrollItemCreateDto {
+    subjectName: string;
+    class: string; 
+    teacherId: string; 
+    subjectId: string; 
+    price: number; 
+  }
+
+  export interface EnrollItemDto {
+    subjectName: string;
+    class: string; 
+    teacherId: string; 
+    price: number; 
+  }
+  

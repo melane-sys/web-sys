@@ -3,7 +3,15 @@
 </div>
 <div class="modal-body">
   <p><strong>Teacher:</strong> {{subject?.teacherFirstName}} {{subject?.teacherLastName}}</p>
-  <p><strong>Description:</strong> fdgretretyrtyrey</p>
+  <p><strong>Students enrolled: </strong>{{subject.enrollItemsCount}}</p>
+  <p><strong>Grade description</strong></p>
+  <div class="app-two-feature-two-content">
+    <ul class="list-unstyled d-flex flex-wrap list-two-col mt-4" >
+      <li class="py-1" *ngFor="let item of subject?.grades">
+        <i class="fad fa-check-circle me-2"></i>{{item?.gradeName}}
+      </li>
+    </ul>
+  </div>
 </div>
 <div class="text-center mt-3" *ngIf="(basket$ | async) as basket; else elseBlock">
 

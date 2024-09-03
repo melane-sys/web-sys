@@ -4,6 +4,14 @@ export interface SubjectDto {
     class: string;
     price: number
     teacherId: string;
+    subjectId: string;
     teacherFirstName: string;
     teacherLastName: string;
+    grades: GradeDto[] |any;
+    enrollItemsCount:any;
+  }
+  export interface GradeDto {
+    id: string; 
+    gradeName: string;
+    subjectId: string;
   }

@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace SkoloInstitute.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialData : Migration
+    public partial class InitialData1 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -207,6 +207,26 @@ namespace SkoloInstitute.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Enrollments",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    Grade = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    EnrolledDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Subtotal = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Enrollments", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Enrollments_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Ratings",
                 columns: table => new
                 {
@@ -240,6 +260,7 @@ namespace SkoloInstitute.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     SubjectName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Class = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     TeacherId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
@@ -254,24 +275,47 @@ namespace SkoloInstitute.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Enrollments",
+                name: "EnrollItems",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    SubjectId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    EnrolledDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    SubjectName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Class = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    TeacherId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    EnrollmentId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    SubjectId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Enrollments", x => x.Id);
+                    table.PrimaryKey("PK_EnrollItems", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Enrollments_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id");
+                        name: "FK_EnrollItems_Enrollments_EnrollmentId",
+                        column: x => x.EnrollmentId,
+                        principalTable: "Enrollments",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Enrollments_Subjects_SubjectId",
+                        name: "FK_EnrollItems_Subjects_SubjectId",
+                        column: x => x.SubjectId,
+                        principalTable: "Subjects",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Grades",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    GradeName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    SubjectId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Grades", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Grades_Subjects_SubjectId",
                         column: x => x.SubjectId,
                         principalTable: "Subjects",
                         principalColumn: "Id",
@@ -283,9 +327,9 @@ namespace SkoloInstitute.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "091fd85a-1ccc-4b42-be6a-1a11abee5eb9", null, "Student", "STUDENT" },
-                    { "6db658b8-624b-4ada-a9c6-d63655b302b5", null, "School", "SCHOOL" },
-                    { "d0700e15-6f38-4555-86dc-bd7e1ddbc85f", null, "Administrator", "ADMINISTRATOR" }
+                    { "ae604613-a32d-4378-86b8-77917466af88", null, "School", "SCHOOL" },
+                    { "bacfd27d-7e86-44ef-90ad-812a41c9fafc", null, "Administrator", "ADMINISTRATOR" },
+                    { "dacd638f-a1a8-4936-a650-c0017f276d69", null, "Student", "STUDENT" }
                 });
 
             migrationBuilder.InsertData(
@@ -295,8 +339,8 @@ namespace SkoloInstitute.Migrations
 
             migrationBuilder.InsertData(
                 table: "Subjects",
-                columns: new[] { "Id", "Class", "SubjectName", "TeacherId" },
-                values: new object[] { new Guid("f10323d3-da72-44e7-ae7d-0379da31b329"), "All", "Career Guidence", new Guid("302a431a-2f54-4768-8a34-b6414f3909df") });
+                columns: new[] { "Id", "Class", "Price", "SubjectName", "TeacherId" },
+                values: new object[] { new Guid("f10323d3-da72-44e7-ae7d-0379da31b329"), "All", 125m, "Career Guidence", new Guid("302a431a-2f54-4768-8a34-b6414f3909df") });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -338,14 +382,24 @@ namespace SkoloInstitute.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Enrollments_SubjectId",
-                table: "Enrollments",
+                name: "IX_EnrollItems_EnrollmentId",
+                table: "EnrollItems",
+                column: "EnrollmentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_EnrollItems_SubjectId",
+                table: "EnrollItems",
                 column: "SubjectId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Enrollments_UserId",
                 table: "Enrollments",
                 column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Grades_SubjectId",
+                table: "Grades",
+                column: "SubjectId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Ratings_TeacherId",
@@ -382,7 +436,10 @@ namespace SkoloInstitute.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Enrollments");
+                name: "EnrollItems");
+
+            migrationBuilder.DropTable(
+                name: "Grades");
 
             migrationBuilder.DropTable(
                 name: "Ratings");
@@ -395,6 +452,9 @@ namespace SkoloInstitute.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "Enrollments");
 
             migrationBuilder.DropTable(
                 name: "Subjects");

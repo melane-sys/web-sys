@@ -51,13 +51,13 @@ namespace SkoloInstitute.Controllers
             await _userManager.AddToRoleAsync(user, "Student");
 
             // Create enrollment
-            var enrollment = new Enrollment
-            {
-                UserId = user.Id,
-                SubjectId = new Guid("f10323d3-da72-44e7-ae7d-0379da31b329")
-            };
-            _repository.Enrollment.CreateData(enrollment);
-            _repository.Save();
+            // var enrollment = new Enrollment
+            // {
+            //    UserId = user.Id,
+            //    SubjectId = new Guid("f10323d3-da72-44e7-ae7d-0379da31b329")
+            //   };
+            //    _repository.Enrollment.CreateData(enrollment);
+            //   _repository.Save();
 
             await SendConfirmEMailAsync(userForRegistration);
 

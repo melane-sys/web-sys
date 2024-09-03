@@ -46,5 +46,23 @@ export class StudentEnrollComponent implements OnInit {
   removeBasketItem(item: IBasketItem) {
     this.basketService.removeItemFromBasket(item);
   }
+
+  public redirectToPayment = async () => {
+    this.basket$.subscribe(basket => {
+      if (basket.items.length > 0) {
+        // Extract unique class names from basket items
+        const uniqueClasses = [...new Set(basket.items.map(item => item.class))];
+        // Join the class names into a comma-separated string
+        const classList = uniqueClasses.join(',');
+        // Construct the URL with the class information
+        var grade = encodeURIComponent(classList);
+        const url = `student-portal/payment/${grade}`;
+        this.router.navigate([url]);
+      } else {
+        alert('Your basket is empty. Please add items to the basket before proceeding to payment.');
+      }
+    });
+  }
+  
  
 }

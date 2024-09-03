@@ -23,28 +23,32 @@ namespace SkoloInstitute.Repository
         public IEnumerable<Enrollment> GetAllData()
         {
             return FindAll().OrderBy(ow => ow.Id)
-                   .Include(x => x.Subject)
-                  .Include(x => x.Subject).ThenInclude(a => a.Teacher)
                   .Include(x => x.User)
+                     .Include(x => x.EnrollItems)
                 .ToList();
         }
 
         public IEnumerable<Enrollment> GetAllDataById(string Id)
         {
             return FindByCondition(ow => ow.UserId.Equals(Id))
-       .Include(x => x.Subject)
-           .Include(x => x.Subject).ThenInclude(a => a.Teacher)
         .Include(x => x.User)
+         .Include(x => x.EnrollItems)
      .ToList();
         }
 
         public Enrollment GetDataById(Guid Id)
         {
             return FindByCondition(ow => ow.Id.Equals(Id))
-                  .Include(x => x.Subject)
                    .Include(x => x.User)
-                       .Include(x => x.Subject).ThenInclude(a => a.Teacher)
+                    .Include(x => x.EnrollItems)
                 .FirstOrDefault();
+        }
+
+        public Enrollment GetDataByUserId(string Id)
+        {
+            return FindByCondition(ow => ow.UserId.Equals(Id))
+                 .Include(x => x.User)
+                 .FirstOrDefault();
         }
 
         public void UpdateData(Enrollment data)

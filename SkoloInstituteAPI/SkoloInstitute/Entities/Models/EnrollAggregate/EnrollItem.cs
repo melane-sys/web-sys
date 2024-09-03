@@ -9,5 +9,7 @@
         public decimal Price { get; set; }
         public Guid EnrollmentId { get; set; }
         public Enrollment Enrollment { get; set; }
+        public Guid SubjectId { get; set; }
+        public Subject Subject { get; set; }
     }
 }

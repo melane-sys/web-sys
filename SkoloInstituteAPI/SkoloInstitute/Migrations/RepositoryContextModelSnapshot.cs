@@ -51,19 +51,19 @@ namespace SkoloInstitute.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "6dc34c2d-707a-4e78-a808-566cd922b3e1",
+                            Id = "dacd638f-a1a8-4936-a650-c0017f276d69",
                             Name = "Student",
                             NormalizedName = "STUDENT"
                         },
                         new
                         {
-                            Id = "b3dba2cc-7d86-49b6-bb0a-5a70abe9470c",
+                            Id = "ae604613-a32d-4378-86b8-77917466af88",
                             Name = "School",
                             NormalizedName = "SCHOOL"
                         },
                         new
                         {
-                            Id = "23a33e1f-1b30-405a-abd4-7cc8f95fa8b6",
+                            Id = "bacfd27d-7e86-44ef-90ad-812a41c9fafc",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         });
@@ -190,6 +190,9 @@ namespace SkoloInstitute.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18, 2)");
 
+                    b.Property<Guid>("SubjectId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("SubjectName")
                         .HasColumnType("nvarchar(max)");
 
@@ -199,6 +202,8 @@ namespace SkoloInstitute.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("EnrollmentId");
+
+                    b.HasIndex("SubjectId");
 
                     b.ToTable("EnrollItems");
                 });
@@ -212,8 +217,8 @@ namespace SkoloInstitute.Migrations
                     b.Property<DateTime>("EnrolledDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("SubjectId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("Grade")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("Subtotal")
                         .HasColumnType("decimal(18, 2)");
@@ -223,11 +228,28 @@ namespace SkoloInstitute.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("SubjectId");
-
                     b.HasIndex("UserId");
 
                     b.ToTable("Enrollments");
+                });
+
+            modelBuilder.Entity("SkoloInstitute.Entities.Models.Grade", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("GradeName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("SubjectId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SubjectId");
+
+                    b.ToTable("Grades");
                 });
 
             modelBuilder.Entity("SkoloInstitute.Entities.Models.Rating", b =>
@@ -508,24 +530,35 @@ namespace SkoloInstitute.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Enrollment");
-                });
-
-            modelBuilder.Entity("SkoloInstitute.Entities.Models.Enrollment", b =>
-                {
                     b.HasOne("SkoloInstitute.Entities.Models.Subject", "Subject")
-                        .WithMany()
+                        .WithMany("EnrollItems")
                         .HasForeignKey("SubjectId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.Navigation("Enrollment");
+
+                    b.Navigation("Subject");
+                });
+
+            modelBuilder.Entity("SkoloInstitute.Entities.Models.Enrollment", b =>
+                {
                     b.HasOne("SkoloInstitute.Entities.Models.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
 
-                    b.Navigation("Subject");
-
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("SkoloInstitute.Entities.Models.Grade", b =>
+                {
+                    b.HasOne("SkoloInstitute.Entities.Models.Subject", "Subject")
+                        .WithMany("Grades")
+                        .HasForeignKey("SubjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Subject");
                 });
 
             modelBuilder.Entity("SkoloInstitute.Entities.Models.Rating", b =>
@@ -559,6 +592,13 @@ namespace SkoloInstitute.Migrations
             modelBuilder.Entity("SkoloInstitute.Entities.Models.Enrollment", b =>
                 {
                     b.Navigation("EnrollItems");
+                });
+
+            modelBuilder.Entity("SkoloInstitute.Entities.Models.Subject", b =>
+                {
+                    b.Navigation("EnrollItems");
+
+                    b.Navigation("Grades");
                 });
 
             modelBuilder.Entity("SkoloInstitute.Entities.Models.Teacher", b =>

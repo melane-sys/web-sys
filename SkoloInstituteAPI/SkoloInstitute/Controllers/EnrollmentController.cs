@@ -81,6 +81,7 @@ namespace SkoloInstitute.Controllers
             }
         }
 
+
         [HttpPost]
         public IActionResult CreateEnrollment([FromBody] EnrollmentForCreationDto enrollment)
         {
@@ -95,7 +96,8 @@ namespace SkoloInstitute.Controllers
                 {
                     return BadRequest("Invalid model object");
                 }
-
+                var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                enrollment.UserId = userId;
                 var enrollmentEntity = _mapper.Map<Enrollment>(enrollment);
                 _repository.Enrollment.CreateData(enrollmentEntity);
                 _repository.Save();

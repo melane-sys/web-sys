@@ -1,22 +1,13 @@
-/* payment.component.css */
-.subject-checkbox-group {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .subject-checkbox-group input[type="checkbox"] {
-    margin-right: 10px;
-  }
-  
-  .subject-checkbox-group label {
-    margin-bottom: 5px;
-  }
-  
-  .table {
-    margin-top: 20px;
-  }
-  
-  .table th, .table td {
-    text-align: center;
-  }
-  
+/* Custom styles for the grade selection */
+.grade-selection {
+  margin-bottom: 1.5rem; /* Add spacing below the section */
+}
+
+.grade-selection .form-check {
+  margin-bottom: 0.75rem; /* Space between radio buttons */
+}
+
+.grade-selection .form-check-label {
+  font-size: 1rem; /* Adjust font size for better readability */
+}
+
