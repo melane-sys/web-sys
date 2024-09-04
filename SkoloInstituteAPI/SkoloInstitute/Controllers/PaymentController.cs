@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using SkoloInstitute.Entities.Models;
 using System.Text;
 
 namespace SkoloInstitute.Controllers
@@ -158,13 +159,6 @@ namespace SkoloInstitute.Controllers
         }
     }
 
-    public class RequestToPayRequest
-    {
-        public string Amount { get; set; }
-        public string Currency { get; set; }
-        public string PayerPartyId { get; set; }
-        public string PayerMessage { get; set; }
-        public string PayeeNote { get; set; }
-    }
+
 
 }
