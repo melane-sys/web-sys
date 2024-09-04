@@ -60,9 +60,11 @@
                 </div>
               </div> 
 
-              <div class="mb-3">
-                <button (click)="redirectToPayment()" class="btn btn-primary">Proceed to Payment</button>
-              </div> 
+              <div class="action-btns mt-4 ps-3" *ngIf="(basketTotals$ | async) as totals">
+                <a (click)="close()" class="btn btn-outline-primary me-2">Add subjects</a>
+                <button   (click)="redirectToPayment()" class="btn btn-primary">Proceed to Payment</button>
+              </div>
+
             </div>         
             <ng-template #elseBlock>
               <h1>Your cart is empty</h1>

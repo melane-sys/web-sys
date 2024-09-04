@@ -31,7 +31,7 @@
                 </div>
                 <div class="action-btns mt-4 ps-3" *ngIf="(basketTotals$ | async) as totals">
                   <a (click)="goBack()" class="btn btn-outline-primary me-2">Back to Cart</a>
-                  <a (click)="openModal()" class="btn btn-primary">Pay <sup>E</sup>{{totals.subTotal |number:'1.2'}}</a>
+                  <button    [disabled]="!selectedGrade" (click)="openModal()" class="btn btn-primary">Pay <sup>E</sup>{{totals.subTotal |number:'1.2'}}</button>
                 </div>
               </div>
 
