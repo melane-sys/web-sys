@@ -1,7 +1,8 @@
 <!-- payment.component.html -->
 <div class="main-wrapper">
   <!-- payment section start -->
-  <section class="sign-up-in-section bg-dark ptb-60" style="background: url('assets/img/page-header-bg.svg') no-repeat right bottom;">
+  <section class="sign-up-in-section bg-dark ptb-60"
+    style="background: url('assets/img/page-header-bg.svg') no-repeat right bottom;">
     <div class="container">
       <div class="row justify-content-center">
         <div class="col-lg-10 col-12">
@@ -14,39 +15,55 @@
               </a>
             </div>
             <div class="price-feature-col pricing-action-info p-5 right-radius bg-light order-0 order-lg-1">
-              <a routerLink="/" class="mb-5 d-block d-xl-none d-lg-none"><img src="assets/img/img-skolo.png" alt="logo" class="img-fluid white-logo" /></a>
+              <a routerLink="/" class="mb-5 d-block d-xl-none d-lg-none"><img src="assets/img/img-skolo.png" alt="logo"
+                  class="img-fluid white-logo" /></a>
               <h5>{{user?.firstName}} {{user?.lastName}}</h5>
               <div class="mb-4">
                 <p *ngIf="gradeOptions.length > 0" class="fs-5 fw-bold mb-3">Select a Grade:</p>
                 <div *ngIf="gradeOptions.length > 0" class="mb-3">
                   <div class="form-check" *ngFor="let grade of gradeOptions">
-                    <input 
-                      type="radio" 
-                      class="form-check-input" 
-                      id="{{grade}}" 
-                      name="grade" 
-                      [value]="grade" 
+                    <input type="radio" class="form-check-input" id="{{grade}}" name="grade" [value]="grade"
                       [(ngModel)]="selectedGrade">
                     <label class="form-check-label" for="{{grade}}">
                       {{grade}}
                     </label>
                   </div>
                 </div>
-
                 <div class="action-btns mt-4 ps-3" *ngIf="(basketTotals$ | async) as totals">
                   <a (click)="goBack()" class="btn btn-outline-primary me-2">Back to Cart</a>
-                  <a (click)="submitOrder()" class="btn btn-primary" >Pay <sup>E</sup>{{totals.subTotal |number:'1.2'}}</a>
+                  <a (click)="openModal()" class="btn btn-primary">Pay <sup>E</sup>{{totals.subTotal |number:'1.2'}}</a>
                 </div>
-                
               </div>
-              
+
+            </div>
           </div>
         </div>
       </div>
     </div>
-    </div>
   </section>
   <!-- payment section end -->
+</div>
+
+<div class="modal" *ngIf="isModalOpen">
+  <div class="modal-content">
+    <span class="close" (click)="closeModal()">&times;</span>
+    <h2>MoMo Payment</h2>
+    <div class="image-container">
+      <img src="../../../assets/img/brand-logo/gh-mtn-logo.webp" alt="MoMo Payment Image" class="mtn" />
+    </div>
+    <div class="form-group">
+      <label for="phoneNumber">Phone Number:</label>
+      <input id="phoneNumber" name="phoneNumber" type="text" [(ngModel)]="phoneNumber" #phoneNumberField="ngModel"
+        required pattern="7\d{7}" maxlength="8" />
+      <div *ngIf="phoneNumberField.invalid && (phoneNumberField.dirty || phoneNumberField.touched)" class="error">
+        <div *ngIf="phoneNumberField.errors?.['required']">Phone number is required.</div>
+        <div *ngIf="phoneNumberField.errors?.['pattern']">Phone number must start with 7 and have 8 digits.</div>
+      </div>
+    </div>
+    <div class="action-btns mt-4 ps-3" *ngIf="(basketTotals$ | async) as totals">
+      <a (click)="submitOrder()" class="btn btn-primary">Pay <sup>E</sup>{{totals.subTotal |number:'1.2'}}</a>
+    </div>
+  </div>
 </div>
 
 

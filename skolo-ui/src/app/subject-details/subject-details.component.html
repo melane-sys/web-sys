@@ -3,7 +3,7 @@
 </div>
 <div class="modal-body">
   <p><strong>Teacher:</strong> {{subject?.teacherFirstName}} {{subject?.teacherLastName}}</p>
-  <p><strong>Students enrolled: </strong>{{subject.enrollItemsCount}}</p>
+  <p><strong>Students enrolled: </strong>{{subject?.enrollItemsCount}}</p>
   <p><strong>Grade description</strong></p>
   <div class="app-two-feature-two-content">
     <ul class="list-unstyled d-flex flex-wrap list-two-col mt-4" >
@@ -15,7 +15,7 @@
 </div>
 <div class="text-center mt-3" *ngIf="(basket$ | async) as basket; else elseBlock">
 
-  <div class="action-btns mt-4 ps-3" *ngIf="isProductInBasket(basket, subject.subjectName); else elseBlock">
+  <div class="action-btns mt-4 ps-3" *ngIf="isProductInBasket(basket, subject?.subjectName); else elseBlock">
     <a (click)="onClose()" class="btn btn-outline-primary me-2">Add subjects</a>
     <a (click)="redirectToEnroll()" class="btn btn-primary" *ngIf="(basketTotals$ | async) as totals">Enroll
       <sup>E</sup>{{totals.subTotal| number: '1.2'}}</a>

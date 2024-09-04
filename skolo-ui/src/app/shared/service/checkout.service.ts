@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
 import { EnvironmentUrlService } from './environment-url.service';
@@ -13,16 +13,16 @@ export class CheckoutService {
   private enrollData: EnrollmentForCreationDto | null = null;
   constructor(private http: HttpClient, private envUrl: EnvironmentUrlService) {}
 
-  createOrder(enroll:EnrollmentForCreationDto): Observable<any> {
-    return this.http.post(this.envUrl.urlAddress + '/api/enrollments', enroll);
-  }
+  // createOrder(enroll:EnrollmentForCreationDto): Observable<any> {
+  //   return this.http.post(this.envUrl.urlAddress + '/api/payments', enroll);
+  // }
 
-  setOrderData(data: EnrollmentForCreationDto) {
-    this.enrollData = data;
-  }
-
-  getOrderData(): EnrollmentForCreationDto | null {
-    return this.enrollData;
+  createOrder(enrollment: any): Observable<any> {
+    return this.http.post<any>(this.envUrl.urlAddress+'/api/payments/create-and-request-to-pay', enrollment, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    });
   }
 
 

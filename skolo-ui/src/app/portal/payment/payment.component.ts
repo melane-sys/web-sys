@@ -28,6 +28,8 @@ export class PaymentComponent implements OnInit {
   errorMessage: string = '';
   ratingForm: FormGroup |any;
   bsModalRef?: BsModalRef;
+  isModalOpen = false;
+  phoneNumber = '';
 
   constructor(private router: Router, 
     private activeRoute: ActivatedRoute,
@@ -81,6 +83,7 @@ export class PaymentComponent implements OnInit {
     const orderData: EnrollmentForCreationDto = {
       grade: this.selectedGrade,
       subtotal: subtotal,
+      phoneNumber: this.phoneNumber,
       enrollItems: basket.items.map(item => {
         return {
           subjectName: item.subjectName,
@@ -128,5 +131,13 @@ export class PaymentComponent implements OnInit {
   }
   goHome(): void {
     this.router.navigate(['student-portal/class']);
+  }
+  openModal(): void {
+    this.isModalOpen = true;
+  }
+
+  closeModal(): void {
+    console.log('Close button clicked');
+    this.isModalOpen = false;
   }
 }

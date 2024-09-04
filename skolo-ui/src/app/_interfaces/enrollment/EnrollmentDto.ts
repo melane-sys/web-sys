@@ -11,6 +11,7 @@ export interface EnrollmentForCreationDto {
     userId?: string;
     grade: string; 
     subtotal: number; 
+    phoneNumber: string;
     enrollItems: EnrollItemCreateDto[]; 
   }
   

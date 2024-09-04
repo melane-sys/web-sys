@@ -5,11 +5,12 @@ using Newtonsoft.Json.Linq;
 using SkoloInstitute.Contracts;
 using SkoloInstitute.Entities.DataTransferObjects.Enrollment;
 using SkoloInstitute.Entities.Models;
+using System.Security.Claims;
 using System.Text;
 
 namespace SkoloInstitute.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/payments")]
     [ApiController]
     public class PaymentController : ControllerBase
     {
@@ -132,7 +133,7 @@ namespace SkoloInstitute.Controllers
                 // Step 5: Request To Pay
                 var requestToPayBody = JsonConvert.SerializeObject(new
                 {
-                    amount = enrollment.Subtotal,
+                    amount = enrollment.Subtotal.ToString(),
                     currency = "EUR",
                     externalId = Guid.NewGuid().ToString(), // Auto-generate externalId
                     payer = new
@@ -147,8 +148,8 @@ namespace SkoloInstitute.Controllers
                 var requestToPayRequestMessage = CreateRequest(HttpMethod.Post, RequestToPayEndpoint, requestToPayBody, referenceId, apiKey, token, targetEnvironment);
                 var requestToPayResponse = await SendRequestAsync(requestToPayRequestMessage);
 
-                //    var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-                //  enrollment.UserId = userId;
+                var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                enrollment.UserId = userId;
                 enrollment.ReferenceId = referenceId;
                 enrollment.PaymentToken = token;
                 var enrollmentEntity = _mapper.Map<Enrollment>(enrollment);
