@@ -1,6 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using SkoloInstitute.Contracts;
+using SkoloInstitute.Entities.DataTransferObjects.Enrollment;
 using SkoloInstitute.Entities.Models;
 using System.Text;
 
@@ -15,10 +18,13 @@ namespace SkoloInstitute.Controllers
         private const string BaseUrl = "https://sandbox.momodeveloper.mtn.com/v1_0/";
         private const string TokenEndpoint = "https://sandbox.momodeveloper.mtn.com/collection/token/";
         private const string RequestToPayEndpoint = "https://sandbox.momodeveloper.mtn.com/collection/v1_0/requesttopay";
-
-        public PaymentController(HttpClient httpClient)
+        private IRepositoryManager _repository;
+        private IMapper _mapper;
+        public PaymentController(HttpClient httpClient, IRepositoryManager repository, IMapper mapper)
         {
             _httpClient = httpClient;
+            _repository = repository;
+            _mapper = mapper;
         }
 
         private HttpRequestMessage CreateRequest(HttpMethod method, string endpoint, string jsonBody = null, string referenceId = null, string apiKey = null, string token = null, string targetEnvironment = null)
@@ -78,7 +84,7 @@ namespace SkoloInstitute.Controllers
         }
 
         [HttpPost("create-and-request-to-pay")]
-        public async Task<IActionResult> CreateAndRequestToPay([FromBody] RequestToPayRequest requestToPayRequest)
+        public async Task<IActionResult> CreateAndRequestToPay([FromBody] EnrollmentForCreationDto enrollment)
         {
             try
             {
@@ -126,20 +132,29 @@ namespace SkoloInstitute.Controllers
                 // Step 5: Request To Pay
                 var requestToPayBody = JsonConvert.SerializeObject(new
                 {
-                    amount = requestToPayRequest.Amount,
-                    currency = requestToPayRequest.Currency,
+                    amount = enrollment.Subtotal,
+                    currency = "EUR",
                     externalId = Guid.NewGuid().ToString(), // Auto-generate externalId
                     payer = new
                     {
                         partyIdType = "MSISDN",
-                        partyId = requestToPayRequest.PayerPartyId
+                        partyId = enrollment.PhoneNumber
                     },
-                    payerMessage = requestToPayRequest.PayerMessage,
-                    payeeNote = requestToPayRequest.PayeeNote
+                    payerMessage = "Payment for enrollment",
+                    payeeNote = "Enrollment payment"
                 });
 
                 var requestToPayRequestMessage = CreateRequest(HttpMethod.Post, RequestToPayEndpoint, requestToPayBody, referenceId, apiKey, token, targetEnvironment);
                 var requestToPayResponse = await SendRequestAsync(requestToPayRequestMessage);
+
+                //    var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                //  enrollment.UserId = userId;
+                enrollment.ReferenceId = referenceId;
+                enrollment.PaymentToken = token;
+                var enrollmentEntity = _mapper.Map<Enrollment>(enrollment);
+                _repository.Enrollment.CreateData(enrollmentEntity);
+                _repository.Save();
+
 
                 // Return the result of RequestToPay
                 return Ok(new
@@ -158,7 +173,5 @@ namespace SkoloInstitute.Controllers
             }
         }
     }
-
-
 
 }

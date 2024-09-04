@@ -6,6 +6,10 @@
         public string Grade { get; set; }
         public DateTime EnrolledDate { get; set; } = DateTime.Now;
         public decimal Subtotal { get; set; }
+        public string PhoneNumber { get; set; }
+        public bool Paid { get; set; }
+        public string ReferenceId { get; set; }
+        public string PaymentToken { get; set; }
         public IEnumerable<EnrollItemCreateDto> EnrollItems { get; init; }
     }
 

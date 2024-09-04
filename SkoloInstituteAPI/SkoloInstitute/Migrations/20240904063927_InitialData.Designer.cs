@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SkoloInstitute.Repository;
 
@@ -11,9 +12,11 @@ using SkoloInstitute.Repository;
 namespace SkoloInstitute.Migrations
 {
     [DbContext(typeof(RepositoryContext))]
-    partial class RepositoryContextModelSnapshot : ModelSnapshot
+    [Migration("20240904063927_InitialData")]
+    partial class InitialData
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -51,19 +54,19 @@ namespace SkoloInstitute.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "a76ab55c-9267-421a-9f3d-bd9f6991b32d",
+                            Id = "7b2c1c29-3534-4fb0-aa7d-20573c74850b",
                             Name = "Student",
                             NormalizedName = "STUDENT"
                         },
                         new
                         {
-                            Id = "d7ef109a-fa42-4022-9c87-66ac86dd735d",
+                            Id = "657b5e2c-45b1-4eb7-ab74-843bda155e71",
                             Name = "School",
                             NormalizedName = "SCHOOL"
                         },
                         new
                         {
-                            Id = "03861512-901d-40f6-8d8c-c14badb96e43",
+                            Id = "1e3962c0-92ad-491e-94d5-735d8bdcfa75",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         });
@@ -222,15 +225,6 @@ namespace SkoloInstitute.Migrations
 
                     b.Property<bool>("Paid")
                         .HasColumnType("bit");
-
-                    b.Property<string>("PaymentToken")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ReferenceId")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("Subtotal")
                         .HasColumnType("decimal(18, 2)");

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SkoloInstitute.Repository;
 
@@ -11,9 +12,11 @@ using SkoloInstitute.Repository;
 namespace SkoloInstitute.Migrations
 {
     [DbContext(typeof(RepositoryContext))]
-    partial class RepositoryContextModelSnapshot : ModelSnapshot
+    [Migration("20240904064655_InitialData4")]
+    partial class InitialData4
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -51,19 +54,19 @@ namespace SkoloInstitute.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "a76ab55c-9267-421a-9f3d-bd9f6991b32d",
+                            Id = "b8dfeb31-8955-4b62-97c0-4395370b135a",
                             Name = "Student",
                             NormalizedName = "STUDENT"
                         },
                         new
                         {
-                            Id = "d7ef109a-fa42-4022-9c87-66ac86dd735d",
+                            Id = "400c38a5-c2fd-4b7d-86f2-4fdcd3ed20e0",
                             Name = "School",
                             NormalizedName = "SCHOOL"
                         },
                         new
                         {
-                            Id = "03861512-901d-40f6-8d8c-c14badb96e43",
+                            Id = "9f164674-352a-478e-943b-c75c9107883d",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         });
@@ -224,9 +227,6 @@ namespace SkoloInstitute.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("PaymentToken")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhoneNumber")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ReferenceId")

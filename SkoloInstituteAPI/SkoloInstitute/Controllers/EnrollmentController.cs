@@ -60,26 +60,6 @@ namespace SkoloInstitute.Controllers
             }
         }
 
-        [HttpGet("{id}", Name = "EnrollmentById")]
-        public IActionResult GetEnrollmentById(Guid id)
-        {
-            try
-            {
-                var enrollment = _repository.Enrollment.GetDataById(id);
-                if (enrollment == null)
-                {
-
-                    return NotFound();
-                }
-                var enrollmentResult = _mapper.Map<EnrollmentDto>(enrollment);
-                return Ok(enrollmentResult);
-            }
-            catch (Exception)
-            {
-
-                return StatusCode(500, "Internal server error");
-            }
-        }
 
 
         [HttpPost]
