@@ -5,6 +5,7 @@ using SkoloInstitute.Entities.DataTransferObjects;
 using SkoloInstitute.Entities.Models;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
 
 namespace SkoloInstitute.JwtFeatures
@@ -13,14 +14,14 @@ namespace SkoloInstitute.JwtFeatures
     {
         private readonly IConfiguration _configuration;
         private readonly IConfigurationSection _jwtSettings;
-        private readonly IConfigurationSection _goolgeSettings;
+        private readonly IConfigurationSection _googleSettings;
         private readonly UserManager<User> _userManager;
 
         public JwtHandler(IConfiguration configuration, UserManager<User> userManager)
         {
             _configuration = configuration;
             _jwtSettings = _configuration.GetSection("JwtSettings");
-            _goolgeSettings = _configuration.GetSection("GoogleAuthSettings");
+            _googleSettings = _configuration.GetSection("GoogleAuthSettings");
             _userManager = userManager;
         }
 
@@ -34,13 +35,33 @@ namespace SkoloInstitute.JwtFeatures
             return token;
         }
 
+        public async Task<string> GenerateRefreshToken()
+        {
+            var randomNumber = new byte[32];
+            using (var rng = RandomNumberGenerator.Create())
+            {
+                rng.GetBytes(randomNumber);
+                return Convert.ToBase64String(randomNumber);
+            }
+        }
+
+        public async Task<JwtSecurityToken> ValidateToken(string token)
+        {
+            var tokenValidationParameters = GetTokenValidationParameters();
+            var tokenHandler = new JwtSecurityTokenHandler();
+            SecurityToken securityToken;
+            var principal = tokenHandler.ValidateToken(token, tokenValidationParameters, out securityToken);
+
+            return securityToken as JwtSecurityToken;
+        }
+
         public async Task<GoogleJsonWebSignature.Payload> VerifyGoogleToken(ExternalAuthDto externalAuth)
         {
             try
             {
                 var settings = new GoogleJsonWebSignature.ValidationSettings()
                 {
-                    Audience = new List<string>() { _goolgeSettings.GetSection("clientId").Value }
+                    Audience = new List<string>() { _googleSettings.GetSection("clientId").Value }
                 };
 
                 var payload = await GoogleJsonWebSignature.ValidateAsync(externalAuth.IdToken, settings);
@@ -49,7 +70,7 @@ namespace SkoloInstitute.JwtFeatures
             }
             catch (Exception)
             {
-                //log an exception
+                // log an exception
                 return null;
             }
         }
@@ -65,12 +86,12 @@ namespace SkoloInstitute.JwtFeatures
         private async Task<List<Claim>> GetClaims(User user)
         {
             var claims = new List<Claim>
-            {
-                new Claim(ClaimTypes.Name, user.Email),
-                new Claim(ClaimTypes.NameIdentifier, user.Id),
-               new Claim(ClaimTypes.GivenName, user.FirstName),
-              new Claim(ClaimTypes.Surname, user.LastName),
-            };
+        {
+            new Claim(ClaimTypes.Name, user.Email),
+            new Claim(ClaimTypes.NameIdentifier, user.Id),
+            new Claim(ClaimTypes.GivenName, user.FirstName),
+            new Claim(ClaimTypes.Surname, user.LastName),
+        };
 
             var roles = await _userManager.GetRolesAsync(user);
             foreach (var role in roles)
@@ -92,5 +113,21 @@ namespace SkoloInstitute.JwtFeatures
 
             return tokenOptions;
         }
+
+        private TokenValidationParameters GetTokenValidationParameters()
+        {
+            return new TokenValidationParameters
+            {
+                ValidateAudience = true,
+                ValidateIssuer = true,
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = new SymmetricSecurityKey(
+                    Encoding.UTF8.GetBytes(_jwtSettings["securityKey"])),
+                ValidateLifetime = true,
+                ValidIssuer = _jwtSettings["validIssuer"],
+                ValidAudience = _jwtSettings["validAudience"],
+            };
+        }
     }
+
 }

@@ -24,14 +24,12 @@ export class AuthenticationService {
   public userChanged = this.userSubject.asObservable(); 
 
   constructor(private http: HttpClient, private envUrl: EnvironmentUrlService, 
-    private jwtHelper: JwtHelperService) { 
-      this.updateAuthState();
-    }
+              private jwtHelper: JwtHelperService) { 
+    this.updateAuthState();
+  }
 
- 
-
-  public registerUser = (route: string, body: UserForRegistrationDto) => {
-    return this.http.post<RegistrationResponseDto> (this.createCompleteRoute(route, this.envUrl.urlAddress), body);
+  public registerUser(route: string, body: UserForRegistrationDto) {
+    return this.http.post<RegistrationResponseDto>(this.createCompleteRoute(route, this.envUrl.urlAddress), body);
   }
 
   public loginUser(route: string, body: UserForAuthenticationDto) {
@@ -39,26 +37,24 @@ export class AuthenticationService {
       .pipe(
         tap((res: AuthResponseDto) => {
           if (res.isAuthSuccessful) {
-            localStorage.setItem("token", res.token);
-            localStorage.setItem("user", JSON.stringify(res.user)); // Store user info in localStorage
-            this.userSubject.next(res.user); // Update user information
-            this.authChangeSub.next(true);
+            this.storeUserData(res);
           } else {
             this.authChangeSub.next(false);
           }
-        })
+        }),
+        catchError(this.handleError)
       );
   }
 
-  public forgotPassword = (route: string, body: ForgotPasswordDto) => {
+  public forgotPassword(route: string, body: ForgotPasswordDto) {
     return this.http.post(this.createCompleteRoute(route, this.envUrl.urlAddress), body);
   }
 
-  public resetPassword = (route: string, body: ResetPasswordDto) => {
+  public resetPassword(route: string, body: ResetPasswordDto) {
     return this.http.post(this.createCompleteRoute(route, this.envUrl.urlAddress), body);
   }
 
-  public confirmEmail = (route: string, token: string, email: string) => {
+  public confirmEmail(route: string, token: string, email: string) {
     let params = new HttpParams({ encoder: new CustomEncoder() })
     params = params.append('token', token);
     params = params.append('email', email);
@@ -66,37 +62,52 @@ export class AuthenticationService {
     return this.http.get(this.createCompleteRoute(route, this.envUrl.urlAddress), { params: params });
   }
 
-  public twoStepLogin = (route: string, body: TwoFactorDto) => {
+  public twoStepLogin(route: string, body: TwoFactorDto) {
     return this.http.post<AuthResponseDto>(this.createCompleteRoute(route, this.envUrl.urlAddress), body);
   }
 
-  public sendAuthStateChangeNotification = (isAuthenticated: boolean) => {
+  public sendAuthStateChangeNotification(isAuthenticated: boolean) {
     this.authChangeSub.next(isAuthenticated);
   }
 
-  public logout = () => {
+  public logout() {
     localStorage.removeItem("token");
-    localStorage.removeItem("user"); // Remove user info from localStorage
-    this.userSubject.next(null); // Clear user info
+    localStorage.removeItem("refreshToken");
+    localStorage.removeItem("user"); 
+    this.userSubject.next(null); 
     this.sendAuthStateChangeNotification(false);
   }
 
-
-  private updateAuthState() {
+  public refreshToken() {
+    const refreshToken = localStorage.getItem("refreshToken");
     const token = localStorage.getItem("token");
-    const user = localStorage.getItem("user");
-    const isAuthenticated = !!token; // Check if token exists
-    this.authChangeSub.next(isAuthenticated);
-    if (isAuthenticated) {
-      this.userSubject.next(user ? JSON.parse(user) : null); // Restore user info from localStorage
+
+    if (!refreshToken) {
+      return throwError('No refresh token available');
     }
+
+    return this.http.post<AuthResponseDto>(this.createCompleteRoute('refreshToken', this.envUrl.urlAddress), { accessToken: token, refreshToken: refreshToken })
+      .pipe(
+        tap((res: AuthResponseDto) => {
+          if (res.isAuthSuccessful) {
+            this.storeUserData(res);
+          } else {
+            this.logout();
+          }
+        }),
+        catchError(error => {
+          this.logout();
+          return throwError(error);
+        })
+      );
   }
+
   public isUserAuthenticated(): boolean {
     const token = localStorage.getItem("token");
-    return !!token; // Return true if token exists, otherwise false
+    return !!token; 
   }
 
-  public isUserAdmin = (): boolean => {
+  public isUserAdmin(): boolean {
     const token = localStorage.getItem("token");
     
     if (!token) {
@@ -108,8 +119,8 @@ export class AuthenticationService {
     
     return role === 'Administrator';
   }
-  
-  public isUserStudent = (): boolean => {
+
+  public isUserStudent(): boolean {
     const token = localStorage.getItem("token");
     
     if (!token) {
@@ -121,7 +132,8 @@ export class AuthenticationService {
     
     return role === 'Student';
   }
-  public isUserSchool = (): boolean => {
+
+  public isUserSchool(): boolean {
     const token = localStorage.getItem("token");
     
     if (!token) {
@@ -134,7 +146,30 @@ export class AuthenticationService {
     return role === 'School';
   }
 
-  private createCompleteRoute = (route: string, envAddress: string) => {
+  private createCompleteRoute(route: string, envAddress: string) {
     return `${envAddress}/${route}`;
+  }
+
+  private updateAuthState() {
+    const token = localStorage.getItem("token");
+    const user = localStorage.getItem("user");
+    const isAuthenticated = !!token; 
+    this.authChangeSub.next(isAuthenticated);
+    if (isAuthenticated) {
+      this.userSubject.next(user ? JSON.parse(user) : null);
+    }
+  }
+
+  private storeUserData(res: AuthResponseDto) {
+    localStorage.setItem("token", res.token);
+    localStorage.setItem("refreshToken", res.refreshToken);
+    localStorage.setItem("user", JSON.stringify(res.user)); 
+    this.userSubject.next(res.user); 
+    this.authChangeSub.next(true);
+  }
+
+  private handleError(error: any) {
+    // Handle errors here
+    return throwError(error);
   }
 }

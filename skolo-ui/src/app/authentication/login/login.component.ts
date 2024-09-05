@@ -53,12 +53,9 @@ export class LoginComponent implements OnInit {
     this.authService.loginUser('api/accounts/login', userForAuth)
       .subscribe({
         next: (res: AuthResponseDto) => {
-          if (res.is2StepVerificationRequired) {
-            this.router.navigate(['/authentication/twostepverification'],
-              { queryParams: { returnUrl: this.returnUrl, provider: res.provider, email: userForAuth.email } })
-          }
-          else {
             localStorage.setItem("token", res.token);
+            const refreshToken = res.refreshToken;
+            localStorage.setItem("refreshToken", refreshToken);
             this.authService.sendAuthStateChangeNotification(res.isAuthSuccessful);
             console.log("status: " +res.isAuthSuccessful);
             if(this.authService.isUserStudent()){
@@ -68,7 +65,7 @@ export class LoginComponent implements OnInit {
               this.router.navigate(['/school-portal']);
             }
           
-          }
+          
         },
         error: (err: HttpErrorResponse) => {
           this.errorMessage = err.message;

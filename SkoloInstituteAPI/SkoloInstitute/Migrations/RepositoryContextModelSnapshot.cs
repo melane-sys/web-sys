@@ -51,19 +51,19 @@ namespace SkoloInstitute.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "a76ab55c-9267-421a-9f3d-bd9f6991b32d",
+                            Id = "2673084c-b360-46ae-b60e-52e6e44e0449",
                             Name = "Student",
                             NormalizedName = "STUDENT"
                         },
                         new
                         {
-                            Id = "d7ef109a-fa42-4022-9c87-66ac86dd735d",
+                            Id = "b4118403-b038-427a-b4e9-df581f312214",
                             Name = "School",
                             NormalizedName = "SCHOOL"
                         },
                         new
                         {
-                            Id = "03861512-901d-40f6-8d8c-c14badb96e43",
+                            Id = "76353ad2-d360-42c2-a22d-1d13a6f591f3",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         });
@@ -459,6 +459,12 @@ namespace SkoloInstitute.Migrations
 
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
+
+                    b.Property<string>("RefreshToken")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("RefreshTokenExpiryTime")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");

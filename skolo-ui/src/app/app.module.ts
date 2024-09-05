@@ -56,7 +56,7 @@ export function tokenGetter() {
     StudentPriceComponent,
     RegisterComponent,
     ChatbotComponent,
-      SubjectDetailsComponent
+    SubjectDetailsComponent
    ],
   imports: [
     BrowserModule, 

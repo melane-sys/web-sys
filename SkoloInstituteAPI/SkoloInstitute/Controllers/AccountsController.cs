@@ -91,7 +91,7 @@ namespace SkoloInstitute.Controllers
         {
             var user = await _userManager.FindByNameAsync(userForAuthentication.Email);
             if (user == null)
-                return BadRequest("Invalid Request");
+                return BadRequest(new AuthResponseDto { ErrorMessage = "Invalid Request" });
 
             if (!await _userManager.IsEmailConfirmedAsync(user))
                 return Unauthorized(new AuthResponseDto { ErrorMessage = "Email is not confirmed" });
@@ -103,7 +103,6 @@ namespace SkoloInstitute.Controllers
                 if (await _userManager.IsLockedOutAsync(user))
                 {
                     var logoUrl = "https://skoloinstitute.azurewebsites.net/assets/img/brand-logo/img-skoloi-web.png";
-
                     var body = $@"
 <!DOCTYPE html>
 <html>
@@ -113,11 +112,10 @@ namespace SkoloInstitute.Controllers
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-           
         }}
-p{{
- font-size: 16px;
-}}
+        p {{
+            font-size: 16px;
+        }}
         .container {{
             width: 100%;
             max-width: 600px;
@@ -138,7 +136,7 @@ p{{
             <img src='{logoUrl}' alt='Skolo Institute' style='max-width: 100px;' />
         </div>
         <p>Hello {user.FirstName} {user.LastName},</p>
-         <p>Username: {user.UserName}.</p>
+        <p>Username: {user.UserName}.</p>
         <p>Your account is locked out. To reset the password click this link:</p>
         <p><a href='{userForAuthentication.ClientURI}'>Click here</a></p>
         <p>Thank you,</p>
@@ -148,7 +146,6 @@ p{{
 </html>";
 
                     var emailSend = new EmailSendDto(user.Email, "Locked out account information", body);
-
                     await _emailService.SendEmailAsync(emailSend);
 
                     return Unauthorized(new AuthResponseDto { ErrorMessage = "The account is locked out" });
@@ -157,9 +154,15 @@ p{{
                 return Unauthorized(new AuthResponseDto { ErrorMessage = "Invalid Authentication" });
             }
 
+            // Generate tokens upon successful authentication
             var token = await _jwtHandler.GenerateToken(user);
+            var refreshToken = await _jwtHandler.GenerateRefreshToken();
 
-            await _userManager.ResetAccessFailedCountAsync(user);
+            // Store the refresh token in the user entity
+            user.RefreshToken = refreshToken;
+            user.RefreshTokenExpiryTime = DateTime.Now.AddDays(7); // Set refresh token expiry time
+            await _userManager.UpdateAsync(user);
+
             // Create the UserDto object with user information
             var userDto = new UserDto
             {
@@ -171,6 +174,7 @@ p{{
             {
                 IsAuthSuccessful = true,
                 Token = token,
+                RefreshToken = refreshToken,
                 Is2StepVerificationRequired = false, // Set based on your logic
                 Provider = null, // Set if needed
                 User = userDto
@@ -179,21 +183,8 @@ p{{
             return Ok(response);
         }
 
-        private async Task<IActionResult> GenerateOTPFor2StepVerification(User user)
-        {
-            var providers = await _userManager.GetValidTwoFactorProvidersAsync(user);
-            if (!providers.Contains("Email"))
-            {
-                return Unauthorized(new AuthResponseDto { ErrorMessage = "Invalid 2-Step Verification Provider." });
-            }
 
-            var token = await _userManager.GenerateTwoFactorTokenAsync(user, "Email");
-            //   var message = new Message(new string[] { user.Email }, "Authentication token", token, null);
 
-            // await _emailSender.SendEmailAsync(message);
-
-            return Ok(new AuthResponseDto { Is2StepVerificationRequired = true, Provider = "Email" });
-        }
 
         [HttpPost("ForgotPassword")]
         public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordDto forgotPasswordDto)
@@ -301,63 +292,6 @@ p{{
             return Ok();
         }
 
-        [HttpPost("TwoStepVerification")]
-        public async Task<IActionResult> TwoStepVerification([FromBody] TwoFactorDto twoFactorDto)
-        {
-            if (!ModelState.IsValid)
-                return BadRequest();
-
-            var user = await _userManager.FindByEmailAsync(twoFactorDto.Email);
-            if (user is null)
-                return BadRequest("Invalid Request");
-
-            var validVerification = await _userManager.VerifyTwoFactorTokenAsync(user, twoFactorDto.Provider, twoFactorDto.Token);
-            if (!validVerification)
-                return BadRequest("Invalid Token Verification");
-
-            var token = await _jwtHandler.GenerateToken(user);
-
-            return Ok(new AuthResponseDto { IsAuthSuccessful = true, Token = token });
-        }
-
-        [HttpPost("ExternalLogin")]
-        public async Task<IActionResult> ExternalLogin([FromBody] ExternalAuthDto externalAuth)
-        {
-            var payload = await _jwtHandler.VerifyGoogleToken(externalAuth);
-            if (payload == null)
-                return BadRequest("Invalid External Authentication.");
-
-            var info = new UserLoginInfo(externalAuth.Provider, payload.Subject, externalAuth.Provider);
-
-            var user = await _userManager.FindByLoginAsync(info.LoginProvider, info.ProviderKey);
-            if (user == null)
-            {
-                user = await _userManager.FindByEmailAsync(payload.Email);
-                if (user == null)
-                {
-                    user = new User { Email = payload.Email, UserName = payload.Email };
-                    await _userManager.CreateAsync(user);
-
-                    //prepare and send an email for the email confirmation
-
-                    await _userManager.AddToRoleAsync(user, "Student");
-                    await _userManager.AddLoginAsync(user, info);
-                }
-                else
-                {
-                    await _userManager.AddLoginAsync(user, info);
-                }
-            }
-
-            if (user == null)
-                return BadRequest("Invalid External Authentication.");
-
-            //check for the Locked out account
-
-            var token = await _jwtHandler.GenerateToken(user);
-
-            return Ok(new AuthResponseDto { Token = token, IsAuthSuccessful = true });
-        }
 
 
         private async Task<bool> SendConfirmEMailAsync(UserForRegistrationDto userForRegistration)
