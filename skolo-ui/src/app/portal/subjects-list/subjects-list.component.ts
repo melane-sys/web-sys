@@ -31,7 +31,7 @@ export class SubjectsListComponent implements OnInit {
   }
 
   public getPrimarySubjects = () => {
-    const addressUri: string = `api/subjects/Primary/class`;
+    const addressUri: string = `api/subjects/classs/Primary/class`;
     this.repoService.getData(addressUri)
     .subscribe(res => {
       this.primarySubjects= res as SubjectDto[];
@@ -41,7 +41,7 @@ export class SubjectsListComponent implements OnInit {
     })
   }
   public getSecondarySubjects = () => {
-    const addressUri: string = `api/subjects/Secondary/class`;
+    const addressUri: string = `api/subjects/classs/Secondary/class`;
     this.repoService.getData(addressUri)
     .subscribe(res => {
       this.secondarySubjects= res as SubjectDto[];
@@ -51,7 +51,7 @@ export class SubjectsListComponent implements OnInit {
     })
   }
   public getSeniorSubjects = () => {
-    const addressUri: string = `api/subjects/Senior/class`;
+    const addressUri: string = `api/subjects/classs/Senior/class`;
     this.repoService.getData(addressUri)
     .subscribe(res => {
       this.seniorSubjects= res as SubjectDto[];

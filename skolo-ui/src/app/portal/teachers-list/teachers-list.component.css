@@ -1,14 +1,20 @@
 .star-rating {
-    display: inline-block;
-  }
-  
+  display: inline-block;
+}
+
+.star-rating span {
+  font-size: 24px; /* Default size for larger screens */
+  color: lightgray;
+  cursor: pointer;
+}
+
+/* Media query for mobile screens */
+@media (max-width: 600px) {
   .star-rating span {
-    font-size: 24px; 
-    color: lightgray; 
-    cursor: pointer; 
+    font-size: 14px; /* Adjusted size for smaller screens */
   }
-  
-  .star-rating span.filled {
-    color: gold; 
-  }
-  
+}
+
+.star-rating span.filled {
+  color: gold;
+}

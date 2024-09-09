@@ -12,7 +12,7 @@
         <div class="blog-details-wrap">
 
           <div class="blog-details-info mt-5">
-            <div class="section-heading" data-aos="fade-up">
+            <div class="section-heading">
               <h2>Enrolled classes</h2>
             </div>
             <div class="tab-content" id="pills-tabContent">
@@ -107,7 +107,7 @@
                 </div>
                 <div class="author-info">
                   <h6 class="mb-0">{{list?.subjectName}}</h6>
-                  <a (click)="redirectToEnroll(list?.id)"
+                  <a (click)="openSubjectDetailsModal(list?.id)"
                   class="link-with-icon p-0 mt-auto text-decoration-none text-warning">Enroll <i
                     class="far fa-arrow-right"></i></a>
                 </div>

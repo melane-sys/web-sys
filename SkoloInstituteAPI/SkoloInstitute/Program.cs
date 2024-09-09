@@ -17,7 +17,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.ConfigureCors();
 builder.Services.ConfigureIISIntegration();
-builder.Services.ConfigureSqlContext(builder.Configuration);
+//builder.Services.ConfigureSqlContext(builder.Configuration);
+builder.Services.ConfigureMySqlContext(builder.Configuration);
 builder.Services.ConfigureRepositoryManager();
 builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddScoped<EmailService>();
@@ -30,6 +31,7 @@ builder.Services.AddSingleton<IConnectionMultiplexer>(c =>
     var config = ConfigurationOptions.Parse(builder.Configuration.GetConnectionString("Redis"), true);
     return ConnectionMultiplexer.Connect(config);
 });
+
 
 builder.Services.AddScoped<IBasketService, BasketService>();
 

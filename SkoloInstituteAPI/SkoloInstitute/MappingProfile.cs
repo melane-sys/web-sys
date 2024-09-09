@@ -39,6 +39,9 @@ namespace SkoloInstitute
             CreateMap<SubjectForCreationDto, Subject>();
             CreateMap<SubjectForUpdateDto, Subject>();
 
+            CreateMap<GradeForCreationDto, Grade>();
+            CreateMap<GradeForUpdateDto, Grade>();
+
             CreateMap<Enrollment, EnrollmentDto>()
                   .ForMember(n => n.FirstName, opt => opt.MapFrom(src => src.User.FirstName))
                   .ForMember(dest => dest.LastName, opt => opt.MapFrom(src => src.User.LastName));

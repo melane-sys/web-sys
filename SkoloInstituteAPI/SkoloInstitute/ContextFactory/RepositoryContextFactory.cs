@@ -8,16 +8,19 @@ namespace SkoloInstitute.ContextFactory
     {
         public RepositoryContext CreateDbContext(string[] args)
         {
+            // Build configuration
             var configuration = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("appsettings.json")
                 .Build();
 
-            var builder = new DbContextOptionsBuilder<RepositoryContext>()
-                .UseSqlServer(configuration.GetConnectionString("sqlConnection"),
-                b => b.MigrationsAssembly("SkoloInstitute"));
+            // Build DbContextOptions
+            var optionsBuilder = new DbContextOptionsBuilder<RepositoryContext>()
+                .UseMySql(configuration.GetConnectionString("myConnection"),
+                          ServerVersion.AutoDetect(configuration.GetConnectionString("myConnection")));
 
-            return new RepositoryContext(builder.Options);
+            // Create and return the context
+            return new RepositoryContext(optionsBuilder.Options);
         }
     }
 }

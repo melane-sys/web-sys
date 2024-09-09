@@ -50,6 +50,22 @@ namespace SkoloInstitute.Controllers
             }
         }
 
+        [HttpGet("classs/{name}/class")]
+        public IActionResult GetAllSubjectsByClasses(string name)
+        {
+            try
+            {
+                var subjects = _repository.Subject.GetSubjectsByClasses(name);
+
+                var subjectsResult = _mapper.Map<IEnumerable<SubjectDto>>(subjects);
+                return Ok(subjectsResult);
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
         [HttpGet("{id}", Name = "SubjectById")]
         public IActionResult GetSubjectById(Guid id)
         {

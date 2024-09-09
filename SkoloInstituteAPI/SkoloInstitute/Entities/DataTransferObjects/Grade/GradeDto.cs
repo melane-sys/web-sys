@@ -6,4 +6,12 @@
         public string GradeName { get; set; }
         public Guid SubjectId { get; set; }
     }
+    public class GradeForCreationDto
+    {
+        public string GradeName { get; set; }
+    }
+    public class GradeForUpdateDto
+    {
+        public string GradeName { get; set; }
+    }
 }

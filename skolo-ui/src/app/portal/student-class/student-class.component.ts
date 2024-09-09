@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { BsModalService } from 'ngx-bootstrap/modal';
+import { BsModalRef, BsModalService, ModalOptions } from 'ngx-bootstrap/modal';
 import { EnrollmentDto } from 'src/app/_interfaces/enrollment/EnrollmentDto';
 import { SubjectDto } from 'src/app/_interfaces/subject/SubjectDto';
 import { AuthenticationService } from 'src/app/shared/service/authentication.service';
 import { ErrorHandlerService } from 'src/app/shared/service/error-handler.service';
 import { RepositoryService } from 'src/app/shared/service/repository.service';
+import { SubjectDetailsComponent } from 'src/app/subject-details/subject-details.component';
 
 @Component({
   selector: 'app-student-class',
@@ -20,12 +21,13 @@ export class StudentClassComponent implements OnInit {
   enrollments: EnrollmentDto|any;
   gradeClass:any;
   grade:any;
-  
+  bsModalRef?: BsModalRef;
 
   constructor( 
     private repoService: RepositoryService,
     private errorService: ErrorHandlerService, 
     private router: Router,
+    private modalService: BsModalService
   ) {}
 
   ngOnInit() {
@@ -124,5 +126,15 @@ export class StudentClassComponent implements OnInit {
   public redirectToEnroll = async (id: string) => {
     let url: string = `student-portal/student-enroll/${id}`;
     this.router.navigate([url]);
+  }
+
+  openSubjectDetailsModal(subjectId: string) {
+    const initialState: ModalOptions = {
+      initialState: {
+        subjectId: subjectId
+      }
+    };
+
+    this.bsModalRef = this.modalService.show(SubjectDetailsComponent, initialState);
   }
 }

@@ -57,6 +57,15 @@ namespace SkoloInstitute.Repository
                 .ToList();
         }
 
+        public IEnumerable<Subject> GetSubjectsByClasses(string name)
+        {
+            return FindByCondition(ow => ow.Class.Equals(name))
+    .Include(x => x.Teacher)
+    .Include(x => x.Grades)
+    .Include(x => x.EnrollItems)
+    .ToList();
+        }
+
         public void UpdateData(Subject data)
         {
             Update(data);
