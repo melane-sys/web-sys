@@ -1,11 +1,16 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { BsModalRef, BsModalService, ModalOptions } from 'ngx-bootstrap/modal';
+import { StudentCategoryDto } from 'src/app/_interfaces/student/student';
 import { SubjectDto } from 'src/app/_interfaces/subject/SubjectDto';
 import { TeacherDto } from 'src/app/_interfaces/teacher/TeacherDto';
 import { ErrorHandlerService } from 'src/app/shared/service/error-handler.service';
 import { RepositoryService } from 'src/app/shared/service/repository.service';
 import { SubjectDetailsComponent } from 'src/app/subject-details/subject-details.component';
+import { CategoryComponent } from '../category/category.component';
+import { Subscription } from 'rxjs';
+import { DataService } from 'src/app/shared/service/data.service';
 
 @Component({
   selector: 'app-subjects-list',
@@ -14,58 +19,62 @@ import { SubjectDetailsComponent } from 'src/app/subject-details/subject-details
 })
 export class SubjectsListComponent implements OnInit {
   bsModalRef?: BsModalRef;
-  primarySubjects: SubjectDto|any;
-  secondarySubjects: SubjectDto|any;
-  seniorSubjects: SubjectDto|any;
-  constructor( 
+  subjects: SubjectDto |any;
+  studentCategory: StudentCategoryDto | null = null;
+  private refreshSubscription!: Subscription;
+  constructor(
     private repoService: RepositoryService,
-    private errorService: ErrorHandlerService, 
+    private errorService: ErrorHandlerService,
     private router: Router,
-    private modalService: BsModalService
-  ) {}
-
-  ngOnInit() {
-    this.getPrimarySubjects();
-    this.getSecondarySubjects();
-    this.getSeniorSubjects();
+    private modalService: BsModalService,
+    private dataService: DataService,
+  ) {
+    this.refreshSubscription = this.dataService.refreshTab1$.subscribe(() => {
+      this.getStudentCategory();
+    });
   }
 
-  public getPrimarySubjects = () => {
-    const addressUri: string = `api/subjects/classs/Primary/class`;
-    this.repoService.getData(addressUri)
-    .subscribe(res => {
-      this.primarySubjects= res as SubjectDto[];
-    },
-    (error) => {
-      this.errorService.handleError(error);
-    })
-  }
-  public getSecondarySubjects = () => {
-    const addressUri: string = `api/subjects/classs/Secondary/class`;
-    this.repoService.getData(addressUri)
-    .subscribe(res => {
-      this.secondarySubjects= res as SubjectDto[];
-    },
-    (error) => {
-      this.errorService.handleError(error);
-    })
-  }
-  public getSeniorSubjects = () => {
-    const addressUri: string = `api/subjects/classs/Senior/class`;
-    this.repoService.getData(addressUri)
-    .subscribe(res => {
-      this.seniorSubjects= res as SubjectDto[];
-    },
-    (error) => {
-      this.errorService.handleError(error);
-    })
-  }
-  public redirectToEnroll = async (id: string) => {
-    let url: string = `student-portal/student-enroll/${id}`;
-    this.router.navigate([url]);
+  ngOnInit(): void {
+    this.getStudentCategory();
   }
 
-  openSubjectDetailsModal(subjectId: string) {
+  private getStudentCategory(): void {
+    const apiUrl: string = `api/categories/user/CategoryByUserId`;
+    this.repoService.getData(apiUrl)
+      .subscribe(
+        (res) => {
+          this.studentCategory = res as StudentCategoryDto;
+          if (!this.studentCategory?.categoryName) {
+            this.openSelectGrade();
+          } else {
+            this.getSubjects(this.studentCategory.categoryName);
+          }
+        },
+        (err: HttpErrorResponse) => {
+          this.openSelectGrade();
+        }
+      );
+  }
+
+  public getSubjects(grade: string): void {
+    const addressUri: string = `api/subjects/classs/${grade}/class`;
+    this.repoService.getData(addressUri)
+      .subscribe(
+        (res) => {
+          this.subjects = res as SubjectDto[];
+        },
+        (error) => {
+          this.errorService.handleError(error);
+        }
+      );
+  }
+
+  // public redirectToEnroll(id: string): void {
+  //   const url: string = `student-portal/student-enroll/${id}`;
+  //   this.router.navigate([url]);
+  // }
+
+  openSubjectDetailsModal(subjectId: string): void {
     const initialState: ModalOptions = {
       initialState: {
         subjectId: subjectId
@@ -73,5 +82,9 @@ export class SubjectsListComponent implements OnInit {
     };
 
     this.bsModalRef = this.modalService.show(SubjectDetailsComponent, initialState);
+  }
+
+  openSelectGrade(): void {
+    this.bsModalRef = this.modalService.show(CategoryComponent);
   }
 }

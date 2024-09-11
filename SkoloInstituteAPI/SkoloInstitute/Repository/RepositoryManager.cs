@@ -11,6 +11,7 @@ namespace SkoloInstitute.Repository
         private ITeacherRepository _teacherRepository;
         private ISubjectRepository _subjectRepository;
         private ISubscribeRepository _subscribeRepository;
+        private IStudentCategoryRepository _categoryRepository;
 
         public RepositoryManager(RepositoryContext repositoryContext)
         {
@@ -89,6 +90,19 @@ namespace SkoloInstitute.Repository
                 return _subscribeRepository;
             }
         }
+
+        public IStudentCategoryRepository StudentCategory
+        {
+            get
+            {
+                if (_categoryRepository == null)
+                {
+                    _categoryRepository = new StudentCategoryRepository(_repoContext);
+                }
+                return _categoryRepository;
+            }
+        }
+
         public void Save() => _repoContext.SaveChanges();
     }
 }

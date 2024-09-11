@@ -8,6 +8,7 @@
         ITeacherRepository Teacher { get; }
         ISubjectRepository Subject { get; }
         ISubscribeRepository Subscriber { get; }
+        IStudentCategoryRepository StudentCategory { get; }
         void Save();
     }
 }

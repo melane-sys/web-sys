@@ -7,6 +7,7 @@ using SkoloInstitute.Entities.DataTransferObjects;
 using SkoloInstitute.Entities.Models;
 using SkoloInstitute.JwtFeatures;
 using SkoloInstitute.Services;
+using System.Security.Claims;
 
 namespace SkoloInstitute.Controllers
 {
@@ -50,8 +51,10 @@ namespace SkoloInstitute.Controllers
 
             await _userManager.AddToRoleAsync(user, "Student");
 
+            // Generate tokens upon successful authentication
+
             // Create enrollment
-            // var enrollment = new Enrollment
+            //  var grade = new 
             // {
             //    UserId = user.Id,
             //    SubjectId = new Guid("f10323d3-da72-44e7-ae7d-0379da31b329")
@@ -266,6 +269,34 @@ p{{
                 return BadRequest("Invalid Request");
 
             var resetPassResult = await _userManager.ResetPasswordAsync(user, resetPasswordDto.Token, resetPasswordDto.Password);
+            if (!resetPassResult.Succeeded)
+            {
+                var errors = resetPassResult.Errors.Select(e => e.Description);
+
+                return BadRequest(new { Errors = errors });
+            }
+
+            await _userManager.SetLockoutEndDateAsync(user, new DateTime(2000, 1, 1));
+
+            return Ok();
+        }
+
+        [HttpPost("User/ChangePassword")]
+        public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordDto resetPasswordDto)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest();
+            var email = User.FindFirstValue(ClaimTypes.Name);
+            var user = await _userManager.FindByEmailAsync(email);
+            if (user == null)
+                return BadRequest("Invalid Request");
+
+            if (!await _userManager.CheckPasswordAsync(user, resetPasswordDto.PreviousPassword))
+            {
+                return BadRequest("Invalid Password");
+            }
+            var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+            var resetPassResult = await _userManager.ResetPasswordAsync(user, token, resetPasswordDto.Password);
             if (!resetPassResult.Succeeded)
             {
                 var errors = resetPassResult.Errors.Select(e => e.Description);

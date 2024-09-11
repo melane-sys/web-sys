@@ -11,7 +11,8 @@ namespace SkoloInstitute.Entities.DataTransferObjects.Subject
         public Guid TeacherId { get; set; }
         public string TeacherFirstName { get; set; }
         public string TeacherLastName { get; set; }
-        public IEnumerable<GradeDto> Grades { get; set; }
+        public int TeacherRating { get; set; }
+        public IEnumerable<ContentDto> Contents { get; set; }
         public int EnrollItemsCount { get; set; }
 
     }

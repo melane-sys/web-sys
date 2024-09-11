@@ -27,6 +27,7 @@ export class TeacherDetailsComponent implements OnInit {
   ratingForm: FormGroup |any;
   bsModalRef?: BsModalRef;
   @Input() light: boolean = false;
+  stars = Array(5).fill(0);
   
   constructor(
    private repository: RepositoryService,

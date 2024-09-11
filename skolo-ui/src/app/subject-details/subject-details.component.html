@@ -3,12 +3,22 @@
 </div>
 <div class="modal-body">
   <p><strong>Teacher:</strong> {{subject?.teacherFirstName}} {{subject?.teacherLastName}}</p>
+  <div class="sh-feedback-rating">
+    <div class="star-rating">
+      <strong>Teacher rating:</strong>
+      <span *ngFor="let star of stars; let i = index"
+            [class.filled]="i < subject?.teacherRating">
+        &#9733; <!-- Unicode star character -->
+      </span>
+    </div>
+    
+  </div>
   <p><strong>Students enrolled: </strong>{{subject?.enrollItemsCount}}</p>
-  <p><strong>Grade description</strong></p>
+  <p><strong>syllabus outline</strong></p>
   <div class="app-two-feature-two-content">
     <ul class="list-unstyled d-flex flex-wrap list-two-col mt-4" >
-      <li class="py-1" *ngFor="let item of subject?.grades">
-        <i class="fad fa-check-circle me-2"></i>{{item?.gradeName}}
+      <li class="py-1" *ngFor="let item of subject?.contents">
+        <i class="fad fa-check-circle me-2"></i>{{item?.contentName}}
       </li>
     </ul>
   </div>

@@ -1,0 +1,197 @@
+<section class="home-blog-section ptb-60-2 bg-light">
+  <div class="container">
+    <div class="row align-items-center justify-content-lg-between">
+      <div class="col-lg-6 col-md-12">
+        <div class="section-heading">
+          <h4 class="h5 text-primary">Foundational</h4>
+          <h2>Primary subjects</h2>
+          <p>
+            Explore our Subjects to give your child a strong foundation and spark their love for learning.
+          </p>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-12">
+        <div class="text-lg-end mb-5 mb-lg-0">
+          <a routerLink="/primary-subjects" class="btn btn-primary"
+            >Explore All Subjects</a
+          >
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12">
+        <div class="integration-wrapper position-relative w-100">
+          <ul class="integration-list list-unstyled mb-0">
+            <li *ngFor="let list of primarySubjects" (click)="openSubjectDetailsModal(list?.id)">
+              <div class="single-integration">
+                <div
+                  class="nav-link d-flex align-items-center"
+                  data-bs-toggle="pill" data-bs-target="#testimonial-tab-1" role="tab" aria-selected="false">
+                  <div class="testimonial-thumb me-3">
+                    <img src="assets/img/integations/airbnb.png" width="50" class="rounded-circle" alt="testimonial thumb" />
+                  </div>
+                  <div class="author-info">
+                    <h6 class="mb-0">{{list?.subjectName}}</h6>
+                    <span>students: {{list?.enrollItemsCount}}</span>
+                  </div>
+                </div>
+
+                <a class="link-with-icon p-0 mt-auto text-decoration-none pointer text-warning">Enroll in Subject<i
+                    class="far fa-arrow-right"></i></a>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="home-blog-section ptb-60-2">
+  <div class="container">
+    <div class="row align-items-center justify-content-lg-between">
+      <div class="col-lg-6 col-md-12">
+        <div class="section-heading">
+          <h4 class="h5 text-primary">Intermediate Studies</h4>
+          <h2>Secondary subjects</h2>
+          <p>
+            Discover our Intermediate Subjects to deepen your child’s understanding and 
+            build essential skills for future success.
+          </p>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-12">
+        <div class="text-lg-end mb-5 mb-lg-0">
+          <a routerLink="/secondary-subjects" class="btn btn-primary"
+            >Explore All subjects</a
+          >
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12">
+        <div class="integration-wrapper position-relative w-100">
+          <ul class="integration-list list-unstyled mb-0">
+            <li *ngFor="let list of secondarySubjects" (click)="openSubjectDetailsModal(list?.id)">
+              <div class="single-integration">
+                <div
+                  class="nav-link d-flex align-items-center"
+                  data-bs-toggle="pill" data-bs-target="#testimonial-tab-1" role="tab" aria-selected="false">
+                  <div class="testimonial-thumb me-3">
+                    <img src="assets/img/integations/airbnb.png" width="50" class="rounded-circle" alt="testimonial thumb" />
+                  </div>
+                  <div class="author-info">
+                    <h6 class="mb-0">{{list?.subjectName}}</h6>
+                    <span>students: {{list?.enrollItemsCount}}</span>
+                  </div>
+                </div>
+
+                <a class="link-with-icon p-0 mt-auto text-decoration-none pointer text-warning">Enroll in Subject<i
+                    class="far fa-arrow-right"></i></a>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="home-blog-section ptb-60-2 bg-light">
+  <div class="container">
+    <div class="row align-items-center justify-content-lg-between">
+      <div class="col-lg-6 col-md-12">
+        <div class="section-heading">
+          <h4 class="h5 text-primary">SGCSE</h4>
+          <h2>Senior subjects</h2>
+          <p>
+            Boost your child's university chances with our advanced subjects, offering deep knowledge and critical skills.
+          </p>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-12">
+        <div class="text-lg-end mb-5 mb-lg-0">
+          <a routerLink="/senior-subjects" class="btn btn-primary"
+            >Explore All subjects</a
+          >
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12">
+        <div class="integration-wrapper position-relative w-100">
+          <ul class="integration-list list-unstyled mb-0">
+            <li *ngFor="let list of seniorSubjects" (click)="openSubjectDetailsModal(list?.id)">
+              <div class="single-integration">
+                <div
+                  class="nav-link d-flex align-items-center">
+                  <div class="testimonial-thumb me-3">
+                    <img src="assets/img/integations/airbnb.png" width="50" class="rounded-circle" alt="testimonial thumb" />
+                  </div>
+                  <div class="author-info">
+                    <h6 class="mb-0">{{list?.subjectName}}</h6>
+                    <span>students: {{list?.enrollItemsCount}}</span>
+                  </div>
+                </div>
+
+                <a class="link-with-icon p-0 mt-auto text-decoration-none pointer text-warning">Enroll in Subject<i
+                    class="far fa-arrow-right"></i></a>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<section class="home-blog-section ptb-120 ">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-12 col-md-12">
+        <div class="section-heading text-center">
+          <h4 class="text-primary h5">Professional Growth</h4>
+          <h2>Career Advancement Programs</h2>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-4 col-md-6" *ngFor="let list of careerSubjects">
+        <div class="single-article rounded-custom mb-4 mb-lg-0">
+          <a routerLink="/news-details" class="article-img">
+            <img
+              src="assets/img/blog-1.jpg"
+              alt="article"
+              class="img-fluid"
+            />
+          </a>
+          <div class="article-content p-4">
+            <div class="article-category mb-4 d-block">
+              <a
+                href="javascript:;"
+                class="d-inline-block text-dark badge bg-warning-soft"
+                >Design</a
+              >
+            </div>
+            <a >
+              <h2 class="h5 article-title limit-2-line-text">
+                Do you really understand the concept of product value?
+              </h2>
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="row justify-content-center">
+      <div class="text-center mt-5">
+        <a routerLink="/career-development" class="btn btn-primary">Explore All Career Programs</a>
+      </div>
+    </div>
+  </div>
+</section>
+

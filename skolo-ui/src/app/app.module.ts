@@ -31,13 +31,23 @@ import { JwtModule } from '@auth0/angular-jwt';
 import { ErrorHandlerService } from './shared/service/error-handler.service';
 import { SchoolPortalModule } from './school-portal/school-portal.module';
 import { SubjectDetailsComponent } from './subject-details/subject-details.component';
+import { SubjectsComponent } from './home/subjects/subjects.component';
+import { CareerComponent } from './home/career/career.component';
+import { PrimaryComponent } from './home/primary/primary.component';
+import { SecondaryComponent } from './home/secondary/secondary.component';
+import { SeniorComponent } from './home/senior/senior.component';
+import { OthersPageHeaderComponent } from './shared/others-page-header/others-page-header.component';
+import { CategoryComponent } from './portal/category/category.component';
+import { AccountComponent } from './account/account.component';
+import { ChangePasswordComponent } from './account/change-password/change-password.component';
+import { ChangeCategoryComponent } from './account/change-category/change-category.component';
 
 export function tokenGetter() {
   return localStorage.getItem("token");
 }
 
 @NgModule({
-  declarations: [											
+  declarations: [												
     AppComponent,
     PageNotFoundComponent,
     HomeComponent,
@@ -56,7 +66,17 @@ export function tokenGetter() {
     StudentPriceComponent,
     RegisterComponent,
     ChatbotComponent,
-    SubjectDetailsComponent
+    SubjectDetailsComponent,
+    SubjectsComponent,
+    PrimaryComponent,
+    SecondaryComponent,
+    SeniorComponent,
+    CareerComponent,
+    OthersPageHeaderComponent,
+    CategoryComponent,
+      AccountComponent,
+      ChangePasswordComponent,
+      ChangeCategoryComponent
    ],
   imports: [
     BrowserModule, 

@@ -7,11 +7,12 @@ export interface SubjectDto {
     subjectId: string;
     teacherFirstName: string;
     teacherLastName: string;
-    grades: GradeDto[] |any;
+    contents: ContentDto[] |any;
     enrollItemsCount:any;
+    teacherRating: number
   }
-  export interface GradeDto {
+  export interface ContentDto {
     id: string; 
-    gradeName: string;
+    contentName: string;
     subjectId: string;
   }

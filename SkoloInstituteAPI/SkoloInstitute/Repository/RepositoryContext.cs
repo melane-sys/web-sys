@@ -21,7 +21,8 @@ namespace SkoloInstitute.Repository
 
         public DbSet<Enrollment> Enrollments { get; set; }
         public DbSet<EnrollItem> EnrollItems { get; set; }
-        public DbSet<Grade> Grades { get; set; }
+        public DbSet<Content> Contents { get; set; }
+        public DbSet<StudentCategory> StudentCategories { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

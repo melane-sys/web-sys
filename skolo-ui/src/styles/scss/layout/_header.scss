@@ -117,7 +117,7 @@
 }
 
 .navbar-dark .main-menu li a.nav-link {
-  color: $gray-300;
+  color: $primary;
 }
 .navbar-dark .action-btns a.btn-link {
   color: $gray-300;
@@ -159,7 +159,7 @@
 .action-btns a.btn-link:hover,
 .navbar-dark.sticky-header.affix .main-menu li a.nav-link:hover,
 .navbar-dark.sticky-header.affix .action-btns a.btn-link:hover {
-  color: $primary;
+  color: $dark;
 }
 .dropdown-grid-item {
   a {

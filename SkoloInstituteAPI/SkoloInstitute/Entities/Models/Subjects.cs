@@ -10,7 +10,7 @@ namespace SkoloInstitute.Entities.Models
         public decimal Price { get; set; } = 125;
         public Guid TeacherId { get; set; }
         public Teacher Teacher { get; set; }
-        public ICollection<Grade> Grades { get; set; }
+        public ICollection<Content> Contents { get; set; }
         public ICollection<EnrollItem> EnrollItems { get; set; }
     }
 }

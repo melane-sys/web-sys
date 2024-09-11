@@ -15,12 +15,16 @@ namespace SkoloInstitute.ContextFactory
                 .Build();
 
             // Build DbContextOptions
-            var optionsBuilder = new DbContextOptionsBuilder<RepositoryContext>()
-                .UseMySql(configuration.GetConnectionString("myConnection"),
-                          ServerVersion.AutoDetect(configuration.GetConnectionString("myConnection")));
+            // var optionsBuilder = new DbContextOptionsBuilder<RepositoryContext>()
+            //    .UseMySql(configuration.GetConnectionString("myConnection"),
+            //             ServerVersion.AutoDetect(configuration.GetConnectionString("myConnection")));
+
+            var builder = new DbContextOptionsBuilder<RepositoryContext>()
+   .UseSqlServer(configuration.GetConnectionString("sqlConnection"),
+   b => b.MigrationsAssembly("SkoloInstitute"));
 
             // Create and return the context
-            return new RepositoryContext(optionsBuilder.Options);
+            return new RepositoryContext(builder.Options);
         }
     }
 }

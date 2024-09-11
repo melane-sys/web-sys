@@ -21,11 +21,13 @@ namespace SkoloInstitute.Controllers
         private const string RequestToPayEndpoint = "https://sandbox.momodeveloper.mtn.com/collection/v1_0/requesttopay";
         private IRepositoryManager _repository;
         private IMapper _mapper;
-        public PaymentController(HttpClient httpClient, IRepositoryManager repository, IMapper mapper)
+        private readonly IBasketService _basketService;
+        public PaymentController(HttpClient httpClient, IRepositoryManager repository, IMapper mapper, IBasketService basketService)
         {
             _httpClient = httpClient;
             _repository = repository;
             _mapper = mapper;
+            _basketService = basketService;
         }
 
         private HttpRequestMessage CreateRequest(HttpMethod method, string endpoint, string jsonBody = null, string referenceId = null, string apiKey = null, string token = null, string targetEnvironment = null)
@@ -156,6 +158,7 @@ namespace SkoloInstitute.Controllers
                 _repository.Enrollment.CreateData(enrollmentEntity);
                 _repository.Save();
 
+                await _basketService.DeleteBasketAsync(enrollment.BasketId);
 
                 // Return the result of RequestToPay
                 return Ok(new

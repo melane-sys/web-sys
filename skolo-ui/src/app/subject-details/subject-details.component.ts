@@ -21,6 +21,7 @@ export class SubjectDetailsComponent implements OnInit {
   basket$!: Observable<IBasket>;
   basketTotals$!: Observable<IBasketTotals>;
   @Input() isBasket = true;
+  stars = Array(5).fill(0);
 
   constructor(public bsModalRef: BsModalRef,
     private repository: RepositoryService,

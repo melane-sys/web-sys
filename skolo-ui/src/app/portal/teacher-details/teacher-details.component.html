@@ -12,6 +12,16 @@
         <div class="section-heading">
           <h4 class="h5 text-primary">Educator details</h4>
           <h2>{{ teacher?.firstName }} {{ teacher?.lastName }}</h2>
+          <div class="sh-feedback-rating">
+            <div class="star-rating">
+              <strong>Teacher rating:</strong>
+              <span *ngFor="let star of stars; let i = index"
+                    [class.filled]="i < teacher?.rating">
+                &#9733; <!-- Unicode star character -->
+              </span>
+            </div>
+            
+          </div>
         </div>
         <div class="row justify-content-between pb-5">
           <img [src]="teacher?.pictureUrl" alt="teacher" class="img-fluid img-size" />

@@ -11,7 +11,7 @@ import { ForgotPasswordDto } from 'src/app/_interfaces/resetPassword/forgotPassw
 import { ResetPasswordDto } from 'src/app/_interfaces/resetPassword/resetPasswordDto.model';
 import { CustomEncoder } from '../custom-encoder';
 import { TwoFactorDto } from 'src/app/_interfaces/twoFactor/twoFactorDto.model';
-import { User } from 'src/app/_interfaces/user/User';
+import { ChangePasswordDto, User } from 'src/app/_interfaces/user/User';
 
 
 @Injectable({
@@ -51,6 +51,10 @@ export class AuthenticationService {
   }
 
   public resetPassword(route: string, body: ResetPasswordDto) {
+    return this.http.post(this.createCompleteRoute(route, this.envUrl.urlAddress), body);
+  }
+
+  public changePassword(route: string, body: ChangePasswordDto) {
     return this.http.post(this.createCompleteRoute(route, this.envUrl.urlAddress), body);
   }
 

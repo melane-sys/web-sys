@@ -35,12 +35,17 @@ namespace SkoloInstitute
             CreateMap<Subject, SubjectDto>()
                   .ForMember(n => n.TeacherFirstName, opt => opt.MapFrom(src => src.Teacher.FirstName))
                   .ForMember(dest => dest.TeacherLastName, opt => opt.MapFrom(src => src.Teacher.LastName))
-                  .ForMember(dest => dest.EnrollItemsCount, opt => opt.MapFrom(src => src.EnrollItems.Count));
+                  .ForMember(dest => dest.EnrollItemsCount, opt => opt.MapFrom(src => src.EnrollItems.Count))
+                   .ForMember(d => d.TeacherRating, o => o.MapFrom(s => s.Teacher.Ratings.Count != 0 ? (int)s.Teacher.Ratings.Average(r => r.starsCount) : 0));
             CreateMap<SubjectForCreationDto, Subject>();
             CreateMap<SubjectForUpdateDto, Subject>();
 
-            CreateMap<GradeForCreationDto, Grade>();
-            CreateMap<GradeForUpdateDto, Grade>();
+            CreateMap<StudentCategory, StudentCategoryDto>();
+            CreateMap<StudentCategoryForCreationDto, StudentCategory>();
+            CreateMap<StudentCategoryForUpdateDto, StudentCategory>();
+
+            CreateMap<ContentForCreationDto, Content>();
+            CreateMap<ContentForUpdateDto, Content>();
 
             CreateMap<Enrollment, EnrollmentDto>()
                   .ForMember(n => n.FirstName, opt => opt.MapFrom(src => src.User.FirstName))
@@ -63,7 +68,7 @@ namespace SkoloInstitute
             CreateMap<BasketItemDto, BasketItem>();
             CreateMap<CustomerBasketDto, CustomerBasket>();
 
-            CreateMap<Grade, GradeDto>();
+            CreateMap<Content, ContentDto>();
 
         }
     }

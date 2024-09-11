@@ -1,0 +1,22 @@
+<div class="modal-header">
+  <h4 class="modal-title">Select your category</h4>
+</div>
+<div class="modal-body">
+  <form [formGroup]="categoryForm" (ngSubmit)="submitApplication()">
+    <div class="form-group">
+      <label for="categoryName">Category</label>
+      <select id="categoryName" formControlName="categoryName" class="form-control">
+        <option value="">Select a category</option>
+        <option *ngFor="let category of categories" [value]="category.name">{{ category.name }}</option>
+      </select>
+      <div *ngIf="validateControl('categoryName')" class="text-danger">
+        Category is required.
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary" [disabled]="categoryForm.invalid">Submit</button>
+  </form>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-danger" (click)="onClose()">Close</button>
+</div>
+

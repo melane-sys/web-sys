@@ -24,7 +24,7 @@ namespace SkoloInstitute.Repository
         {
             return FindAll().OrderBy(ow => ow.Id)
                    .Include(x => x.Teacher)
-                       .Include(x => x.Grades)
+                       .Include(x => x.Contents)
                                        .Include(x => x.EnrollItems)
                 .ToList();
         }
@@ -33,7 +33,7 @@ namespace SkoloInstitute.Repository
         {
             return FindByCondition(ow => ow.Id.Equals(Id))
                   .Include(x => x.Teacher)
-                        .Include(x => x.Grades)
+                        .Include(x => x.Contents)
                                         .Include(x => x.EnrollItems)
                 .FirstOrDefault();
         }
@@ -42,7 +42,8 @@ namespace SkoloInstitute.Repository
         {
             return FindByCondition(ow => ow.Class.Equals(name))
                 .Include(x => x.Teacher)
-                .Include(x => x.Grades)
+                .ThenInclude(c => c.Ratings)
+                .Include(x => x.Contents)
                 .Include(x => x.EnrollItems)
                 .AsEnumerable()
                 .GroupBy(s => s)
@@ -61,7 +62,7 @@ namespace SkoloInstitute.Repository
         {
             return FindByCondition(ow => ow.Class.Equals(name))
     .Include(x => x.Teacher)
-    .Include(x => x.Grades)
+    .Include(x => x.Contents)
     .Include(x => x.EnrollItems)
     .ToList();
         }

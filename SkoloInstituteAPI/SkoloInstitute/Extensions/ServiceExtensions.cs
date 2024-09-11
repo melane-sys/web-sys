@@ -28,16 +28,16 @@ namespace SkoloInstitute.Extensions
         {
             services.AddSingleton<ILoggerManager, LoggerManager>();
         }
-        //   public static void ConfigureSqlContext(this IServiceCollection services, IConfiguration configuration) =>
-        //     services.AddDbContext<RepositoryContext>(opts =>
-        //         opts.UseSqlServer(configuration.GetConnectionString("sqlConnection"), b => b.MigrationsAssembly("SkoloInstitute")));
+        public static void ConfigureSqlContext(this IServiceCollection services, IConfiguration configuration) =>
+          services.AddDbContext<RepositoryContext>(opts =>
+               opts.UseSqlServer(configuration.GetConnectionString("sqlConnection"), b => b.MigrationsAssembly("SkoloInstitute")));
 
-        public static void ConfigureMySqlContext(this IServiceCollection services, IConfiguration config)
-        {
-            var connectionString = config.GetConnectionString("myConnection");
-            services.AddDbContext<RepositoryContext>(o => o.UseMySql(connectionString,
-                MySqlServerVersion.LatestSupportedServerVersion));
-        }
+        //   public static void ConfigureMySqlContext(this IServiceCollection services, IConfiguration config)
+        //  {
+        //    var connectionString = config.GetConnectionString("myConnection");
+        //   services.AddDbContext<RepositoryContext>(o => o.UseMySql(connectionString,
+        //        MySqlServerVersion.LatestSupportedServerVersion));
+        // }
         public static void ConfigureRepositoryManager(this IServiceCollection services) =>
            services.AddScoped<IRepositoryManager, RepositoryManager>();
 

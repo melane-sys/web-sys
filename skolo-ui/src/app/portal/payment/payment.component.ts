@@ -83,6 +83,7 @@ export class PaymentComponent implements OnInit {
     const orderData: EnrollmentForCreationDto = {
       grade: this.selectedGrade,
       subtotal: subtotal,
+      basketId: basket.id,
       phoneNumber: this.phoneNumber,
       enrollItems: basket.items.map(item => {
         return {
@@ -115,7 +116,8 @@ export class PaymentComponent implements OnInit {
 
         this.bsModalRef = this.modal.show(SuccessModalComponent, config);
         this.bsModalRef.content.redirectOnOk.subscribe((_: any)=> {
-        this.goHome();
+          this.basketService.deleteLocalBasket(basket.id);
+           this.goHome();
         } );
 
       },

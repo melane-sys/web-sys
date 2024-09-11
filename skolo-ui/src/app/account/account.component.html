@@ -1,0 +1,50 @@
+<app-header></app-header>
+<section class="blog-details pt-60">
+  <div class="container">
+    <div class="row justify-content-between">
+      <div class="col-lg-4">
+        <div class="author-wrap text-center bg-light p-5 sticky-sidebar rounded-custom mt-5 mt-lg-0">
+          <div class="author-info my-4">
+            <h5 class="mb-0">{{user?.firstName}} {{user?.lastName}}</h5>
+            <span class="small">{{studentCategory?.categoryName}}</span>
+          </div>
+          <img
+          src="assets/img/brand-logo/img-skoloi-web.png"
+          alt="author"
+          width="120"
+          class="img-fluid shadow-sm rounded-circle"
+        />
+          <ul class="list-unstyled author-social-list list-inline mt-3 mb-0">
+            <li class="list-inline-item">
+              <a href="#"><i class="fab fa-linkedin-in"></i></a>
+            </li>
+            <li class="list-inline-item">
+              <a href="#"><i class="fab fa-twitter"></i></a>
+            </li>
+            <li class="list-inline-item">
+              <a href="#"><i class="fab fa-github"></i></a>
+            </li>
+            <li class="list-inline-item">
+              <a href="#"><i class="fab fa-facebook-f"></i></a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-lg-8 pe-lg-5">
+        <div class="blog-details-wrap">
+
+          <div class="section-heading">
+            <h4>
+              Password change</h4>
+          </div>
+<app-change-password></app-change-password>
+
+          <div class="blog-details-info mt-5">
+            <h3 class="h5">Update your class category</h3>
+             <app-change-category></app-change-category>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

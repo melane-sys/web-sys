@@ -10,6 +10,11 @@ import { StudentPriceComponent } from './student-price/student-price.component';
 import { AuthGuard } from './shared/guards/auth.guard';
 import { StudentGuard } from './shared/guards/student.guard';
 import { SchoolGuard } from './shared/guards/school.guard';
+import { PrimaryComponent } from './home/primary/primary.component';
+import { SecondaryComponent } from './home/secondary/secondary.component';
+import { SeniorComponent } from './home/senior/senior.component';
+import { CareerComponent } from './home/career/career.component';
+import { AccountComponent } from './account/account.component';
 
 
 const routes: Routes = [
@@ -36,6 +41,26 @@ const routes: Routes = [
   {
     path: 'school-pricing',
     component: SchoolPriceComponent,
+  },
+  {
+    path: 'primary-subjects',
+    component: PrimaryComponent,
+  },
+  {
+    path: 'secondary-subjects',
+    component: SecondaryComponent,
+  },
+  {
+    path: 'senior-subjects',
+    component: SeniorComponent,
+  },
+  {
+    path: 'career-development',
+    component: CareerComponent,
+  },
+  {
+    path: 'account',
+    component: AccountComponent,
   },
   { path: 'authentication', loadChildren: () => import('./authentication/authentication.module').then(m => m.AuthenticationModule) },
   {
