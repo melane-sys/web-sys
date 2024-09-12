@@ -1,5 +1,4 @@
-﻿
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using SkoloInstitute.Contracts;
 using SkoloInstitute.LoggerService;
 using SkoloInstitute.Repository;
@@ -29,8 +28,8 @@ namespace SkoloInstitute.Extensions
             services.AddSingleton<ILoggerManager, LoggerManager>();
         }
         public static void ConfigureSqlContext(this IServiceCollection services, IConfiguration configuration) =>
-          services.AddDbContext<RepositoryContext>(opts =>
-               opts.UseSqlServer(configuration.GetConnectionString("sqlConnection"), b => b.MigrationsAssembly("SkoloInstitute")));
+        services.AddDbContext<RepositoryContext>(opts =>
+          opts.UseSqlServer(configuration.GetConnectionString("sqlConnection"), b => b.MigrationsAssembly("SkoloInstitute")));
 
         //   public static void ConfigureMySqlContext(this IServiceCollection services, IConfiguration config)
         //  {
@@ -38,6 +37,12 @@ namespace SkoloInstitute.Extensions
         //   services.AddDbContext<RepositoryContext>(o => o.UseMySql(connectionString,
         //        MySqlServerVersion.LatestSupportedServerVersion));
         // }
+
+        //  public static void ConfigureSqlContext(this IServiceCollection services,
+        //IConfiguration configuration) =>
+        //services.AddDbContext<RepositoryContext>(o =>
+        //o.UseInMemoryDatabase("SkoloInstitute"));
+
         public static void ConfigureRepositoryManager(this IServiceCollection services) =>
            services.AddScoped<IRepositoryManager, RepositoryManager>();
 
